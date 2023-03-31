@@ -12,25 +12,20 @@
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let row of rows" style="-webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none;">
-                <td>
-                    <span>{{ row[0] }}</span></td>
-                <td>
-                    <span>{{ row[1] }}</span></td>
-                <td>
-                    <span>{{ row[2] }}</span></td>
-                <td>
-                    <span>{{ row[3] }}</span></td>
-                <td>
-                    <span>{{ row[4] }}</span></td>
-                <td>
-                    <span>{{ row[5] }}</span></td>
-                <td>
-                    <span>{{ row[6] }}</span></td>
-              </tr>
+            <tr *ngFor="let row of rows">
+                <td *ngFor="let day of row" #td >
+                    <span class="day-span">{{ day }}</span>
+                    <div class="toggle-wrapper" 
+                    *ngIf="day != null"
+                    (click)="goToSingleDay(td)"
+                    [ngStyle]="day != null ? {} :  { 'background': '#f2f2f2', 'cursor': 'default' }"
+                    >
+                        Go to single day
+                    </div>
+                </td>
+            </tr>
         </tbody>
     </table>
 </div>
+<router-outlet></router-outlet>
   
-<input type="date">
-

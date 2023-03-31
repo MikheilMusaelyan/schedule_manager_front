@@ -9,12 +9,19 @@ import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
 
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { SingleDayComponent } from './single-day/single-day.component';
+import { CommonModule } from '@angular/common';
 
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { RouterModule } from '@angular/router';
+import { CalendarComponent } from './calendar/calendar.component';
 
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    SingleDayComponent,
+    CalendarComponent
   ],
   imports: [
     BrowserModule,
@@ -22,7 +29,10 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     StoreModule.forRoot({}),
     EffectsModule.forRoot([]),
     StoreDevtoolsModule.instrument(),
-    MatPaginatorModule
+    MatPaginatorModule,
+    CommonModule,
+    BrowserAnimationsModule,
+    RouterModule
   ],
   providers: [],
   bootstrap: [AppComponent]
