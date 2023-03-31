@@ -1,1 +1,36 @@
-<div></div>
+<div class="container">
+    <table>
+        <thead>
+            <tr>
+                <th>Sun</th>
+                <th>Mon</th>
+                <th>Tue</th>
+                <th>Wed</th>
+                <th>Thu</th>
+                <th>Fri</th>
+                <th>Sat</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let row of rows" style="-webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none;">
+                <td>
+                    <span>{{ row[0] }}</span></td>
+                <td>
+                    <span>{{ row[1] }}</span></td>
+                <td>
+                    <span>{{ row[2] }}</span></td>
+                <td>
+                    <span>{{ row[3] }}</span></td>
+                <td>
+                    <span>{{ row[4] }}</span></td>
+                <td>
+                    <span>{{ row[5] }}</span></td>
+                <td>
+                    <span>{{ row[6] }}</span></td>
+              </tr>
+        </tbody>
+    </table>
+</div>
+  
+<input type="date">
+

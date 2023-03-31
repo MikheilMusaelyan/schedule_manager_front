@@ -1,0 +1,77 @@
+/* Reset default styles */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f2f2f2;
+}
+
+.container {
+    max-width: 1800px;
+    margin: 0;
+    padding: 20px;
+    background-color: white;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    overflow-x: auto;
+    border-radius: 20px;
+}
+
+
+table {
+    
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+    font-size: 14px;
+    color: #333;
+}
+
+th, td {
+    padding: 20px;
+    height: 80px !important;
+    border: 1px solid #ddd;
+}
+th{
+    text-align: center;
+    background-color: #eee;
+    color: #666;
+}
+td span {
+    position: absolute;
+    display: block;
+    top: 10px;
+    left: 10px;
+    font-weight: bold;
+}
+td {
+    background-color: white;
+    cursor: pointer;
+    position: relative;
+}
+
+
+td:hover {
+    background-color: #f2f2f2;
+}
+
+
+
+@media screen and (max-width: 800px) {
+    table {
+        font-size: 12px;
+    }
+    th, td {
+        padding: 14px;
+    }
+}
+
+@media screen and (max-width: 500px) {
+    th, td {
+        padding: 10px;
+    }
+}

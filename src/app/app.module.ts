@@ -8,6 +8,9 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
 
+import { MatPaginatorModule } from '@angular/material/paginator';
+
+
 
 @NgModule({
   declarations: [
@@ -18,7 +21,8 @@ import { StoreModule } from '@ngrx/store';
     AppRoutingModule,
     StoreModule.forRoot({}),
     EffectsModule.forRoot([]),
-    StoreDevtoolsModule.instrument()
+    StoreDevtoolsModule.instrument(),
+    MatPaginatorModule
   ],
   providers: [],
   bootstrap: [AppComponent]
