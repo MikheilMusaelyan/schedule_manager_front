@@ -1,0 +1,30 @@
+<div class="container">
+    <table>
+        <thead>
+            <tr>
+                <th>Sun</th>
+                <th>Mon</th>
+                <th>Tue</th>
+                <th>Wed</th>
+                <th>Thu</th>
+                <th>Fri</th>
+                <th>Sat</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let row of rows">
+                <td *ngFor="let day of row" #td >
+                    <span class="day-span">{{ day }}</span>
+                    <div class="toggle-wrapper" 
+                    *ngIf="day != null"
+                    (click)="goToSingleDay(td)"
+                    [ngStyle]="day != null ? {} :  { 'background': '#f2f2f2', 'cursor': 'default' }"
+                    >
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<router-outlet></router-outlet>

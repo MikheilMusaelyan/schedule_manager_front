@@ -8,20 +8,23 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
 
-import { MatPaginatorModule } from '@angular/material/paginator';
 import { SingleDayComponent } from './single-day/single-day.component';
 import { CommonModule } from '@angular/common';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
-import { CalendarComponent } from './calendar/calendar.component';
+import { CalendarComponent } from './calendar/calendar/calendar.component';
+import { MainComponent } from './main/main.component';
+
+import { CalendarModule } from './calendar/calendar.module';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     SingleDayComponent,
-    CalendarComponent
+    CalendarComponent,
+    MainComponent
   ],
   imports: [
     BrowserModule,
@@ -29,10 +32,10 @@ import { CalendarComponent } from './calendar/calendar.component';
     StoreModule.forRoot({}),
     EffectsModule.forRoot([]),
     StoreDevtoolsModule.instrument(),
-    MatPaginatorModule,
     CommonModule,
     BrowserAnimationsModule,
-    RouterModule
+    RouterModule,
+    CalendarModule
   ],
   providers: [],
   bootstrap: [AppComponent]
