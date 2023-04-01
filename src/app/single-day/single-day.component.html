@@ -1,3 +1,11 @@
 <main #main class="single-day-popup" (click)="closeDay()">
-    
+    <!-- <div *ngFor="let event of children" class="event">
+        {{event.start}} {{event.end}}
+        <div *ngFor="let eventI of event?.children" class="event">
+            {{eventI.start}} {{eventI.end}}
+            <div *ngFor="let eventII of eventI?.children" class="event">
+                {{eventII.start}} {{eventII.end}}
+            </div>
+        </div>
+    </div> -->
 </main>

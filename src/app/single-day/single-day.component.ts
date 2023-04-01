@@ -17,7 +17,7 @@ export class SingleDayComponent implements OnInit, AfterViewInit{
     private route: ActivatedRoute,
     private router: Router
   ) {
-    
+
   }
 
   ngOnInit() {
@@ -42,9 +42,10 @@ export class SingleDayComponent implements OnInit, AfterViewInit{
     this.main.nativeElement.style.transition = 'all 400ms cubic-bezier(0.25, 0.04, 0, 0.99)'
 
     setTimeout(() => {
-      this.main.nativeElement.style.transform = `translate(0px, 0px)`;
+      
       this.main.nativeElement.style.width = `100vw`
       this.main.nativeElement.style.height = `100svh`
+      this.main.nativeElement.style.transform = `translate(0px, 0px)`;
       setTimeout(() => {
         this.main.nativeElement.style.transition = ''
       }, 400);
