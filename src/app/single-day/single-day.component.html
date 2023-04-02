@@ -1,11 +1,18 @@
 <main #main class="single-day-popup" (click)="closeDay()">
-    <!-- <div *ngFor="let event of children" class="event">
+    <div *ngFor="let event of nodes" class="event" [ngStyle]="{'height': (event.end - event.start) * 20 + 'px'}">
         {{event.start}} {{event.end}}
-        <div *ngFor="let eventI of event?.children" class="event">
+        <div *ngFor="let eventI of event?.children" class="event" [ngStyle]="{'height': (event.end - event.start) * 20 + 'px'}">
             {{eventI.start}} {{eventI.end}}
-            <div *ngFor="let eventII of eventI?.children" class="event">
+            <div *ngFor="let eventII of eventI?.children" class="event" [ngStyle]="{'height': (event.end - event.start) * 20 + 'px'}">
                 {{eventII.start}} {{eventII.end}}
+                <div *ngFor="let eventIII of eventII?.children" class="event" [ngStyle]="{'height': (event.end - event.start) * 20 + 'px'}">
+                    {{eventIII.start}} {{eventIII.end}}
+                </div>
             </div>
         </div>
-    </div> -->
+    </div>
+
+    <div class="times-wrapper">
+        <div class="time-row" *ngFor="let row of rows"></div> 
+    </div>
 </main>

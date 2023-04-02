@@ -1,0 +1,12 @@
+<div class="side-navbar">
+    <ul class="nav-links">
+        <li *ngFor="let link of links">
+          <a [routerLink]="link.label" 
+          routerLinkActive="active" 
+          class="nav-links-a"
+        >
+            a
+          </a>
+        </li>
+    </ul>
+</div>

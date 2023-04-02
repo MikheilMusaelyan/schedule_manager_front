@@ -17,6 +17,7 @@ import { CalendarComponent } from './calendar/calendar/calendar.component';
 import { MainComponent } from './main/main.component';
 
 import { CalendarModule } from './calendar/calendar.module';
+import { NavbarComponent } from './navbar/navbar.component';
 
 
 @NgModule({
@@ -24,7 +25,8 @@ import { CalendarModule } from './calendar/calendar.module';
     AppComponent,
     SingleDayComponent,
     CalendarComponent,
-    MainComponent
+    MainComponent,
+    NavbarComponent
   ],
   imports: [
     BrowserModule,

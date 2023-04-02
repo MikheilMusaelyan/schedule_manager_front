@@ -1,7 +1,7 @@
-export const children: any[] = [
+export let childs: Node[] = [
     {
       start: 13,
-      end: 17,
+      end: 37,
       children: [
         {
           start: 14,
@@ -26,18 +26,27 @@ export const children: any[] = [
           ]
         }
       ]
-    }
+    },
+    
   ]
 
-export function newNode(children: any[], node: any) {
-    for(let i = 0; i < children.length; i ++){
+ export interface Node {
+    start: number;
+    end: number;
+    children: Node[];
+  }
 
+export function newNode(children: any[], node: Node) {
+    for(let i = 0; i < children.length; i ++){
         if(node.start <= children[i].start && node.end >= children[i].end){
+            console.log('node is the biggest')
             node.children.push(children[i])
+            children.splice(i, 1, node)
             return
         }
 
         else if(node.start > children[i].start && node.start < children[i].end) {
+
             if(children[i].children.length == 0) {
                 children[i].children.push(node)
                 break
@@ -45,50 +54,65 @@ export function newNode(children: any[], node: any) {
             newNode(children[i].children, node)
             break
         } 
-        
-        else if(node.start <= children[i].start && node.end > children[i].start) {
-            if(children[i].children.length > 0) {
-                addToQueue(node, children[i].children)
-            }
 
-            // node.children.push(children[i])
-            console.log(children)
+        else if(node.start >= children[i].end && i == (children.length - 1)){
+          children.push(node)
+          break
+        }
+
+        else if(node.start <= children[i].start && node.end > children[i].start) {
+            node.children.push(children[i])
             children.splice(i, 1, node)
+            if(node.children[node.children.length - 1].children.length > 0) {
+                addToQueue(node.end, node.children[node.children.length - 1])
+                queue.forEach(element => {
+                  newNode(childs, element)
+                })
+                break
+            }
             break
         }
         
         else if(node.start < children[i].start && node.end < children[i].start) {
+          
             children.splice(i, 0, node)
             break 
         } // ????
+
+        
+
     }
 }
 
 
-function addToQueue(node: any, checkChildren: any[], queue: any[] = []) {
+export function addToQueue(node: number, child: Node) {
+    let checkChildren: any[] = child.children
+
     for (let i = 0; i < checkChildren.length; i++) {
-        if(node.end > checkChildren[i].start) {
-            if(node.end > checkChildren[i].end || checkChildren[i].children.length == 0) {
-                return
-            }
-            addToQueue(node, checkChildren[i].children)
+      
+      if(node > checkChildren[i].start) {
+        if(node >= checkChildren[i].end || checkChildren[i].children.length == 0) {
+            return
         }
-        else {
-            let toPush = checkChildren.splice(i)
-            putInQueue(toPush)
-            break
-        }
+        addToQueue(node, checkChildren[i])
+      }
+      else {
+        let toPush = checkChildren.splice(i)
+        putInQueue(toPush)
+        break
+      }
     }
 }
 
-function putInQueue(toPush: any, queue: any[] = []) {
-    console.log(toPush, 'these have to perform addNode')
+const queue: Node[] = []
 
+export function putInQueue(toPush: Node[]) {
     for (let child of toPush) {
-      if(child.children.length > 0){
-        let singleChild = child.children.slice(0)
-        queue.push(singleChild);
-      }         
+      let childChildren = child.children.splice(0)
+      queue.push(child);
+      if(childChildren.length > 0){
+        putInQueue(childChildren) 
+      }  
     }
     
 }
