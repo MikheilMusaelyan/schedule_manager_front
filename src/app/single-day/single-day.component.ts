@@ -25,7 +25,7 @@ export class SingleDayComponent implements OnInit, AfterViewInit{
 
   ngOnInit() {
     this.print(this.nodes, 0)
-    let node = { start: 12, end: 14, children:[] }
+    let node = { start: 16, end: 34, children:[] }
     nodes.newNode(nodes.childs, node)
     this.print(this.nodes, 0)
   }

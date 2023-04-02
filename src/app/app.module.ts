@@ -18,6 +18,8 @@ import { MainComponent } from './main/main.component';
 
 import { CalendarModule } from './calendar/calendar.module';
 import { NavbarComponent } from './navbar/navbar.component';
+import { DragdropDirective } from './directives/dragdrop.directive';
+import { EventComponent } from './single-day/event/event.component';
 
 
 @NgModule({
@@ -26,7 +28,9 @@ import { NavbarComponent } from './navbar/navbar.component';
     SingleDayComponent,
     CalendarComponent,
     MainComponent,
-    NavbarComponent
+    NavbarComponent,
+    DragdropDirective,
+    EventComponent
   ],
   imports: [
     BrowserModule,

@@ -36,8 +36,9 @@ export let childs: Node[] = [
     children: Node[];
   }
 
-export function newNode(children: any[], node: Node) {
+export function newNode(children: Node[], node: Node) {
     for(let i = 0; i < children.length; i ++){
+      console.log(i)
         if(node.start <= children[i].start && node.end >= children[i].end){
             console.log('node is the biggest')
             node.children.push(children[i])
@@ -46,7 +47,7 @@ export function newNode(children: any[], node: Node) {
         }
 
         else if(node.start > children[i].start && node.start < children[i].end) {
-
+          console.log('node is in child')
             if(children[i].children.length == 0) {
                 children[i].children.push(node)
                 break
@@ -56,11 +57,13 @@ export function newNode(children: any[], node: Node) {
         } 
 
         else if(node.start >= children[i].end && i == (children.length - 1)){
+          console.log('node is the biggest in the children and cant compare to next one')
           children.push(node)
           break
         }
 
         else if(node.start <= children[i].start && node.end > children[i].start) {
+          console.log('node overlaps a child partially')
             node.children.push(children[i])
             children.splice(i, 1, node)
             if(node.children[node.children.length - 1].children.length > 0) {
@@ -74,7 +77,7 @@ export function newNode(children: any[], node: Node) {
         }
         
         else if(node.start < children[i].start && node.end < children[i].start) {
-          
+            console.log('node doesnt overlap with anything')
             children.splice(i, 0, node)
             break 
         } // ????
