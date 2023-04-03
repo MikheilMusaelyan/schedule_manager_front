@@ -7,6 +7,12 @@
                 {{eventII.start}} {{eventII.end}}
                 <div *ngFor="let eventIII of eventII?.children" class="event" [ngStyle]="{'height': (event.end - event.start) * 20 + 'px'}">
                     {{eventIII.start}} {{eventIII.end}}
+                    <div *ngFor="let eventIIII of eventIII?.children" class="event" [ngStyle]="{'height': (event.end - event.start) * 20 + 'px'}">
+                        {{eventIIII.start}} {{eventIIII.end}}
+                        <div *ngFor="let eventV of eventIIII?.children" class="event" [ngStyle]="{'height': (event.end - event.start) * 20 + 'px'}">
+                            {{eventV.start}} {{eventV.end}}
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
