@@ -57,9 +57,10 @@ export let childs: Node[] = []
             
             if(node.children[node.children.length - 1].children.length > 0) {
                 addToQueue(node.end, node.children[node.children.length - 1])
-                queue.forEach(element => {
-                  newNode(childs, element)
-                })
+                const queueCopy = [...queue];
+                queueCopy.forEach(element => {
+                  newNode(childs, element);
+                });
                 // queue = [] 
                 return
             }
