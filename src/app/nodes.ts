@@ -4,9 +4,18 @@ export let childs: Node[] = []
     start: number;
     end: number;
     children: Node[];
+    id?: number;
   }
 
-  export function newNode(children: Node[], node: Node) {
+  let nodesCount: number = 0
+
+  export function newNode(children: Node[], node: Node): any {
+    
+    if(!node?.id){
+      node.id = ++nodesCount
+    }
+    
+
     queue = []
     let spliced = false
     if(children.length == 0) {
@@ -22,14 +31,14 @@ export let childs: Node[] = []
             spliced = true 
           } else {
             children.splice(i, 1)
-            console.log(children.slice())
+            // console.log(children.slice())
             i--
           }
         }
         //tols orivegan vamocmebt, iq ubralod vamocmebt tu grdzelia node (da childs vnestav)
         // da tu arari, anu moklea da chainesteba child shi
         else if(node.start >= children[i].start && node.start < children[i].end) {
-          console.log('node is in child')
+          // console.log('node is in child')
           if(children[i].children.length == 0) {
               children[i].children.push(node)
               return
@@ -39,7 +48,7 @@ export let childs: Node[] = []
         } 
 
         else if(node.start >= children[i].end && i == (children.length - 1)){
-          console.log('node is the biggest in the children and cant compare to next one')
+          // console.log('node is the biggest in the children and cant compare to next one')
           children.push(node)
           return
         }
@@ -59,7 +68,9 @@ export let childs: Node[] = []
                 addToQueue(node.end, node.children[node.children.length - 1])
                 const queueCopy = [...queue];
                 queueCopy.forEach(element => {
-                  newNode(childs, element);
+                  //????? children or childs
+                   newNode(children, element);
+                  //?????
                 });
                 // queue = [] 
                 return
@@ -68,7 +79,7 @@ export let childs: Node[] = []
         }
         
         else if(node.start < children[i].start && node.end <= children[i].start) {
-            console.log('node doesnt overlap with anything')
+            // console.log('node doesnt overlap with anything')
             if(spliced == false){
               children.splice(i, 0, node)
             }
@@ -82,7 +93,7 @@ export let childs: Node[] = []
 export function addToQueue(node: number, child: Node) {
     let checkChildren: any[] = child.children
 
-    console.log('added to queue: ', checkChildren.slice())
+    // console.log('added to queue: ', checkChildren.slice())
 
     for (let i = 0; i < checkChildren.length; i++) {
       
@@ -110,3 +121,18 @@ export function putInQueue(toPush: Node[]) {
     }
     
 }
+
+
+export function findNode(id: number, array: any[]): any {
+  for(let i = 0; i < array.length; i++) {
+    if(array[i]?.id == id) {
+      
+      return
+    }
+    findNode(id, array[i].children)
+  }
+}
+
+setTimeout(() => {
+  findNode(26,childs)
+}, 300);
