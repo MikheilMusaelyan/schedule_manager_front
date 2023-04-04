@@ -1,0 +1,29 @@
+<div 
+    #thisDiv
+    
+
+    class="absolute"
+    appDragdrop 
+    (droppedEvent)="handleDropEvent($event)"
+    [divList]=divList
+    
+    
+    [ngStyle]="{
+        'width': width + 'px',
+        'height': (30 * (+thisEvent.end - +thisEvent.start)) - 1 + 'px',
+        'top': (+divList.offsetTop) + (+thisEvent.start * 30) + 'px',
+        'overflow-y': 'hidden'
+    }"
+    
+    >
+    {{thisEvent.start}} - {{thisEvent.end}}
+</div>
+
+<app-event 
+*ngFor="let event of thisEvent.children"
+[event]="event"
+[divList]="divList"
+[divWidth]="thisDiv.clientWidth - 90"
+></app-event>
+
+<!-- 'width': (+myParent?.clientWidth - 80) + 'px' || '50%', -->
