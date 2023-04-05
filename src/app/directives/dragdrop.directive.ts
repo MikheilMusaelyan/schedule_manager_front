@@ -76,7 +76,6 @@ export class DragdropDirective{
   
 
   handleMouseMove = (event: MouseEvent) => {
-    console.log('event')
     const mouseY = event.clientY;
     const constantDifference = this.initialMouseY - this.initialAbsoluteTop;
     const newAbsoluteTop = mouseY - constantDifference;
@@ -98,7 +97,7 @@ export class DragdropDirective{
   }
 
   public handleMouseUp = (event: MouseEvent) => {
-    console.log(event)
+    // console.log(event)
     this.droppedEvent.emit({dropY: this.droppedIn, dropped: true})
     // this.firstYIndex = this.droppedIn
     // if(this.firstYIndex != this.droppedIn){

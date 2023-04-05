@@ -112,7 +112,7 @@ export function addToQueue(node: number, child: Node, queue: Node[]) {
 
 export function putInQueue(toPush: Node[], queue: Node[]) {
     for (let child of toPush) {
-      let childChildren = child.children.splice(0) // ???
+      let childChildren = child.children.splice(0) // ???      
       queue.push(child);
       if(childChildren.length > 0){
         putInQueue(childChildren, queue) 
@@ -142,17 +142,16 @@ export function deleteNode(id: number | undefined, array: any[]): any {
               })
               return
             
-            return
-            console.log('did not happen br')
+            
           // }
         }
-        console.log('array[i+1] is not there')
+        // console.log('array[i+1] is not there')
         // there's no next node so our children could not overlap anything
         array.splice(i, 1, ...childrenCopy)
         return
       }
       // node has no children so its children won't be deleted
-      console.log('no children')
+      // console.log('no children')
       array.splice(i, 1)
       return
     }
@@ -163,7 +162,7 @@ export function deleteNode(id: number | undefined, array: any[]): any {
 export function MoveNode(node: Node) {
   deleteNode(node?.id, childs)
   node.children.splice(0)
-  console.log(node)
+  // console.log(node)
 
   newNode(childs, node)
 }
