@@ -121,25 +121,30 @@ export function putInQueue(toPush: Node[], queue: Node[]) {
     
 }
 
-export function deleteNode(id: number, array: any[]): any {
+export function deleteNode(id: number | undefined, array: any[]): any {
+  if(!id){
+    return
+  }
   let nodeQueue: Node[] = []
   for(let i = 0; i < array.length; i++) {
     if(array[i]?.id == id) { // find the element      
       if(array[i].children.length > 0){ 
         let childrenCopy = array[i].children.slice()
         if(array[i+1]){
-          for(let j = 0; j < childrenCopy.length; j++) {
-            if(childrenCopy[j].end > array[i+1].start){
-              let addToSibling = childrenCopy.splice(j, 1)
-              array.splice(i, 1, ...childrenCopy)
-              putInQueue(addToSibling, nodeQueue)
+          // for(let j = 0; j < childrenCopy.length; j++) {
+            
+              // let addToSibling = childrenCopy.splice(j, 1)
+              
+              array.splice(i, 1)
+              putInQueue(childrenCopy, nodeQueue)
               nodeQueue.forEach((e: Node) => {
                 newNode(array, e)
               })
               return
-            }
+            
+            return
             console.log('did not happen br')
-          }
+          // }
         }
         console.log('array[i+1] is not there')
         // there's no next node so our children could not overlap anything
@@ -147,11 +152,20 @@ export function deleteNode(id: number, array: any[]): any {
         return
       }
       // node has no children so its children won't be deleted
+      console.log('no children')
       array.splice(i, 1)
       return
     }
     deleteNode(id, array[i].children)
   }
+}
+
+export function MoveNode(node: Node) {
+  deleteNode(node?.id, childs)
+  node.children.splice(0)
+  console.log(node)
+
+  newNode(childs, node)
 }
 
 

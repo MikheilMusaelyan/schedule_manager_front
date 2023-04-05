@@ -85,6 +85,7 @@ export class DragdropDirective{
         const distance = Math.abs(listItem.offsetTop - newAbsoluteTop);
         if (distance < closest.storedDistance) {
           this.droppedIn = i;
+          // this.droppedEvent.emit({dropY: this.droppedIn, dropped: false})
           return { listItem, storedDistance: distance, index: i };
         }
         return closest;
@@ -97,7 +98,8 @@ export class DragdropDirective{
   }
 
   public handleMouseUp = (event: MouseEvent) => {
-    this.droppedEvent.emit(this.droppedIn)
+    console.log(event)
+    this.droppedEvent.emit({dropY: this.droppedIn, dropped: true})
     // this.firstYIndex = this.droppedIn
     // if(this.firstYIndex != this.droppedIn){
       
