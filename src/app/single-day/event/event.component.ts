@@ -1,4 +1,4 @@
-import { Component, Input , ChangeDetectorRef} from '@angular/core';
+import { Component, EventEmitter, Input , Output, ViewChild} from '@angular/core';
 import * as nodes from "src/app/nodes";
 import { print } from '../single-day.component';
 
@@ -8,17 +8,21 @@ import { print } from '../single-day.component';
   styleUrls: ['./event.component.css']
 })
 export class EventComponent {
-  @Input('event') thisEvent: nodes.Node
+  @Input('parent') parent: nodes.Node[];
+  @Input('index') index: any;
   @Input('divList') divList: any
   @Input('divWidth') width: any
+  
+  @ViewChild('thisDiv', {static: false}) thisDiv: any;
+
+  autoZindex: boolean = true;
+  thisEvent: any;
 
   ngOnInit() {
+    this.thisEvent = this.parent[this.index];
   }
 
   handleDropEvent(event: any){
-    const eventLength = this.thisEvent.end - this.thisEvent.start
-    this.thisEvent.start = event.dropY;
-    this.thisEvent.end = event.dropY + eventLength
-    nodes.MoveNode(this.thisEvent)  
+    
   }
 }

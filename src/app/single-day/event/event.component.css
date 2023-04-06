@@ -1,6 +1,8 @@
 .absolute {
     position: absolute;
-    padding: 5px 5px 7px 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
     font-size: 14px;
     top: 0;
     right: 0;
@@ -10,4 +12,26 @@
     height: 18px;
     background-color: rgb(3, 155, 229);
     color: white;
+    cursor: pointer;
+  }
+
+  .resize-div-wrap{
+    height: 4px;
+    width: 100%;
+    background: blue;
+    position: relative;
+  }
+
+  .resize-div{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: red;
+    cursor: ns-resize;
+  }
+
+  .event-time {
+    padding: 5px 5px 0 5px;
   }

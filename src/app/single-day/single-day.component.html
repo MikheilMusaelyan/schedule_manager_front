@@ -1,7 +1,8 @@
 <main #main class="single-day-popup" (click)="closeDay()">
     <app-event 
-    *ngFor="let event of nodes"
-    [event]="event"
+    *ngFor="let event of nodes; let i = index;"
+    [parent]="nodes"
+    [index]="i"
     [divList]="divList"
     >
 

@@ -112,7 +112,7 @@ export function addToQueue(node: number, child: Node, queue: Node[]) {
 
 export function putInQueue(toPush: Node[], queue: Node[]) {
     for (let child of toPush) {
-      let childChildren = child.children.splice(0) // ???      
+      let childChildren = child.children.splice(0)      
       queue.push(child);
       if(childChildren.length > 0){
         putInQueue(childChildren, queue) 
@@ -127,31 +127,20 @@ export function deleteNode(id: number | undefined, array: any[]): any {
   }
   let nodeQueue: Node[] = []
   for(let i = 0; i < array.length; i++) {
-    if(array[i]?.id == id) { // find the element      
+    if(array[i]?.id == id) {    
       if(array[i].children.length > 0){ 
         let childrenCopy = array[i].children.slice()
-        if(array[i+1]){
-          // for(let j = 0; j < childrenCopy.length; j++) {
-            
-              // let addToSibling = childrenCopy.splice(j, 1)
-              
-              array.splice(i, 1)
-              putInQueue(childrenCopy, nodeQueue)
-              nodeQueue.forEach((e: Node) => {
-                newNode(array, e)
-              })
-              return
-            
-            
-          // }
+        if(array[i+1]){   
+          array.splice(i, 1)
+          putInQueue(childrenCopy, nodeQueue)
+          nodeQueue.forEach((e: Node) => {
+            newNode(array, e)
+          })
+          return   
         }
-        // console.log('array[i+1] is not there')
-        // there's no next node so our children could not overlap anything
         array.splice(i, 1, ...childrenCopy)
         return
       }
-      // node has no children so its children won't be deleted
-      // console.log('no children')
       array.splice(i, 1)
       return
     }
@@ -162,11 +151,23 @@ export function deleteNode(id: number | undefined, array: any[]): any {
 export function MoveNode(node: Node) {
   deleteNode(node?.id, childs)
   node.children.splice(0)
-  // console.log(node)
-
   newNode(childs, node)
 }
 
+export function resizeNode(id: number, array: Node[], increased: boolean) {
+  let queue = []
+  let foundNode: any;
+  for(let i = 0; i < array.length; i++) {
+    if(array[i]?.id == id || foundNode) {
+      foundNode = array[i]
+      if(!increased) {
+      }
+    } 
+    else {
+      resizeNode(id, array[i].children, increased)
+    }
+  }
+}
 
 
 

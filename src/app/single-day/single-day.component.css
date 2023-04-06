@@ -11,7 +11,7 @@
 .time-row{
     height: 30px;
     margin-bottom: 0px;
-    /* border-bottom: 1px solid rgb(216, 216, 216); */
+    border-bottom: 1px solid rgb(216, 216, 216);
 }
 .times-wrapper {
     width: 100%;

@@ -26,14 +26,16 @@ export class SingleDayComponent implements OnInit, AfterViewInit{
 
 
   ngOnInit() {
-    nodes.newNode(nodes.childs, { start: 2, end: 6, children: []}) 
-    nodes.newNode(nodes.childs, { start: 3, end: 7, children: []}) 
+    nodes.newNode(nodes.childs, { start: 2, end: 20, children: []}) 
+    nodes.newNode(nodes.childs, { start: 3, end: 14, children: []}) 
     nodes.newNode(nodes.childs, { start: 5, end: 10, children: []}) 
     nodes.newNode(nodes.childs, { start: 8, end: 10, children: []}) 
+    nodes.newNode(nodes.childs, { start: 15, end: 21, children: []}) 
+    nodes.newNode(nodes.childs, { start: 7, end: 12, children: []}) 
+    nodes.newNode(nodes.childs, { start: 4, end: 17, children: []}) 
     nodes.newNode(nodes.childs, { start: 5, end: 6, children: []}) 
-    nodes.newNode(nodes.childs, { start: 4, end: 13, children: []}) 
     nodes.newNode(nodes.childs, { start: 5, end: 6, children: []}) 
-    nodes.newNode(nodes.childs, { start: 5, end: 8, children: []}) 
+    nodes.newNode(nodes.childs, { start: 14, end: 16, children: []}) 
   }
 
   
