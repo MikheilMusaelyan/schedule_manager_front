@@ -96,10 +96,7 @@ export class DragdropDirective{
 
     // activateEventListeners();
 
-    this.mouseDownTimeOut = setTimeout(() => { 
-      this.activateTouch(!this.touched)
-    }, 500);
-    document.addEventListener('mouseup', this.clearTouch, { once: true });    
+    this.activateTouch
   }
 
   activateTouch(bool: boolean) {
