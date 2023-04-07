@@ -12,7 +12,7 @@ export class DragdropDirective{
   @Output() droppedEvent = new EventEmitter<any>();
 
   private absoluteDiv: any;
-  private initialAbsoluteTop: any;
+  private initialRelativeTop: any;
   private initialMouseY: any;
   private droppedIn: number = -1;
   private listItems: any[] = []
@@ -20,9 +20,11 @@ export class DragdropDirective{
   private initialObject: any;
   private resizeAt: any;
 
-  moveNodeEmitter: EventEmitter<any> = new EventEmitter();
-  deleteEmitter: EventEmitter<any> = new EventEmitter();
-  resizeEmitter: EventEmitter<any> = new EventEmitter();
+  mouseDownTimeOut: any;
+
+  @Output() moveNodeEmitter: EventEmitter<nodes.Node> = new EventEmitter();
+  @Output() deleteEmitter: EventEmitter<any> = new EventEmitter();
+  @Output() resizeEmitter: EventEmitter<boolean> = new EventEmitter();
 
   constructor(
     private el: ElementRef,
@@ -30,6 +32,9 @@ export class DragdropDirective{
   
   ngAfterViewInit() {
     this.resizeDiv.addEventListener('mousedown', (event: any) => {
+      this.handleMouseDown(event, true);
+    });
+    this.resizeDiv.addEventListener('touchstart', (event: any) => {
       this.handleMouseDown(event, true);
     });
   }
@@ -42,63 +47,93 @@ export class DragdropDirective{
 
   ngOnDestroy() {
     this.removeListeners()
+    this.clearTouch()
   }
 
-
+  @HostListener('touchstart', ['$event'])
   @HostListener('mousedown', ['$event'])
   handleMouseDown(event: any, element?: boolean) {
-    event.preventDefault();
-    event.stopPropagation();  
+    // event.preventDefault();
+    event.stopPropagation();
 
-    this.initialMouseY = event.clientY; 
-    this.initialAbsoluteTop = this.absoluteDiv.offsetTop;
+    const isTouchEvent = event.type.startsWith('touch');
+    const clientY = isTouchEvent ? event.touches[0].clientY : event.clientY;
+
+    this.initialMouseY = clientY;
+    this.initialRelativeTop = this.absoluteDiv.getBoundingClientRect().top;
     
-    if(element) {
-      document.addEventListener('mousemove', this.handleResizeMouseMove);
-      document.addEventListener('mouseup', this.handleResizeMouseUp);
-    } else {
-      document.addEventListener('mousemove', this.handleMouseMove);
-      document.addEventListener('mouseup', this.handleMouseUp);
+    const activateEventListeners = () => {
+      if (element) {
+        document.addEventListener('mousemove', this.handleResizeMouseMove);
+        document.addEventListener('mouseup', this.handleResizeMouseUp);
+  
+        document.addEventListener('touchmove', this.handleResizeMouseMove);
+        document.addEventListener('touchend', this.handleResizeMouseUp);
+      } else {
+        document.addEventListener('mousemove', this.handleMouseMove);
+        document.addEventListener('mouseup', this.handleMouseUp);
+  
+        document.addEventListener('touchmove', this.handleMouseMove);
+        document.addEventListener('touchend', this.handleMouseUp);
+      }
+    };
+  
+    if (isTouchEvent) {
+      this.mouseDownTimeOut = setTimeout(() => { 
+        activateEventListeners();
+
+        if (navigator.vibrate) {
+          navigator.vibrate(100)
+        };
+
+      }, 500);
+      document.addEventListener('touchend', this.clearTouch, { once: true });
+      return
     }
+
+    activateEventListeners();
   }
 
-  handleResizeMouseMove = (event: MouseEvent) => {
+  clearTouch = () => { clearTimeout( this.mouseDownTimeOut ) };
+
+  
+  handleResizeMouseMove = (event: any) => {
+    const isTouchEvent = event.type.startsWith('touch');
+    const clientY = isTouchEvent ? event.touches[0].clientY : event.clientY;
+
     this.listItems.reduce((closest: any, listItem: any, i: number) => {
-        const distance = Math.abs(listItem.offsetTop - event.clientY);
+        const distance = Math.abs(listItem.getBoundingClientRect().top - clientY);
         if (distance < closest.storedDistance) {
-          this.resizeAt = Math.max(this.event.start + 1, i);
+          this.resizeAt = Math.max(i, this.event.start + 1)
           return { listItem, storedDistance: distance, index: i };
         }
         return closest;
       },
       { listItem: null, storedDistance: Infinity, index: 0 }
     )
-    
+
     this.event.end = this.resizeAt
   }
 
   handleResizeMouseUp = (event: any) => {
-    if(
-      this.initialObject.end < this.event.end
-    ) {
-      this.initialObject.end = this.event.end;
-      nodes.resizeNode(this.event.id, nodes.childs, true)
-    } else {
-      nodes.resizeNode(this.event.id, nodes.childs, false)
-    }
+    this.resizeEmitter.emit(this.initialObject.end < this.event.end);
+    this.initialObject.end = this.event.end;
     
     this.removeListeners()
     this.changeMouseCursor('default');
   }
   
 
-  handleMouseMove = (event: MouseEvent) => {
-    const mouseY = event.clientY;
-    const constantDifference = this.initialMouseY - this.initialAbsoluteTop;
+  handleMouseMove = (event: any) => {
+    const isTouchEvent = event.type.startsWith('touch');
+    const clientY = isTouchEvent ? event.touches[0].clientY : event.clientY;
+
+    const mouseY = clientY;
+    const constantDifference = this.initialMouseY - this.initialRelativeTop;
     const newAbsoluteTop = mouseY - constantDifference;
     
-    const closestListItem = this.listItems.reduce((closest: any, listItem: any, i: number) => {
-        const distance = Math.abs(listItem.offsetTop - newAbsoluteTop);
+    this.listItems.reduce((closest: any, listItem: any, i: number) => {
+        const distance = Math.abs((listItem.getBoundingClientRect().top) - newAbsoluteTop);
         if (distance < closest.storedDistance) {
           this.droppedIn = i;
 
@@ -111,10 +146,10 @@ export class DragdropDirective{
         return closest;
       },
       { listItem: null, storedDistance: Infinity, index: 0 }
-    ).listItem;
+    );
     
-    const snapTop = closestListItem.offsetTop;
-    this.absoluteDiv.style.top = `${snapTop}px`;
+    // const snapTop = closestListItem.offsetTop;
+    // this.absoluteDiv.style.top = `${snapTop}px`;
   }
 
   public handleMouseUp = () => {
@@ -124,7 +159,8 @@ export class DragdropDirective{
     ) {
       this.initialObject.start = this.event.start;
       this.initialObject.end = this.event.end;
-      nodes.MoveNode(this.event)
+      console.log(this.event)
+      this.moveNodeEmitter.emit(this.event)
     }
     
     this.removeListeners()
@@ -140,6 +176,11 @@ export class DragdropDirective{
     document.removeEventListener('mousemove', this.handleResizeMouseMove);
     document.removeEventListener('mouseup', this.handleMouseUp);
     document.removeEventListener('mouseup', this.handleResizeMouseUp);
+
+    document.removeEventListener('touchmove', this.handleMouseMove);
+    document.removeEventListener('touchmove', this.handleResizeMouseMove);
+    document.removeEventListener('touchend', this.handleMouseUp);
+    document.removeEventListener('touchend', this.handleResizeMouseUp);
   }
   
 }

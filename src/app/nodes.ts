@@ -14,7 +14,6 @@ export let childs: Node[] = []
     if(!node?.id){
       node.id = ++nodesCount
     }
-    
 
     let queue: Node[] = []
     let spliced = false
@@ -91,7 +90,6 @@ export let childs: Node[] = []
 
 export function addToQueue(node: number, child: Node, queue: Node[]) {
     let checkChildren: any[] = child.children
-
     // console.log('added to queue: ', checkChildren.slice())
 
     for (let i = 0; i < checkChildren.length; i++) {
@@ -109,6 +107,19 @@ export function addToQueue(node: number, child: Node, queue: Node[]) {
     }
 }
 
+export function removeChildren(node: number, child: Node, queue: Node[]) {
+  let checkChildren: any[] = child.children
+
+  for (let i = 0; i < checkChildren.length; i++) {
+    if(node <= checkChildren[i].start) {
+      const childrenCopy = checkChildren.splice(i)
+      putInQueue(childrenCopy, queue)
+      return
+    }
+    removeChildren(node, checkChildren[i], queue)
+  }
+}
+
 
 export function putInQueue(toPush: Node[], queue: Node[]) {
     for (let child of toPush) {
@@ -116,58 +127,57 @@ export function putInQueue(toPush: Node[], queue: Node[]) {
       queue.push(child);
       if(childChildren.length > 0){
         putInQueue(childChildren, queue) 
-      }  
-    }
-    
-}
-
-export function deleteNode(id: number | undefined, array: any[]): any {
-  if(!id){
-    return
-  }
-  let nodeQueue: Node[] = []
-  for(let i = 0; i < array.length; i++) {
-    if(array[i]?.id == id) {    
-      if(array[i].children.length > 0){ 
-        let childrenCopy = array[i].children.slice()
-        if(array[i+1]){   
-          array.splice(i, 1)
-          putInQueue(childrenCopy, nodeQueue)
-          nodeQueue.forEach((e: Node) => {
-            newNode(array, e)
-          })
-          return   
-        }
-        array.splice(i, 1, ...childrenCopy)
-        return
       }
-      array.splice(i, 1)
-      return
     }
-    deleteNode(id, array[i].children)
-  }
 }
 
-export function MoveNode(node: Node) {
-  deleteNode(node?.id, childs)
-  node.children.splice(0)
-  newNode(childs, node)
-}
+// export function deleteNode(id: number | undefined, array: any[]): any {
+//   if(!id){
+//     return
+//   }
+//   let nodeQueue: Node[] = []
+//   for(let i = 0; i < array.length; i++) {
+//     if(array[i]?.id == id) {    
+//       if(array[i].children.length > 0){ 
+//         let childrenCopy = array[i].children.slice()
+//         if(array[i+1]){   
+//           array.splice(i, 1)
+//           putInQueue(childrenCopy, nodeQueue)
+//           nodeQueue.forEach((e: Node) => {
+//             newNode(array, e)
+//           })
+//           return   
+//         }
+//         array.splice(i, 1, ...childrenCopy)
+//         return
+//       }
+//       array.splice(i, 1)
+//       return
+//     }
+//     deleteNode(id, array[i].children)
+//   }
+// }
 
-export function resizeNode(id: number, array: Node[], increased: boolean) {
-  let queue = []
-  let foundNode: any;
-  for(let i = 0; i < array.length; i++) {
-    if(array[i]?.id == id || foundNode) {
-      foundNode = array[i]
-      if(!increased) {
-      }
-    } 
-    else {
-      resizeNode(id, array[i].children, increased)
-    }
-  }
-}
+// export function MoveNode(node: Node) {
+//   deleteNode(node?.id, childs)
+//   node.children.splice(0)
+//   newNode(childs, node)
+// }
+
+// export function resizeNode(id: number, array: Node[], increased: boolean) {
+//   let queue = []
+//   let foundNode: any;
+//   for(let i = 0; i < array.length; i++) {
+//     if(array[i]?.id == id || foundNode) {
+//       foundNode = array[i]
+//       if(!increased) {
+//       }
+//     } 
+//     else {
+//       resizeNode(id, array[i].children, increased)
+//     }
+//   }
+// }
 
 
 

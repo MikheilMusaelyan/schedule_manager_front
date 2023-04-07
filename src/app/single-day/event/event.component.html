@@ -1,24 +1,43 @@
-<div 
+<div  
     #thisDiv
     
-
     class="absolute"
     appDragdrop 
+    (deleteEmitter)="deleteEvent()"
+    (moveNodeEmitter)="moveEvent()"
+    (resizeEmitter)="resizeEvent($event)"
     (droppedEvent)="handleDropEvent($event)"
     [divList]=divList
     [event]="thisEvent"
     [resizeDiv]="resize"
     
     [ngStyle]="{
-        'width': width + 'px',
-        'height': (30 * (+thisEvent.end - +thisEvent.start)) - 1 + 'px',
-        'top': (+divList.offsetTop) + (+thisEvent.start * 30) + 'px',
+        'width': 'calc(100% - ' + (level * 150)  + 'px)',
+        'height': (20 * (+thisEvent.end - +thisEvent.start)) - 1 + 'px',
+        'top': (+divList.offsetTop) + (+thisEvent.start * 20) + 'px',
     }"
     
     >
-    <span class="event-time">{{thisEvent.start}} - {{thisEvent.end}}</span>
-    <div #resize class="resize-div-wrap">
-        <div  class="resize-div"></div>
+    <div class="event-info"
+        [ngStyle]="{
+            'padding': (+thisEvent.end - +thisEvent.start) >= 2 ? '2px 5px 3px 6px' : '1.5px 2px 0 6px',
+            'display': (+thisEvent.end - +thisEvent.start) >= 2 ? 'block' : 'flex'
+        }"
+    >
+        <span class="event-time"
+        >{{thisEvent.start}} - {{thisEvent.end}}</span>
+        <span class="event-name">
+            (event name)
+        </span>
+    </div>
+
+    <div #resize class="resize-div-wrap"
+        [ngStyle]="{
+            'height': (+thisEvent.end - +thisEvent.start) >= 2 ? '8px' : '5px',
+            'min-height': (+thisEvent.end - +thisEvent.start) >= 2 ? '8px' : '5px'
+        }"
+    >
+        <div class="resize-div"></div>
     </div>
 </div>
 
@@ -27,7 +46,7 @@
 [parent]="thisEvent?.children"
 [index]="i"
 [divList]="divList"
-[divWidth]="thisDiv.clientWidth - 90"
+[level]="this.level"
 ></app-event>
 
 <!-- 'width': (+myParent?.clientWidth - 80) + 'px' || '50%', -->
