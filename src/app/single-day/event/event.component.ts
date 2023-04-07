@@ -1,6 +1,5 @@
 import { Component, EventEmitter, Input , Output, ViewChild, ChangeDetectorRef} from '@angular/core';
 import * as nodes from "src/app/nodes";
-import { print } from '../single-day.component';
 
 @Component({
   selector: 'app-event',
@@ -22,11 +21,16 @@ export class EventComponent {
   constructor(private cdRef: ChangeDetectorRef){}
 
   ngOnInit() {
+    
     this.level += 1
     this.thisEvent = this.parent[this.index];
   }
 
   ngAfterViewChecked() {
+  }
+
+  getWindow(){
+    return window.innerWidth
   }
 
   handleDropEvent(event: any){

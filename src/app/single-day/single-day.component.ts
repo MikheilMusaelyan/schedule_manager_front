@@ -36,13 +36,11 @@ export class SingleDayComponent implements OnInit, AfterViewInit{
     nodes.newNode(nodes.childs, { start: 5, end: 6, children: []}) 
     nodes.newNode(nodes.childs, { start: 5, end: 6, children: []}) 
     nodes.newNode(nodes.childs, { start: 14, end: 16, children: []}) 
-  }
-
-  
-  
-
-  counter = 0
-  
+    nodes.newNode(nodes.childs, { start: 4, end: 17, children: []}) 
+    nodes.newNode(nodes.childs, { start: 5, end: 6, children: []}) 
+    nodes.newNode(nodes.childs, { start: 5, end: 6, children: []}) 
+    nodes.newNode(nodes.childs, { start: 14, end: 16, children: []}) 
+  }  
  
 
   ngAfterViewInit(): void  {
@@ -62,9 +60,9 @@ export class SingleDayComponent implements OnInit, AfterViewInit{
     this.main.nativeElement.style.width = `${width}px`
     this.main.nativeElement.style.height = `${height}px`
 
-    this.main.nativeElement.style.transition = 'all 400ms cubic-bezier(0.25, 0.04, 0, 0.99)'
-
     setTimeout(() => {
+      this.main.nativeElement.style.transition = 'all 400ms cubic-bezier(0.25, 0.04, 0, 0.99)'
+
       this.main.nativeElement.style.width = `100vw`
       this.main.nativeElement.style.height = `100svh`
       this.main.nativeElement.style.transform = `translate(0px, 0px)`;
@@ -91,11 +89,4 @@ export class SingleDayComponent implements OnInit, AfterViewInit{
   
 
 
-}
-export function print(events: any, depth: number): void {
-  for (let child of events) {
-    console.log(`${"      ".repeat(depth)}[${child.start}, ${child.end}, ${child?.id}]`);
-    print(child.children, depth+1);
-  }
-  
 }

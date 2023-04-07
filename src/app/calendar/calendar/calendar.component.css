@@ -27,9 +27,7 @@ table {
     font-size: 14px;
     color: #333;
 }
-tr{
-    -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none;
-}
+
 th, td {
     height: 80px !important;
     border: 1px solid #ddd;

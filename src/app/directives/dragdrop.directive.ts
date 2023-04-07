@@ -20,8 +20,8 @@ export class DragdropDirective{
   private initialObject: any;
   private resizeAt: any;
 
-  private mouseDownTimeOut: any;
-  private touchTimeOut: any;
+  private mouseDownTimeOut: any; // hold timeout on mobile, activating touch
+  private touchTimeOut: any; // timeout for zIndex animation
   private scrollThreshhold: number;
   private touched: boolean = false;
 
@@ -85,26 +85,38 @@ export class DragdropDirective{
     };
   
     if (isTouchEvent) {
-      this.mouseDownTimeOut = setTimeout(() => { 
-        navigator.vibrate(4000)
-        this.activateTouch(!this.touched)
-      }, 500);
-      document.addEventListener('touchend', this.clearTouch, { once: true });
+          if(!this.touched){
+            this.mouseDownTimeOut = setTimeout(() => { 
+              this.popOut(true)
+              navigator.vibrate(4000)
+              // activateEventListeners()
+              // here if I do touchend and not move a mouse, 
+              activateEventListeners()
+              document.removeEventListener('touchend', this.clearTouch)
+              clearTimeout(this.mouseDownTimeOut)
+            }, 300);
+            document.addEventListener('touchend', this.clearTouch, { once: true });
+          } 
+          else {
+            clearTimeout(this.mouseDownTimeOut)
+            this.mouseDownTimeOut = setTimeout(() => {
+              activateEventListeners()
+            }, 150);
+            document.addEventListener('touchend', this.clearTouch, { once: true })
+          }
       return 
     } 
-    
 
-    // activateEventListeners();
-
-    this.activateTouch
+    this.popOut(true)
+    activateEventListeners()
   }
 
-  activateTouch(bool: boolean) {
+  popOut(bool: boolean) { // 
     this.touched = bool;
     this.touched ? this.absoluteDiv.classList.add('touched') : this.absoluteDiv.classList.remove('touched')
     clearTimeout(this.touchTimeOut)
     if(this.touched) {
-      this.touchTimeOut = setTimeout(() => {
+      this.touchTimeOut = setTimeout(() => { // from touch to touch there has to be 200ms, or anim will fail.
         this.absoluteDiv.style.zIndex = 10000;
       }, 200);
       return
@@ -115,8 +127,7 @@ export class DragdropDirective{
   clearTouch = () => { 
     clearTimeout(this.mouseDownTimeOut);
     this.removeListeners()
-    this.activateTouch(false)
-    this.absoluteDiv.style.zIndex = 'auto'
+    this.popOut(false)
     this.changeMouseCursor('default');
   };
   
