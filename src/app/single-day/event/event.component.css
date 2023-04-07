@@ -14,18 +14,24 @@
     background-color: rgb(3, 155, 229);
     color: white;
     cursor: pointer;
+    transform-origin: top;
+  }
+
+  .absolute:hover {
+    background-color: rgb(5, 160, 238);
   }
   
 
   .resize-div-wrap{
-    height: 5px;
+    min-height: 8px;
+    height: 8px;
     width: 100%;
     position: relative;
   }
 
   .resize-div{
     position: absolute;
-    top: -1px;
+    top: 4px;
     left: 0;
     width: 100%;
     height: 100%;

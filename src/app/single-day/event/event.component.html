@@ -20,7 +20,7 @@
     >
     <div class="event-info"
         [ngStyle]="{
-            'padding': (+thisEvent.end - +thisEvent.start) >= 2 ? '2px 5px 3px 6px' : '1.5px 2px 0 6px',
+            'padding': (+thisEvent.end - +thisEvent.start) >= 2 ? '2px 5px 3px 6px' : '0.5px 2px 0 6px',
             'display': (+thisEvent.end - +thisEvent.start) >= 2 ? 'block' : 'flex'
         }"
     >
@@ -31,13 +31,10 @@
         </span>
     </div>
 
-    <div #resize class="resize-div-wrap"
-        [ngStyle]="{
-            'height': (+thisEvent.end - +thisEvent.start) >= 2 ? '8px' : '5px',
-            'min-height': (+thisEvent.end - +thisEvent.start) >= 2 ? '8px' : '5px'
-        }"
-    >
-        <div class="resize-div"></div>
+    <div #resize class="resize-div-wrap">
+        <div class="resize-div"
+        [ngStyle]="{'top': (+thisEvent.end - +thisEvent.start) >= 2 ? '4px' : '-1px'}"
+        ></div>
     </div>
 </div>
 

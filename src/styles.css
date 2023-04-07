@@ -5,10 +5,14 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 * {
     box-sizing: border-box;
 }
-.event-info span, tr{
-    -webkit-user-select: none; 
-    -moz-user-select: none; 
-    -ms-user-select: none; 
+.event-info span, tr, th, table, .time-row{
     user-select: none;
-    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+}
+.touched {
+    transition: 
+    box-shadow 300ms cubic-bezier(0.4, 0, 1, 0.22),
+    scale 300ms 100ms cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    box-shadow: rgba(100, 100, 111, 0.649) 0px 7px 29px 0px;
+    scale: 1.05;
 }

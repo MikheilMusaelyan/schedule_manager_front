@@ -31,8 +31,9 @@ export class AppComponent {
     return false;
   }
 
-  ngOnInit() {
-    
+  ngAfterViewInit() {
+
   }
+ 
 }
 

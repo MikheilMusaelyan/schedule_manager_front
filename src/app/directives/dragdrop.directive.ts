@@ -20,7 +20,10 @@ export class DragdropDirective{
   private initialObject: any;
   private resizeAt: any;
 
-  mouseDownTimeOut: any;
+  private mouseDownTimeOut: any;
+  private touchTimeOut: any;
+  private scrollThreshhold: number;
+  private touched: boolean = false;
 
   @Output() moveNodeEmitter: EventEmitter<nodes.Node> = new EventEmitter();
   @Output() deleteEmitter: EventEmitter<any> = new EventEmitter();
@@ -31,6 +34,9 @@ export class DragdropDirective{
   ) { }
   
   ngAfterViewInit() {
+
+    this.scrollThreshhold =  window.innerHeight / 5; //for autoscroll
+
     this.resizeDiv.addEventListener('mousedown', (event: any) => {
       this.handleMouseDown(event, true);
     });
@@ -46,15 +52,15 @@ export class DragdropDirective{
   }
 
   ngOnDestroy() {
-    this.removeListeners()
     this.clearTouch()
   }
+  
 
   @HostListener('touchstart', ['$event'])
   @HostListener('mousedown', ['$event'])
   handleMouseDown(event: any, element?: boolean) {
-    // event.preventDefault();
     event.stopPropagation();
+    event.preventDefault();
 
     const isTouchEvent = event.type.startsWith('touch');
     const clientY = isTouchEvent ? event.touches[0].clientY : event.clientY;
@@ -80,24 +86,42 @@ export class DragdropDirective{
   
     if (isTouchEvent) {
       this.mouseDownTimeOut = setTimeout(() => { 
-        activateEventListeners();
-
-        if (navigator.vibrate) {
-          navigator.vibrate(100)
-        };
-
+        navigator.vibrate(4000)
+        this.activateTouch(!this.touched)
       }, 500);
       document.addEventListener('touchend', this.clearTouch, { once: true });
-      return
-    }
+      return 
+    } 
+    
 
-    activateEventListeners();
+    // activateEventListeners();
+
+    this.activateTouch
   }
 
-  clearTouch = () => { clearTimeout( this.mouseDownTimeOut ) };
+  activateTouch(bool: boolean) {
+    this.touched = bool;
+    this.touched ? this.absoluteDiv.classList.add('touched') : this.absoluteDiv.classList.remove('touched')
+    clearTimeout(this.touchTimeOut)
+    if(this.touched) {
+      this.touchTimeOut = setTimeout(() => {
+        this.absoluteDiv.style.zIndex = 10000;
+      }, 200);
+      return
+    } 
+    this.absoluteDiv.style.zIndex = 'auto';
+  }
 
+  clearTouch = () => { 
+    clearTimeout(this.mouseDownTimeOut);
+    this.removeListeners()
+    this.activateTouch(false)
+    this.absoluteDiv.style.zIndex = 'auto'
+    this.changeMouseCursor('default');
+  };
   
   handleResizeMouseMove = (event: any) => {
+    this.autoScroll(event)
     const isTouchEvent = event.type.startsWith('touch');
     const clientY = isTouchEvent ? event.touches[0].clientY : event.clientY;
 
@@ -119,12 +143,29 @@ export class DragdropDirective{
     this.resizeEmitter.emit(this.initialObject.end < this.event.end);
     this.initialObject.end = this.event.end;
     
-    this.removeListeners()
-    this.changeMouseCursor('default');
+    this.clearTouch()
   }
   
+  autoScroll(e: any) {    
+    const isTouchEvent = e.type.startsWith('touch');
+    const clientY = isTouchEvent ? e.touches[0].clientY : e.clientY;
+    
+    const distanceFromBottom = window.innerHeight - clientY;
+    const distanceFromTop = clientY;
+    
+    if (distanceFromBottom <= this.scrollThreshhold) {
+      window.scrollBy(0, 30);
+    }
+    
+    if (distanceFromTop <= this.scrollThreshhold) {
+      window.scrollBy(0, -30);
+    }
+  }
 
   handleMouseMove = (event: any) => {
+
+    this.autoScroll(event)
+
     const isTouchEvent = event.type.startsWith('touch');
     const clientY = isTouchEvent ? event.touches[0].clientY : event.clientY;
 
@@ -159,12 +200,10 @@ export class DragdropDirective{
     ) {
       this.initialObject.start = this.event.start;
       this.initialObject.end = this.event.end;
-      console.log(this.event)
       this.moveNodeEmitter.emit(this.event)
     }
     
-    this.removeListeners()
-    this.changeMouseCursor('default');
+    this.clearTouch()
   }
 
   private changeMouseCursor(cursor: string) {
