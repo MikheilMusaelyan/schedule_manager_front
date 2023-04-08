@@ -147,7 +147,7 @@ export class DragdropDirective{
       { listItem: null, storedDistance: Infinity, index: 0 }
     )
 
-    this.event.end = this.resizeAt
+    this.event.end = this.resizeAt >= 95 ? 96 : this.resizeAt
   }
 
   handleResizeMouseUp = (event: any) => {
@@ -192,8 +192,8 @@ export class DragdropDirective{
 
           const eventLength = Math.max(this.event.end - this.event.start, 1);
           
-          if (this.droppedIn + eventLength >= 96) {
-            this.event.start = 95 - eventLength;
+          if (this.droppedIn + eventLength > 96) {
+            this.event.start = 96 - eventLength;
           } else {
             this.event.start = this.droppedIn;
           }
