@@ -147,7 +147,7 @@ export class DragdropDirective{
       { listItem: null, storedDistance: Infinity, index: 0 }
     )
 
-    this.event.end = this.resizeAt >= 95 ? 96 : this.resizeAt
+    this.event.end = this.resizeAt
   }
 
   handleResizeMouseUp = (event: any) => {

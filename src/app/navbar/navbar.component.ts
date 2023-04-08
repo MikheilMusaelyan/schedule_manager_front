@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { faUser } from '@fortawesome/free-regular-svg-icons'
 
 @Component({
   selector: 'app-navbar',
@@ -6,10 +7,13 @@ import { Component } from '@angular/core';
   styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent {
+  home = faUser
+
   links = [
-    { label: 'a', active: false },
-    { label: 'd', active: false },
-    { label: 'calendar', active: false },
-    { label: 'd', active: false },
+    { label: 'calendar', icon: this.home },
+    { label: 'singleday', icon: this.home },
+    { label: 'a', icon: this.home },
+    { label: 'b', icon: this.home },
   ];
+  
 }

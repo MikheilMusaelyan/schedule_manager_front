@@ -1,10 +1,12 @@
 <div class="side-navbar">
     <ul class="nav-links">
         <li *ngFor="let link of links">
-          <a [routerLink]="link.label" 
-          routerLinkActive="active" 
-          class="nav-links-a"
-        >
+          <a 
+            [routerLink]="link.label" 
+            routerLinkActive="active" 
+            class="nav-links-a"
+          >
+          <fa-icon class="icon" [icon]="link.icon"></fa-icon>
           </a>
         </li>
     </ul>

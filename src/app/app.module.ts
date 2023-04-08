@@ -21,7 +21,7 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { DragdropDirective } from './directives/dragdrop.directive';
 import { EventComponent } from './single-day/event/event.component';
 
-
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @NgModule({
   declarations: [
@@ -43,6 +43,7 @@ import { EventComponent } from './single-day/event/event.component';
     BrowserAnimationsModule,
     RouterModule,
     CalendarModule,
+    FontAwesomeModule
   ],
   providers: [],
   bootstrap: [AppComponent]
