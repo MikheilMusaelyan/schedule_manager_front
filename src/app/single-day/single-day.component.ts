@@ -14,7 +14,9 @@ export class SingleDayComponent implements OnInit, AfterViewInit{
   left: any
   top: any
   height: any
-  nodes = nodes.childs;
+  nodes: any[]
+
+  myDivList: any;
 
   rows: any[] = []
 
@@ -39,11 +41,17 @@ export class SingleDayComponent implements OnInit, AfterViewInit{
 
 
   ngOnInit() {
-    
-  }  
+    setTimeout(() => {
+      this.nodes = nodes.childs;
+    }, 0);
+  }   
  
+  ngAfterViewChecked() {
+    
+  }
 
   ngAfterViewInit(): void  {
+    
     const left = Number(this.route.snapshot.queryParamMap.get('left'))
     const top = Number(this.route.snapshot.queryParamMap.get('top'))
     const width = Number(this.route.snapshot.queryParamMap.get('width'))
