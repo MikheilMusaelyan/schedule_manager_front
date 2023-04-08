@@ -1,0 +1,36 @@
+main{
+    display: flex;
+    justify-content: center;
+    position: relative;
+    height: 100px;
+}
+.search-form {
+    position: fixed;
+    display: flex;
+    width: 800px;
+}
+  
+  .search-input {
+    width: 100%;
+    display: block;
+    padding: 18px;
+    border: none !important;
+    outline: none !important;
+    border-radius: 25px;
+    background-color: white;
+    color: #333;
+    font-size: var(--fsM);
+  }
+  
+  .search-button {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 8px 12px;
+    border: none;
+    border-radius: 20px;
+    background-color: #333;
+    color: #fff;
+    cursor: pointer;
+  }
+  

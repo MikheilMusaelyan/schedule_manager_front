@@ -2,10 +2,22 @@
 
 :root{
     --rootColor: rgb(83, 3, 255);
-    --lGrey: #f2f2f2;
+    --lGrey: #f4f4f4;
+    --grey: #717070;
+    --fsXXS: 9px;
+    --fsXS: 11px;
+    --fsS: 13px;
+    --fsM: 16px;
+    --fsL: 19px;
+    --fsH: 40px;
+    --mainBackground: #f4f4f4;
 }
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+body { 
+    width: 100%;
+    margin: 0; 
+    font-family: Arial, Helvetica, sans-serif; 
+    background: var(--mainBackground);
+}
 * {
     box-sizing: border-box !important;
 }
@@ -20,4 +32,10 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     box-shadow: rgba(100, 106, 111, 0.649) 0px 10px 29px 0px;
     background-color: rgba(5, 160, 238, 0.696) !important;
     font-weight: 500;
+}
+
+.header{
+    display: block;
+    font-size: var(--fsH);
+    padding-bottom: 20px !important;
 }

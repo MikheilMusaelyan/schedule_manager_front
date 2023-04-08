@@ -5,12 +5,14 @@ import { MainComponent } from './main/main.component';
 import { SingleDayComponent } from './single-day/single-day.component';
 
 const routes: Routes = [
-  {path: '', component: MainComponent,
-    children: [
-      { path: 'calendar', component: CalendarComponent },
-      { path: 'singleday', component: SingleDayComponent }
-    ]
+  {
+    path: '', component: MainComponent,
+    // children: [
+    //   { path: 'calendar', component: CalendarComponent },
+    //   // { path: ''}
+    // ],
   },
+  { path: 'singleday', component: SingleDayComponent }
 ];
 
 @NgModule({

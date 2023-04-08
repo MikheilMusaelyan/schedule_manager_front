@@ -1,3 +1,10 @@
 main{
     display: flex;
+    width: 100%;
+}
+section{
+    width: 100%;
+}
+.search-router-wrap{
+    padding: 30px;
 }

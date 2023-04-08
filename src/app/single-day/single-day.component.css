@@ -24,7 +24,7 @@ main{
     justify-content: center;
 }
 .time-row span{
-    font-size: 12px;
+    font-size: var(--fsS);
     font-weight: 500;
     color: #717171;
 }

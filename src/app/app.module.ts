@@ -22,6 +22,8 @@ import { DragdropDirective } from './directives/dragdrop.directive';
 import { EventComponent } from './single-day/event/event.component';
 
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { YearComponent } from './year/year.component';
+import { SearchbarComponent } from './searchbar/searchbar.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +33,9 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     MainComponent,
     NavbarComponent,
     DragdropDirective,
-    EventComponent
+    EventComponent,
+    YearComponent,
+    SearchbarComponent
   ],
   imports: [
     BrowserModule,

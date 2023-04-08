@@ -12,11 +12,9 @@ body {
 .container {
     max-width: 1800px;
     margin: 0;
-    padding: 20px;
     background-color: white;
-    border-radius: 10px;
-    overflow-x: auto;
     border-radius: 20px;
+    padding: 25px;
 }
 
 
@@ -24,12 +22,14 @@ table {
     width: 100%;
     border-collapse: collapse;
     table-layout: fixed;
-    font-size: 14px;
+    font-size: var(--fsS);
     color: #333;
+    border-radius: 20px;
 }
 
+
 th, td {
-    height: 80px !important;
+    height: 70px !important;
     border: 1px solid #ddd;
 }
 th{
@@ -75,7 +75,7 @@ td {
 
 @media screen and (max-width: 800px) {
     table {
-        font-size: 12px;
+        font-size: var(--fsXS);
     }
     th, td {
         height: 50px !important;
@@ -84,7 +84,7 @@ td {
         padding: 14px;
     }
     .day-span{
-        font-size: 11px;
+        font-size: var(--fsXS);
         top: 5px;
         left: 5px;
     }
@@ -98,7 +98,7 @@ td {
         height: 30px !important;
     }
     .day-span{
-        font-size: 9px;
+        font-size: var(--fsXXS);
         top: 3px;
         left: 3px;
     }

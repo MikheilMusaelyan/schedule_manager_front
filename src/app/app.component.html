@@ -1,4 +1,14 @@
 <main>
     <app-navbar></app-navbar>
-    <router-outlet></router-outlet>
+
+    <section class="search-router-wrap">
+        <section>
+            <app-searchbar></app-searchbar>
+        </section>
+
+        <section class="outlet">
+            <router-outlet></router-outlet>
+        </section>
+    </section>
+    
 </main>
