@@ -39,7 +39,7 @@ export class SingleDayComponent implements OnInit, AfterViewInit{
     nodes.newNode(nodes.childs, { start: 4, end: 17, children: []}) 
     nodes.newNode(nodes.childs, { start: 5, end: 6, children: []}) 
     nodes.newNode(nodes.childs, { start: 5, end: 6, children: []}) 
-    nodes.newNode(nodes.childs, { start: 14, end: 16, children: []}) 
+    // nodes.newNode(nodes.childs, { start: 14, end: 16, children: []}) 
   }  
  
 
@@ -59,16 +59,18 @@ export class SingleDayComponent implements OnInit, AfterViewInit{
     this.main.nativeElement.style.transform = `translate(${left}px, ${top}px)`
     this.main.nativeElement.style.width = `${width}px`
     this.main.nativeElement.style.height = `${height}px`
-
+    this.main.nativeElement.style.overflow = 'hidden'    
+    
     setTimeout(() => {
-      this.main.nativeElement.style.transition = 'all 400ms cubic-bezier(0.25, 0.04, 0, 0.99)'
+      this.main.nativeElement.style.transition = '400ms cubic-bezier(0.25, 0.04, 0, 0.99)';
 
       this.main.nativeElement.style.width = `100vw`
-      this.main.nativeElement.style.height = `100svh`
+      this.main.nativeElement.style.height = `100%`
       this.main.nativeElement.style.transform = `translate(0px, 0px)`;
       setTimeout(() => {
-        document.body.style.overflow = 'auto'
-        this.main.nativeElement.style.transition = ''
+        this.main.nativeElement.style.overflow = 'initial'
+        document.body.style.overflow = 'initial'
+        this.main.nativeElement.style.transition = 'initial'
       }, 400);
     }, 0);
   }

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input , Output, ViewChild, ChangeDetectorRef} from '@angular/core';
+import { Component, Input, ViewChild} from '@angular/core';
 import * as nodes from "src/app/nodes";
 
 @Component({
@@ -14,56 +14,24 @@ export class EventComponent {
   
   @ViewChild('thisDiv', {static: false}) thisDiv: any;
 
-  autoZindex: boolean = true;
   thisEvent: any;
-  eventWidth: number;
-
-  constructor(private cdRef: ChangeDetectorRef){}
+  WINDOW: number;
 
   ngOnInit() {
-    
+    this.WINDOW = window.innerWidth
+    window.addEventListener('resize', () => {
+      this.WINDOW = window.innerWidth
+    })
     this.level += 1
     this.thisEvent = this.parent[this.index];
   }
 
-  ngAfterViewChecked() {
-  }
+  deleteEvent(){
 
-  getWindow(){
-    return window.innerWidth
-  }
-
-  handleDropEvent(event: any){
-    
-  }
-
- 
-
-  deleteEvent() {
-    if(!this.thisEvent.id){
-      return
-    }
-    let nodeQueue: nodes.Node[] = []
-    if(this.thisEvent.children.length > 0){ 
-      let childrenCopy = this.thisEvent.children.slice()
-      if(this.parent[this.index+1]){   
-        this.parent.splice(this.index, 1)
-        nodes.putInQueue(childrenCopy, nodeQueue)
-        nodeQueue.forEach((e: nodes.Node) => {
-          nodes.newNode(this.parent, e)
-        })
-        return   
-      }
-      this.parent.splice(this.index, 1, ...childrenCopy)
-      return
-    }
-    this.parent.splice(this.index, 1)
   }
 
   moveEvent() {
-    this.deleteEvent()
-    this.thisEvent.children.splice(0)
-    nodes.newNode(nodes.childs, this.thisEvent)
+    nodes.moveEvent(this.thisEvent, this.parent, this.index)
   }
 
   resizeEvent(event: any) {

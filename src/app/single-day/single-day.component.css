@@ -5,11 +5,10 @@
     background-color: rebeccapurple;
     width: 0;
     height: 0;
-    overflow-x: auto;
 }
 
 .time-row{
-    height: 20px;
+    height: 30px;
     margin-bottom: 0px;
     border-bottom: 1px solid rgb(216, 216, 216);
 }

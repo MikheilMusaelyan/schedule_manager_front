@@ -1,21 +1,18 @@
 <div  
-    #thisDiv
-    
     class="absolute"
     appDragdrop 
     (deleteEmitter)="deleteEvent()"
     (moveNodeEmitter)="moveEvent()"
     (resizeEmitter)="resizeEvent($event)"
-    (droppedEvent)="handleDropEvent($event)"
     [divList]=divList
     [event]="thisEvent"
     [resizeDiv]="resize"
     
     [ngStyle]="{
-        'width': 300 > (getWindow() - (level * 150)) ? '300px' : getWindow() - (level * 150) + 'px',
+        'width': 300 > (WINDOW  - (level * 150)) ? '300px' : WINDOW - (level * 150) + 'px',
         'left': level * 150 + 'px',
-        'height': (20 * (+thisEvent.end - +thisEvent.start)) - 1 + 'px',
-        'top': (+divList.offsetTop) + (+thisEvent.start * 20) + 'px',
+        'height': (30 * (+thisEvent.end - +thisEvent.start)) - 1 + 'px',
+        'top': (+divList.offsetTop) + (+thisEvent.start * 30) + 'px',
     }"
     
     >
@@ -46,5 +43,3 @@
 [divList]="divList"
 [level]="this.level"
 ></app-event>
-
-<!-- 'width': (+myParent?.clientWidth - 80) + 'px' || '50%', -->

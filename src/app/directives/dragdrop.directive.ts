@@ -158,6 +158,7 @@ export class DragdropDirective{
   }
   
   autoScroll(e: any) {    
+    
     const isTouchEvent = e.type.startsWith('touch');
     const clientY = isTouchEvent ? e.touches[0].clientY : e.clientY;
     

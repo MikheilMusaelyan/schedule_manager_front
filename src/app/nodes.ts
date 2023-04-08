@@ -131,6 +131,77 @@ export function putInQueue(toPush: Node[], queue: Node[]) {
     }
 }
 
+
+
+export function deleteEvent(thisEvent: Node, parent: Node[], index: number) {
+  if(!thisEvent.id){
+    return
+  }
+  let nodeQueue: Node[] = []
+  if(thisEvent.children.length > 0){ 
+    let childrenCopy = thisEvent.children.slice()
+    if(parent[index+1]){   
+      parent.splice(index, 1)
+      putInQueue(childrenCopy, nodeQueue)
+      nodeQueue.forEach((e: Node) => {
+        newNode(parent, e)
+      })
+      return   
+    }
+    parent.splice(index, 1, ...childrenCopy)
+    return
+  }
+  parent.splice(index, 1)
+}
+
+export function moveEvent(thisEvent: Node, parent: Node[], index: number) {
+  deleteEvent(thisEvent, parent, index)
+  thisEvent.children.splice(0)
+  newNode(childs, thisEvent)
+}
+
+// resizeEvent(event: any) {
+//   let queue = []
+//   if(!event) {
+//     for(let i = 0; i < this.thisEvent.children.length; i++) {
+//       if(this.thisEvent.end <= this.thisEvent.children[i].start) {
+//         const childrenCopy = this.thisEvent.children.splice(i)
+//         if(this.parent[this.index+1]){
+//           nodes.putInQueue(childrenCopy, queue)
+//           queue.forEach((e: nodes.Node) => {
+//             nodes.newNode(this.parent, e)
+//           })
+//           return
+//         }
+//         this.parent.push(...childrenCopy)
+//         return
+//       } else if(this.thisEvent.end < this.thisEvent.children[i].end){
+//         console.log('this event is partially covering a child')
+//         nodes.removeChildren(this.thisEvent.end, this.thisEvent.children[i], queue)
+//         console.log(queue)
+//         queue.forEach((e: nodes.Node) => {
+//           nodes.newNode(this.parent, e)
+//         })
+//       }
+//     }
+//     return
+//   };
+
+//   for(let i = this.index + 1; i < this.parent.length; i++){
+//     if(this.thisEvent.end > this.parent[i].start) {
+//       const newChildren = this.parent.splice(i, 1)
+//       nodes.putInQueue(newChildren, queue);
+//       queue.forEach((e: nodes.Node) => {
+//         nodes.newNode(this.parent, e)
+//       })
+//       queue = []
+//       i--
+//     } else {
+//       return
+//     }
+//   } 
+// }
+
 // export function deleteNode(id: number | undefined, array: any[]): any {
 //   if(!id){
 //     return
