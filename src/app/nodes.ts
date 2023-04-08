@@ -200,6 +200,12 @@ export function resizeEvent(e: any, thisEvent: Node, parent: Node[], index: numb
   } 
 }
 
+
+newNode(childs, { start: 2, end: 20, children: []}) 
+newNode(childs, { start: 3, end: 14, children: []}) 
+newNode(childs, { start: 5, end: 10, children: []}) 
+newNode(childs, { start: 8, end: 10, children: []}) 
+
 // export function deleteNode(id: number | undefined, array: any[]): any {
 //   if(!id){
 //     return

@@ -22,6 +22,7 @@ import { DragdropDirective } from './directives/dragdrop.directive';
 import { EventComponent } from './single-day/event/event.component';
 
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -41,7 +42,7 @@ import { EventComponent } from './single-day/event/event.component';
     CommonModule,
     BrowserAnimationsModule,
     RouterModule,
-    CalendarModule
+    CalendarModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -7,11 +7,8 @@ import { SingleDayComponent } from './single-day/single-day.component';
 const routes: Routes = [
   {path: '', component: MainComponent,
     children: [
-      {path: 'calendar', component: CalendarComponent,
-        children: [
-          {path: 'singleday', component: SingleDayComponent}
-        ]
-      },
+      { path: 'calendar', component: CalendarComponent },
+      { path: 'singleday', component: SingleDayComponent }
     ]
   },
 ];

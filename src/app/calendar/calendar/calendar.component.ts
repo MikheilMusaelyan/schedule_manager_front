@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { MatPaginator } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-calendar',
   templateUrl: './calendar.component.html',
   styleUrls: ['./calendar.component.css']
 })
+
 export class CalendarComponent {
   currentYear: number = new Date().getFullYear();
   currentMonth: number = new Date().getMonth();
@@ -47,8 +47,7 @@ export class CalendarComponent {
     const navigationExtras: any = {
       queryParams: { left: left, top: top, width: width, height: height }
     };
-    this.router.navigate(['calendar/singleday'], navigationExtras);
+    this.router.navigate(['singleday'], navigationExtras);
   }
-
 
 }

@@ -188,11 +188,17 @@ export class DragdropDirective{
     this.listItems.reduce((closest: any, listItem: any, i: number) => {
         const distance = Math.abs((listItem.getBoundingClientRect().top) - newAbsoluteTop);
         if (distance < closest.storedDistance) {
-          this.droppedIn = i;
+          this.droppedIn = Math.min(96, i);
 
-          const eventLength = this.event.end - this.event.start
-          this.event.start = this.droppedIn;
-          this.event.end = this.droppedIn + eventLength
+          const eventLength = Math.max(this.event.end - this.event.start, 1);
+          
+          if (this.droppedIn + eventLength >= 96) {
+            this.event.start = 95 - eventLength;
+          } else {
+            this.event.start = this.droppedIn;
+          }
+          
+          this.event.end = this.event.start + eventLength;
 
           return { listItem, storedDistance: distance, index: i };
         }

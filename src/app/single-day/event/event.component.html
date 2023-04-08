@@ -10,9 +10,9 @@
     
     [ngStyle]="{
         'width': 300 > (WINDOW  - (level * 150)) ? '300px' : WINDOW - (level * 150) + 'px',
-        'left': level * 150 + 'px',
-        'height': (30 * (+thisEvent.end - +thisEvent.start)) - 1 + 'px',
-        'top': (+divList.offsetTop) + (+thisEvent.start * 30) + 'px',
+        'left': (level * 150) + 60 + 'px',
+        'height': (40 * (+thisEvent.end - +thisEvent.start)) - 1 + 'px',
+        'top': (+divList.offsetTop) + (+thisEvent.start * 40) + 'px',
     }"
     
     >
@@ -22,8 +22,10 @@
             'display': (+thisEvent.end - +thisEvent.start) >= 2 ? 'block' : 'flex'
         }"
     >
-        <span class="event-time"
-        >{{thisEvent.start}} - {{thisEvent.end}}</span>
+        <span class="event-time">
+            {{getEventTime().start.hours}}:{{getEventTime().start.minutes == 0 ? '00' : getEventTime().start.minutes }}{{getEventTime().start.meridiem}} - 
+            {{getEventTime().end.hours}}:{{getEventTime().end.minutes == 0 ? '00' : getEventTime().end.minutes }}{{getEventTime().end.meridiem}}
+        </span>
         <span class="event-name">
             (event name)
         </span>

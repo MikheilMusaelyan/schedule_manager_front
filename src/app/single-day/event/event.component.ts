@@ -19,61 +19,52 @@ export class EventComponent {
 
   ngOnInit() {
     this.WINDOW = window.innerWidth
-    window.addEventListener('resize', () => {
-      this.WINDOW = window.innerWidth
-    })
+    window.addEventListener('resize', () => { this.WINDOW = window.innerWidth })
     this.level += 1
     this.thisEvent = this.parent[this.index];
   }
 
-  deleteEvent(){
-
-  }
+  deleteEvent(){ }
 
   moveEvent() {
     nodes.moveEvent(this.thisEvent, this.parent, this.index)
   }
 
   resizeEvent(event: any) {
-    nodes.resizeEvent(event, this.thisEvent, this.parent, this.index )
-    let queue = []
-    if(!event) {
-      for(let i = 0; i < this.thisEvent.children.length; i++) {
-        if(this.thisEvent.end <= this.thisEvent.children[i].start) {
-          const childrenCopy = this.thisEvent.children.splice(i)
-          if(this.parent[this.index+1]){
-            nodes.putInQueue(childrenCopy, queue)
-            queue.forEach((e: nodes.Node) => {
-              nodes.newNode(this.parent, e)
-            })
-            return
-          }
-          this.parent.push(...childrenCopy)
-          return
-        } else if(this.thisEvent.end < this.thisEvent.children[i].end){
-          console.log('this event is partially covering a child')
-          nodes.removeChildren(this.thisEvent.end, this.thisEvent.children[i], queue)
-          console.log(queue)
-          queue.forEach((e: nodes.Node) => {
-            nodes.newNode(this.parent, e)
-          })
-        }
+    nodes.resizeEvent(event, this.thisEvent, this.parent, this.index)
+  }
+
+  getEventTime() {
+    let timeData: any = {
+      start: {
+        hours: '00',
+        minutes: '00',
+        meridiem: 'AM'
+      },
+      end: {
+        hours: '00',
+        minutes: '00',
+        meridiem: 'AM'
       }
-      return
     };
 
-    for(let i = this.index + 1; i < this.parent.length; i++){
-      if(this.thisEvent.end > this.parent[i].start) {
-        const newChildren = this.parent.splice(i, 1)
-        nodes.putInQueue(newChildren, queue);
-        queue.forEach((e: nodes.Node) => {
-          nodes.newNode(this.parent, e)
-        })
-        queue = []
-        i--
-      } else {
-        return
-      }
-    } 
+    timeData.start.hours = this.getHours(this.thisEvent.start).hour
+    timeData.start.meridiem = this.getHours(this.thisEvent.start).meridiem
+    timeData.start.minutes = (this.thisEvent.start % 4) * 15;
+    
+    timeData.end.hours = this.getHours(this.thisEvent.end).hour
+    timeData.end.meridiem = this.getHours(this.thisEvent.end).meridiem
+    timeData.end.minutes = (this.thisEvent.end % 4) * 15;
+    return timeData
+  }
+
+  getHours(index: number) {
+    const meridiem = Math.floor(index / 4) > 11 ? ' PM': ' AM';
+    const hour = Math.floor(index / 4) % 12 == 0 ? 12 : Math.floor(index / 4) % 12;
+    return {hour: hour, meridiem: meridiem}
+  }
+
+  getMinutes(index: number) {
+    return (index % 4) * 15;
   }
 }

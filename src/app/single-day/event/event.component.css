@@ -14,7 +14,7 @@
     background-color: rgb(3, 155, 229);
     color: white;
     cursor: pointer;
-    transform-origin: top;
+    transform-origin: top left;
     transition: background-color 200ms;
     overflow: hidden;
   }

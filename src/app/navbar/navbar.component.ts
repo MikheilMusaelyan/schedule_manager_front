@@ -12,6 +12,4 @@ export class NavbarComponent {
     { label: 'calendar', active: false },
     { label: 'd', active: false },
   ];
-
-  
 }

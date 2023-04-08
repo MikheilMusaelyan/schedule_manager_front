@@ -12,9 +12,8 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 .touched {
     transition: 
     background-color 200ms,
-    box-shadow 300ms cubic-bezier(0.4, 0, 1, 0.22),
-    scale 300ms 100ms cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
+    box-shadow 300ms 100ms cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
     box-shadow: rgba(100, 106, 111, 0.649) 0px 10px 29px 0px;
-    scale: 1.05;
     background-color: rgba(5, 160, 238, 0.696) !important;
+    font-weight: 500;
 }

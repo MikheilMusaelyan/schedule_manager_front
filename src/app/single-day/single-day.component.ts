@@ -16,30 +16,30 @@ export class SingleDayComponent implements OnInit, AfterViewInit{
   height: any
   nodes = nodes.childs;
 
-  rows: any[] = [1,2,3,4,5,6,7,8,9,0,1,2,3,4,5,5,6,7,8,1,2,3,4,5,6,7,8,9,0,1,2,3,4,5,5,6,7,8,1,2,3,4,5,6,7,8,9,0,1,2,3,4,5,5,6,7,8,1,2,3,4,5,6,7,8,9,0,1,2,3,4,5,5,6,7,8,1,2,3,4,5,6,7,8,9,0,1,2,3,4,5,5,6,7,8,1,2,3,4,5,6,7,8,9,0,1,2,3,4,5,5,6,7,8,1,2,3,4,5,6,7,8,9,0,1,2,3,4,5,5,6,7,8,1,2,3,4,5,6,7,8,9,0,1,2,3,4,5,5,6,7,8,1,2,3,4,5,6,7,8,9,0,1,2,3,4,5,5,6,7,8,]
+  rows: any[] = []
 
   constructor(
     private route: ActivatedRoute,
-    private router: Router
   ) {
+    for (let i = 0; i < 24; i++) {
+      const hour = String(i % 12 == 0 ? 12 : i % 12);
+      const meridiem = i < 12 ? ' AM' : ' PM'
+      for (let j = 0; j < 4; j++) {
+        const minute = (j * 15) % 60 == 0 ? '00' : String(j * 15)
+        const object = {
+          hour: +hour,
+          minute: +minute,
+          meridiem: meridiem,
+          string: hour + meridiem
+        } 
+        this.rows.push(object)
+      }
+    }
   }
 
 
   ngOnInit() {
-    nodes.newNode(nodes.childs, { start: 2, end: 20, children: []}) 
-    nodes.newNode(nodes.childs, { start: 3, end: 14, children: []}) 
-    nodes.newNode(nodes.childs, { start: 5, end: 10, children: []}) 
-    nodes.newNode(nodes.childs, { start: 8, end: 10, children: []}) 
-    nodes.newNode(nodes.childs, { start: 15, end: 21, children: []}) 
-    nodes.newNode(nodes.childs, { start: 7, end: 12, children: []}) 
-    nodes.newNode(nodes.childs, { start: 4, end: 17, children: []}) 
-    nodes.newNode(nodes.childs, { start: 5, end: 6, children: []}) 
-    nodes.newNode(nodes.childs, { start: 5, end: 6, children: []}) 
-    nodes.newNode(nodes.childs, { start: 14, end: 16, children: []}) 
-    nodes.newNode(nodes.childs, { start: 4, end: 17, children: []}) 
-    nodes.newNode(nodes.childs, { start: 5, end: 6, children: []}) 
-    nodes.newNode(nodes.childs, { start: 5, end: 6, children: []}) 
-    // nodes.newNode(nodes.childs, { start: 14, end: 16, children: []}) 
+    
   }  
  
 
@@ -59,18 +59,19 @@ export class SingleDayComponent implements OnInit, AfterViewInit{
     this.main.nativeElement.style.transform = `translate(${left}px, ${top}px)`
     this.main.nativeElement.style.width = `${width}px`
     this.main.nativeElement.style.height = `${height}px`
-    this.main.nativeElement.style.overflow = 'hidden'    
+    this.main.nativeElement.style.overflow = 'hidden'
     
     setTimeout(() => {
-      this.main.nativeElement.style.transition = '400ms cubic-bezier(0.25, 0.04, 0, 0.99)';
+      this.main.nativeElement.style.transition = '500ms cubic-bezier(0.3, .4, 0, 1)';
 
       this.main.nativeElement.style.width = `100vw`
-      this.main.nativeElement.style.height = `100%`
+      this.main.nativeElement.style.height = `100svh`
       this.main.nativeElement.style.transform = `translate(0px, 0px)`;
       setTimeout(() => {
         this.main.nativeElement.style.overflow = 'initial'
         document.body.style.overflow = 'initial'
         this.main.nativeElement.style.transition = 'initial'
+        this.main.nativeElement.style.height = '100%'
       }, 400);
     }, 0);
   }
@@ -88,7 +89,5 @@ export class SingleDayComponent implements OnInit, AfterViewInit{
   ngOnDestroy() {
     
   }
-  
-
 
 }
