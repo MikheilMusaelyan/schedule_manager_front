@@ -35,6 +35,7 @@ export class EventComponent {
   }
 
   resizeEvent(event: any) {
+    nodes.resizeEvent(event, this.thisEvent, this.parent, this.index )
     let queue = []
     if(!event) {
       for(let i = 0; i < this.thisEvent.children.length; i++) {
