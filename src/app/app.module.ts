@@ -24,6 +24,7 @@ import { EventComponent } from './single-day/event/event.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { YearComponent } from './year/year.component';
 import { SearchbarComponent } from './searchbar/searchbar.component';
+import { CurrentTimeComponent } from './current-time/current-time.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import { SearchbarComponent } from './searchbar/searchbar.component';
     DragdropDirective,
     EventComponent,
     YearComponent,
-    SearchbarComponent
+    SearchbarComponent,
+    CurrentTimeComponent
   ],
   imports: [
     BrowserModule,

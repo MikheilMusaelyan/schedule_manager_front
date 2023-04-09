@@ -10,10 +10,16 @@ main{
     width: 100%;
 }
 .r-side{
-    padding-left: 20px;
+    padding-left: 40px;
     width: 30%;
 }
 
 .calendar-wrap{
     width: 70%;
+}
+.r-side section:last-child{
+    padding-bottom: 0;
+}
+.r-side section{
+    padding-bottom: 30px;
 }

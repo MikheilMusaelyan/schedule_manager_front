@@ -1,9 +1,16 @@
 <main>
     <div class="container">
-        <table>
-            <tbody>
-                <!-- <td *ngFor="let month of months"></td> -->
-            </tbody>
-        </table>
+      <table>
+        <tbody>
+          <tr *ngFor="let row of months">
+            <td *ngFor="let column of row" class="cell">
+                <span class="cell-span">{{column}}</span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
-</main>
+  </main>
+  
+  
+  

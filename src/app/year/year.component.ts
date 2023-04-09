@@ -15,16 +15,24 @@ export class YearComponent {
   minute = this.date.getMinutes();
   second = this.date.getSeconds(); 
   
-  monthNames: string[] = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+  months: any[] = [
+    ['Jan', 'Feb', 'Mar'], 
+    ['Apr', 'May', 'Jun'], 
+    ['Jul', 'Aug', 'Sept'], 
+    ['Oct', 'Nov', 'Dec']
+  ];
 
   ngOnInit() {
-    setInterval(() => {
-      this.date = new Date();
-    }, 1000); // 
     console.log(this.year, this.month, this.day, this.hours, this.minute, this.second)
   }
 
   ngOnDestroy() {
     
   }
+
+
+  constructor() { }
+
+
+ 
 }

@@ -6,12 +6,13 @@ main{
 }
 .search-form {
     width: 800px;
+    position: relative;
 }
   
   .search-input {
     width: 100%;
     display: block;
-    padding: 18px;
+    padding: 18px 18px 18px 44px;
     border: none !important;
     outline: none !important;
     border-radius: 25px;
@@ -31,4 +32,10 @@ main{
     color: #fff;
     cursor: pointer;
   }
-  
+  .search-icon{
+    position: absolute;
+    color: var(--rootColor);
+    left: 18px;
+    top: 0;
+    transform: translateY(100%);
+  }

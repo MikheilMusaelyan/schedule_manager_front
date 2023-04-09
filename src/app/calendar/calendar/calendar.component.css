@@ -15,6 +15,7 @@ body {
     background-color: white;
     border-radius: 20px;
     padding: 25px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 
@@ -56,7 +57,6 @@ th{
     background-color:var(--lGrey);
     color: #666;
     border: 1px solid #e7e7e7;
-    font-weight: normal;
 }
 .day-span {
     pointer-events: none;

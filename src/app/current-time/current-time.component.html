@@ -1,0 +1,22 @@
+<div class="card">
+    <div class="card-header">Current Time</div>
+
+    <div class="card-body">
+      <div class="time">{{ currentTime | date:'h:mm a' }}</div>
+      
+      <div class="timezone">
+            <button class="select-timezone" (click)="expandTimeZones()">
+                Timezone: {{selectedTimezone}}
+            </button>
+
+            <div class="timezone-wrap" [@wrapper]="wrapperState">
+                <div class="timezone-option" *ngFor="let timezone of timezones"
+                (click)="updateTimezone(timezone.value)">
+                    <span class="timezone-span"><strong>{{timezone.value}}</strong> {{timezone.label}} </span>
+                </div>
+            </div>
+        </div>
+
+    </div>
+  </div>
+  
