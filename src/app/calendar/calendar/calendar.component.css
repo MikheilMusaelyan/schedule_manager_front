@@ -28,14 +28,34 @@ table {
 }
 
 
+tbody tr:last-child td{
+    border-bottom: none;
+}
+thead tr th{
+  border-top: none;
+}
+tr td:first-child, tr th:first-child{
+    border-left: none;
+}
+tr td:last-child, tr th:last-child{
+    border-right: none;
+}
+thead tr th:first-child{
+    border-radius: 13px 0 0 0;
+}
+thead tr th:last-child{
+    border-radius: 0 13px 0 0;
+}
+
 th, td {
     height: 70px !important;
-    border: 1px solid #ddd;
+    border: 1px solid #ededed;
 }
 th{
     text-align: center;
-    background-color: #eee;
+    background-color:var(--lGrey);
     color: #666;
+    border: 1px solid #e7e7e7;
     font-weight: normal;
 }
 .day-span {

@@ -1,7 +1,19 @@
 main{
     background-color: var(--mainBackground);
     width: 100%;
+    display: flex;
+    justify-content: space-between;
 }
-section{
+
+.c-y-t{
+    display: flex;
     width: 100%;
+}
+.r-side{
+    padding-left: 20px;
+    width: 30%;
+}
+
+.calendar-wrap{
+    width: 70%;
 }

@@ -2,11 +2,9 @@ main{
     display: flex;
     justify-content: center;
     position: relative;
-    height: 100px;
+    padding-bottom: 60px;
 }
 .search-form {
-    position: fixed;
-    display: flex;
     width: 800px;
 }
   

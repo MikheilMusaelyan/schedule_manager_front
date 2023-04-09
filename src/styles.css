@@ -10,7 +10,7 @@
     --fsM: 16px;
     --fsL: 19px;
     --fsH: 40px;
-    --mainBackground: #f4f4f4;
+    --mainBackground: #f4f4f4; /* #f3f9ff; */
 }
 body { 
     width: 100%;
