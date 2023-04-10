@@ -1,16 +1,22 @@
 /* You can add global styles to this file, and also import other style files */
 
 :root{
-    --rootColor: rgb(83, 3, 255);
-    --lGrey: #f4f4f4;
-    --grey: #717070;
     --fsXXS: 9px;
     --fsXS: 11px;
     --fsS: 13px;
     --fsM: 16px;
     --fsL: 19px;
     --fsH: 40px;
+    /* colors */
     --mainBackground: #f4f4f4; /* #f3f9ff; */
+    --rootColor: rgb(83, 3, 255);
+    --hoverrootColor: rgb(77, 0, 243);
+    --lGrey: #f4f4f4;
+    --hoverlGrey: rgb(229, 229, 229);
+    --grey: #717070;
+    --orange: rgb(255, 187, 0);
+    --grey: #757575;
+    --bxs: 0 4px 8px rgba(0, 0, 0, 0.1)
 }
 body { 
     width: 100%;

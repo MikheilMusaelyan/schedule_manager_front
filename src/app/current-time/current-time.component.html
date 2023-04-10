@@ -6,10 +6,13 @@
       
       <div class="timezone">
             <button class="select-timezone" (click)="expandTimeZones()">
-                Timezone: {{selectedTimezone}}
+                <span>
+                    <fa-icon class="clock-icon" [icon]="clockIcon"></fa-icon>
+                    Timezone: {{selectedTimezone}}
+                </span>
             </button>
 
-            <div class="timezone-wrap" [@wrapper]="wrapperState">
+            <div class="timezone-wrap" [@wrapper]="wrapperState" *ngIf="expanded">
                 <div class="timezone-option" *ngFor="let timezone of timezones"
                 (click)="updateTimezone(timezone.value)">
                     <span class="timezone-span"><strong>{{timezone.value}}</strong> {{timezone.label}} </span>

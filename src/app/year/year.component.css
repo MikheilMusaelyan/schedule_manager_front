@@ -1,3 +1,45 @@
+
+button{
+    border-radius: 50px;
+    border: none !important;
+    outline: none !important;
+    width: 100%;
+    margin-bottom: 20px;
+    background: white;
+    display: flex;
+    justify-content: center;
+    box-shadow: var(--bxs);
+    position: relative;
+    padding: 0;
+    overflow: hidden;
+}
+
+button div{
+    width: 50%;
+    color: var(--rootColor);
+    font-size: 18px;
+    font-weight: bold;
+    display: block;
+    padding: 14px;
+    transition: 200ms;
+    cursor: pointer;
+}
+
+button div:hover{
+    background: var(--mainBackground);
+}
+
+.line{
+    top: 50%;
+    height: 40%;
+    background-color:var(--orange);
+    width: 1.5px;
+    margin: 0 5px;
+    position: absolute;
+    transform: translateY(-50%);
+}
+
+
 .container{
     background: white;
     padding: 20px;

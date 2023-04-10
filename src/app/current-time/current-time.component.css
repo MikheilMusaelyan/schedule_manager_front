@@ -17,7 +17,7 @@
   }
   
   .time {
-    font-size: 3rem;
+    font-size: 43px;
     font-weight: bold;
     text-align: center;
     color: var(--rootColor);
@@ -30,10 +30,29 @@
     border: none !important;
     outline: none !important;
     font-size: var(--fsM);
-    font-weight: bold;
-    color: #666;
     background-color: var(--mainBackground);
     cursor: pointer;
+    transition: 200ms;
+}
+.select-timezone:hover{
+    background: var(--hoverlGrey)
+}
+
+.clock-icon,
+.select-timezone span{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.select-timezone span{
+    color: #666;
+    font-weight: bold;
+}
+.clock-icon{
+    padding-right: 8px;
+    color: rgb(255, 187, 0);
+    filter: drop-shadow(0 0 10px rgba(255, 187, 0, 0.493))
 }
 
 .timezone-option{
@@ -58,6 +77,7 @@
 .timezone-wrap{
     padding: 10px;
     position: absolute;
+    z-index: 10;
     height: 300px;
     overflow-y: auto;
     width: 100%;

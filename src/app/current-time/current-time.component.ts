@@ -1,5 +1,6 @@
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { Component } from '@angular/core';
+import { faClock } from "@fortawesome/free-solid-svg-icons"
 
 @Component({
   selector: 'app-current-time',
@@ -20,12 +21,16 @@ import { Component } from '@angular/core';
   ]
 })
 export class CurrentTimeComponent {
-  currentTime: any = new Date();
-  selectedTimezone = 'Etc/GMT'; 
+  clockIcon = faClock;
+  
+  selectedTimezone = 'Etc/GMT';
+  currentTime: any = new Date().toLocaleString('en-US', { timeZone: this.selectedTimezone });
+  wrapperState: string = 'void';
+  expanded: boolean = false;
 
-  wrapperState: string = 'void'
 
   expandTimeZones() {
+    this.expanded = !this.expanded
     this.wrapperState = this.wrapperState == 'void' ? 'normal' : 'void';
   }
 
@@ -47,12 +52,14 @@ export class CurrentTimeComponent {
 
   ngOnInit() {
     setInterval(() => {
-      this.updateTimezone(this.selectedTimezone);
+      this.updateTimezone(this.selectedTimezone, true);
     }, 1000 * 60);
   }
 
-  updateTimezone(timezone: any): void {
-    this.expandTimeZones()
+  updateTimezone(timezone: any, auto?: boolean): void {
+    if(!auto) {
+      this.expandTimeZones()
+    }
     this.selectedTimezone = timezone
     this.currentTime = new Date().toLocaleString('en-US', { timeZone: this.selectedTimezone });
   }

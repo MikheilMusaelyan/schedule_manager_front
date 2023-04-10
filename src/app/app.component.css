@@ -7,4 +7,5 @@ section{
 }
 .search-router-wrap{
     padding: 30px 50px;
+    max-width: calc(100% - 90px) !important;
 }

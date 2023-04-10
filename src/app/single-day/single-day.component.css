@@ -2,11 +2,8 @@ main{
     width: 100%;
 }
 
-.single-day-popup {
-    top: 0;
-    left: 0;
-    width: 0;
-    height: 0;
+.single-day-popup{
+    position: relative;
 }
 
 .time-row-wrap{

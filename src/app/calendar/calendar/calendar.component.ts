@@ -38,16 +38,5 @@ export class CalendarComponent {
     }
   }
 
-  goToSingleDay(reference: any) {
-    const left = reference.offsetLeft
-    const top = reference.offsetTop 
-    const width = reference.clientWidth
-    const height = reference.clientHeight
-    
-    const navigationExtras: any = {
-      queryParams: { left: left, top: top, width: width, height: height }
-    };
-    this.router.navigate(['singleday'], navigationExtras);
-  }
 
 }

@@ -24,7 +24,6 @@ table {
     border-collapse: collapse;
     table-layout: fixed;
     font-size: var(--fsS);
-    color: #333;
     border-radius: 20px;
 }
 
@@ -54,21 +53,64 @@ th, td {
 }
 th{
     text-align: center;
-    background-color:var(--lGrey);
-    color: #666;
+    background-color: var(--mainBackground);
+    color: var(--grey);
     border: 1px solid #e7e7e7;
 }
 .day-span {
     pointer-events: none;
     position: absolute;
-    display: block;
-    top: 10px;
-    left: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    top: 0;
+    left: 0;
     font-weight: bold;
+    width: 22px;
+    height: 22px;
+    margin: 5px;
 }
 td {
     background-color: white;
     position: relative;
+}
+
+/* current day */
+.c-day {
+    /* background: var(--mainBackground) !important; */
+}
+.c-day-span{
+    background-color: var(--rootColor) !important;
+    color: white !important;
+    margin: 0 !important;
+    top: -1px !important;
+    border-radius: 2px 2px 50% 2px;
+}
+
+.c-day-events{
+    display: flex;
+    align-items: center;
+    position: relative;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+}
+.c-day-events h2{
+    display: inline-block;
+}
+.c-day-events-c {
+    padding-right: 7px;
+    font-size: 30px;
+    color: var(--rootColor) ;
+}
+.c-day-events-s{
+    transform: translateY(5px);
+    font-size: 13px;
+    color: rgb(188, 188, 188) ;
+}
+
+.current-day-events-header{
+    color: var(--rootColor);
 }
 
 
@@ -79,7 +121,7 @@ td {
 .toggle-wrapper {
     width: 100%;
     height: 100%;
-    padding: 20px;
+    padding: 10px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -87,7 +129,7 @@ td {
     cursor: pointer;
 }
 .day-span{
-    color: #666;
+    color: var(--grey);
     font-size: 13px;
 }
 
@@ -99,9 +141,6 @@ td {
     }
     th, td {
         height: 50px !important;
-    }
-    .toggle-wrapper{
-        padding: 14px;
     }
     .day-span{
         font-size: var(--fsXS);

@@ -42,7 +42,12 @@
 .nav-links-a, .icon{
     transition: 0.4s;
 }
-
+.nav-links-a:hover {
+    background: var(--lGrey);
+}
+.active:hover{
+    background-color: var(--hoverlGrey);
+}
 .active{
     background-color: var(--lGrey);
 }

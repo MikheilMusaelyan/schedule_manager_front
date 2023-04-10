@@ -14,13 +14,17 @@
         </thead>
         <tbody>
             <tr *ngFor="let row of rows">
-                <td *ngFor="let day of row" #td >
-                    <span class="day-span">{{ day }}</span>
-                    <div class="toggle-wrapper" 
-                    *ngIf="day != null"
-                    (click)="goToSingleDay(td)"
-                    [ngStyle]="day != null ? {} :  { 'background': '#f2f2f2', 'cursor': 'default' }"
+                <td *ngFor="let day of row" #td [ngClass]="{ 'c-day': currentDay == day }">
+                    <span class="day-span" [ngClass]="{ 'c-day-span': currentDay == day }">{{ day }}</span>
+                    <div 
+                        class="toggle-wrapper" 
+                        *ngIf="day != null"
+                        routerLink="singleday"
                     >
+                        <div class="c-day-events" *ngIf="currentDay == day">
+                            <h2 class="c-day-events-c">10</h2>
+                            <h2 class="c-day-events-s">Events</h2>
+                        </div>
                     </div>
                 </td>
             </tr>

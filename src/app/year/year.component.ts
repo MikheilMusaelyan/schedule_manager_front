@@ -1,19 +1,12 @@
-import { Component, Host } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-year',
   templateUrl: './year.component.html',
   styleUrls: ['./year.component.css']
 })
-export class YearComponent {
-  date: Date = new Date();
 
-  month = this.date.getMonth()
-  year = this.date.getFullYear(); 
-  day = this.date.getDate()
-  hours = this.date.getHours()
-  minute = this.date.getMinutes();
-  second = this.date.getSeconds(); 
+export class YearComponent {
   
   months: any[] = [
     ['Jan', 'Feb', 'Mar'], 
@@ -22,17 +15,17 @@ export class YearComponent {
     ['Oct', 'Nov', 'Dec']
   ];
 
-  ngOnInit() {
-    console.log(this.year, this.month, this.day, this.hours, this.minute, this.second)
+  ngOnInit() {}
+
+  ngOnDestroy() {}
+
+  openMonths() {
+
   }
 
-  ngOnDestroy() {
+  openYears() {
     
   }
 
-
   constructor() { }
-
-
- 
 }
