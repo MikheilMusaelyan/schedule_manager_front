@@ -22,10 +22,11 @@ import { faClock } from "@fortawesome/free-solid-svg-icons"
 })
 export class CurrentTimeComponent {
   clockIcon = faClock;
+  wrapperState: string = 'void';
   
   selectedTimezone = 'Etc/GMT';
-  currentTime: any = new Date().toLocaleString('en-US', { timeZone: this.selectedTimezone });
-  wrapperState: string = 'void';
+  currentTime: string = new Date().toLocaleString('en-US', { timeZone: this.selectedTimezone });
+  
   expanded: boolean = false;
 
 

@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { Observable } from 'rxjs'
 
 @Component({
   selector: 'app-calendar',
@@ -8,17 +9,21 @@ import { Router } from '@angular/router';
 })
 
 export class CalendarComponent {
+  currentYear$: Observable<number>;
+  currentMonth$: Observable<number>;
+  currentDay$: Observable<number>;
   currentYear: number = new Date().getFullYear();
   currentMonth: number = new Date().getMonth();
-  currentDay: number = new Date().getDate();
+  currentDay: number = new Date().getDate()
   daysInMonth: number = new Date(this.currentYear, this.currentMonth + 1, 0).getDate();
   firstDayOfMonth: number = new Date(this.currentYear, this.currentMonth, 1).getDay();
   
   rows: any[] = [];
  
-  constructor(
-    private router: Router
-  ) {
+  constructor() {
+    setTimeout(() => {
+      console.log(this.currentMonth)
+    }, 1000);
     let row = [];
     for (let i = 0; i < this.firstDayOfMonth; i++) {
       row.push(null);

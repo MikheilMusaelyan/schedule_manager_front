@@ -7,6 +7,7 @@ import { AppComponent } from './app.component';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
+import { reducers } from './reducers';
 
 import { SingleDayComponent } from './single-day/single-day.component';
 import { CommonModule } from '@angular/common';
@@ -42,7 +43,7 @@ import { CurrentTimeComponent } from './current-time/current-time.component';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    StoreModule.forRoot({}),
+    StoreModule.forRoot(reducers),
     EffectsModule.forRoot([]),
     StoreDevtoolsModule.instrument(),
     CommonModule,
