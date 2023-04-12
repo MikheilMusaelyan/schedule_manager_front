@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 import { AppState } from 'src/app/reducers';
 import { selectToday } from '../calendar.selectors';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-calendar',
@@ -18,13 +19,15 @@ export class CalendarComponent {
   firstDayOfMonth: number;
   
   rows: any[] = [];
+
+  todaySubscription: Subscription;
  
   constructor(
     private store: Store<AppState>
   ) {
-    this.store.pipe(select(selectToday)).subscribe((today: Date) => {
-      console.log(today, 'unsubscribe')
-      this.today = today; // we have to unsub
+    this.todaySubscription = this.store.pipe(select(selectToday))
+    .subscribe((today: Date) => {
+      this.today = today;
       this.currentYear = today.getFullYear();
       this.currentMonth = today.getMonth();
       this.currentDay = today.getDate();
@@ -34,11 +37,10 @@ export class CalendarComponent {
     },
       error => console.error(error)
     );
-    
-    
   }
 
   renderCalendar() {
+    this.rows = []
     let row = [];
     for (let i = 0; i < this.firstDayOfMonth; i++) {
       row.push(null);
@@ -56,6 +58,10 @@ export class CalendarComponent {
       }
       this.rows.push(row);
     }
+  }
+
+  ngOnDestroy(): void {
+    this.todaySubscription.unsubscribe();
   }
 
 

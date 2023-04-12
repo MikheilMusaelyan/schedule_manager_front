@@ -22,6 +22,10 @@ export const initialCalendarState = adapter.getInitialState({
 export const calendarReducer = createReducer(
     initialCalendarState,
     on(selectDate, (state: any, { date }) => ({
-        ...state, today: date
+        ...state, 
+        dateObject: {
+            ...state.dateObject,
+            today: date
+        }
     }))
 )

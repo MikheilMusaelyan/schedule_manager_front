@@ -10,7 +10,7 @@ export class NavbarComponent {
   home = faUser
 
   links = [
-    { label: 'calendar', icon: this.home },
+    { label: '', icon: this.home },
     { label: 'singleday', icon: this.home },
     { label: 'a', icon: this.home },
     { label: 'b', icon: this.home },

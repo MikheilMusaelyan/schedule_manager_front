@@ -1,6 +1,4 @@
-main{
-    width: 300;
-}
+
 button{
     border-radius: 50px;
     border: none !important;
@@ -43,7 +41,9 @@ button div:hover{
 
 
 .container{
-    top: 50%;
+    transition: 300ms;
+    min-width: 400px;
+    top: 45%;
     left: 50%;
     transform: translate(-50%, -50%);
     position: absolute;
@@ -58,6 +58,7 @@ table{
 }
 tbody {
     display: flex;
+    justify-content: center;
     flex-wrap: wrap;
 }
 
@@ -77,6 +78,9 @@ tr{
     box-sizing: border-box;
     font-size: var(--fsS);
     font-weight: bold;
+}
+.year-cell{
+    padding: 20px
 }
 .cell-span{  
     color: #666;

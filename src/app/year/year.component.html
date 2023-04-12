@@ -6,12 +6,12 @@
     </div>
     <aside class="line"></aside>
     <div class="year" (click)="openYears()">
-      <span class="year-span">{{today.getFullYear()}}</span>
+      <span class="year-span">{{(today$ | async).getFullYear()}}</span>
     </div>
   </button>
 
   
-    <div class="container zIndexMax" *ngIf="(container$ | async) === 'normal'" [@container]="container$ | async">
+    <div class="container zIndexMax" *ngIf="(openComponent$ | async) == 'monthsCard'" [@container]="openComponentState$ | async">
       <table>
         <tbody>
           <tr *ngFor="let row of months; let i = index">
@@ -22,6 +22,19 @@
                 >{{column}}</span>
             </td>
           </tr>
+        </tbody>
+      </table>
+    </div>
+    
+    <div class="container zIndexMax" *ngIf="(openComponent$ | async) == 'yearsCard'" [@container]="openComponentState$ | async">
+      <table>
+        <tbody>
+            <td *ngFor="let year of years; let i = index" class="year-cell">
+                <span class="cell-span"
+                [ngClass]="{ 'activeMonth' : currentYear == year }"
+                (click)="pickYear(year)"
+                >{{year}}</span>
+            </td>
         </tbody>
       </table>
     </div>

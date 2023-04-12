@@ -1,4 +1,11 @@
+<div class="fixed" 
+    *ngIf="(isComponentOpen$ | async) !== ''" 
+    [@fixed]="fixedState$ | async"
+    (click)="closeComponent()"
+></div>
+
 <main>
+    
     <app-navbar></app-navbar>
 
     <section class="search-router-wrap">

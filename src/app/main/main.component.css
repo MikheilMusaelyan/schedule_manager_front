@@ -3,19 +3,23 @@ main{
     width: 100%;
     display: flex;
     justify-content: space-between;
+    position: relative;
 }
 
 .c-y-t{
     display: flex;
     width: 100%;
 }
-.r-side{
-    padding-left: 40px;
-    width: 30%;
-}
+
 
 .calendar-wrap{
     width: 70%;
+}
+/* rside */
+
+.r-side{
+    padding-left: 40px;
+    width: 30%;
 }
 .r-side section:last-child{
     padding-bottom: 0;
