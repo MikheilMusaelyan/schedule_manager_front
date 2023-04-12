@@ -11,7 +11,7 @@
   </button>
 
   
-    <div class="container zIndexMax" *ngIf='monthOpen$ | async' [@container]="container$">
+    <div class="container zIndexMax" *ngIf="(container$ | async) === 'normal'" [@container]="container$ | async">
       <table>
         <tbody>
           <tr *ngFor="let row of months; let i = index">

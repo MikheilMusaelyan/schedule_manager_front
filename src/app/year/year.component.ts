@@ -27,19 +27,6 @@ import { toggleMonth, toggleYear } from '../UI-store/UI.actions';
 export class YearComponent {
   @Input('today') today: Date;
   currentMonth: string;
-
-  monthOpen$: Observable<boolean> = this.store.pipe(
-    select(getMonthOpenState)
-  )
-  container$ = this.monthOpen$.pipe(
-    map(monthOpen => monthOpen ? 'normal' : 'void')
-  );
-
-  constructor(
-    private store: Store<AppState>
-  ) {
-  }
-  
   months: any[] = [
     ['Jan', 'Feb', 'Mar'], 
     ['Apr', 'May', 'Jun'], 
@@ -47,11 +34,21 @@ export class YearComponent {
     ['Oct', 'Nov', 'Dec']
   ];
 
+  monthOpen$: Observable<boolean> = this.store.pipe(
+    select(getMonthOpenState),
+  );
+  container$ = this.monthOpen$.pipe(
+    map(monthOpen => monthOpen ? 'normal' : 'void'),
+  );
+
+  constructor(
+    private store: Store<AppState>
+  ) {
+
+  }
+  
   ngOnInit() {
     this.currentMonth = this.months[Math.floor((this.today.getMonth() / 3))][this.today.getMonth() % 3]
-  }
-
-  ngOnDestroy() {
   }
 
   openMonths() {
@@ -63,13 +60,12 @@ export class YearComponent {
   }
 
   pickMonth(i: number, j: number) {
-    this.currentMonth = this.months[i][j]; // set month locally
-    const monthIndex = (i * 3) + j
+    this.currentMonth = this.months[i][j]; // set month name locally
+    const monthIndex = (i * 3) + j; // get monthindex locally
     let newDate: Date = new Date()
     newDate.setMonth(monthIndex)
-    const dateToString: Date = newDate;
-
-    this.store.dispatch(selectDate({date: new Date(dateToString)}))
+    const dateToString: Date = newDate; // create new date from that month and send it
+    this.store.dispatch(selectDate({date: dateToString}))
   }
 
   
