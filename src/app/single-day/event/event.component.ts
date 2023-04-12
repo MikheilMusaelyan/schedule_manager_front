@@ -1,5 +1,8 @@
 import { Component, Input, ViewChild} from '@angular/core';
+import { Store } from '@ngrx/store';
 import * as nodes from "src/app/nodes";
+import { AppState } from 'src/app/reducers';
+import { changeTree } from '../event.actions';
 
 @Component({
   selector: 'app-event',
@@ -16,6 +19,10 @@ export class EventComponent {
 
   thisEvent: any;
 
+  constructor(
+    private store: Store<AppState>
+  ){}
+
   ngOnInit() {
     this.level += 1;
     this.thisEvent = this.parent[this.index];
@@ -26,12 +33,33 @@ export class EventComponent {
   }
 
   moveEvent() {
-    nodes.moveEvent(this.thisEvent, this.parent, this.index)
+    nodes.moveEvent(this.thisEvent, this.parent, this.index);
+    const treeSlice = JSON.parse(JSON.stringify(nodes.childs))
+    this.store.dispatch(changeTree({tree: treeSlice}))
   }
 
   resizeEvent(event: boolean) {
     nodes.resizeEvent(event, this.thisEvent, this.parent, this.index)
+    const treeSlice = JSON.parse(JSON.stringify(nodes.childs))
+    this.store.dispatch(changeTree({tree: treeSlice}))
   }
+  
+  // flattenTree(node: any) {
+  //   const flattened = [];
+    
+  //   function traverse(node: any) {
+  //     flattened.push(node);
+  //     if (node.children) {
+  //       for (let child of node.children) {
+  //         traverse(child);
+  //       }
+  //     }
+  //   }
+    
+  //   traverse(node);
+    
+  //   return flattened;
+  // }
 
   getEventTime() {
     let timeData: any = {

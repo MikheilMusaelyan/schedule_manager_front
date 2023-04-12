@@ -27,6 +27,8 @@ import { YearComponent } from './year/year.component';
 import { SearchbarComponent } from './searchbar/searchbar.component';
 import { CurrentTimeComponent } from './current-time/current-time.component';
 import { UpcomingeventsComponent } from './upcomingevents/upcomingevents.component';
+import { EventEffects$ } from './single-day/event.effects';
+import { EventService } from './single-day/event.service';
 
 @NgModule({
   declarations: [
@@ -40,13 +42,14 @@ import { UpcomingeventsComponent } from './upcomingevents/upcomingevents.compone
     YearComponent,
     SearchbarComponent,
     CurrentTimeComponent,
-    UpcomingeventsComponent
+    UpcomingeventsComponent,
+    
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     StoreModule.forRoot(reducers),
-    EffectsModule.forRoot([]),
+    EffectsModule.forRoot([EventEffects$]),
     StoreDevtoolsModule.instrument(),
     CommonModule,
     BrowserAnimationsModule,

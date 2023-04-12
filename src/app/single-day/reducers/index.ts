@@ -1,9 +1,8 @@
 import { createReducer, on } from "@ngrx/store";
-import { addEvent } from "../event.actions";
-import { Eventt } from "../event-model";
+import { changeTree } from "../event.actions";
 
 export interface EventState {
-    events: Eventt[]
+    events: any[]
 }
 
 export const initialEventState = {
@@ -12,7 +11,8 @@ export const initialEventState = {
 
 export const EventReducer = createReducer(
     initialEventState, 
-    on(addEvent, (state: any, {event}) => ({
-        ...state
+    on(changeTree, (state: any, {tree}) => ({
+        ...state,
+        events: tree
     }))
 )
