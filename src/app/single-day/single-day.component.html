@@ -1,24 +1,32 @@
+
 <main>
+    
+    <div class="times">
+        <div *ngFor="let row of rows" class="times-div">
+            <span class="times-span" *ngIf="row.minute == 0" >{{row.string}}</span>
+        </div>
+    </div>
+
+    <app-year></app-year>
+
     <div #main class="single-day-popup">
-        <app-event 
-        *ngFor="let event of nodes; let i = index;"
-        [parent]="nodes"
-        [index]="i"
-        [divList]="divList"
-        [level]="-1"
-        >
-        </app-event>
-    
-    
+
         <div class="times-wrapper" #divList>
-            <div *ngFor="let row of rows" >
-                <div class="time-row-wrap">
-                    <div class="time-row">
-                        <span *ngIf="row.minute == 0" >{{row.string}}</span>
-                    </div> 
-                </div>
+            <div *ngFor="let row of rows" class="time-row-wrap-wrap">
+                <div class="time-row-wrap"></div>
             </div>
         </div>
+       
+        <app-event
+            *ngFor="let event of nodes; let i = index;"
+            [parent]="nodes"
+            [index]="i"
+            [divList]="divList"
+            [level]="-1"
+        ></app-event>
+    
+        
 
     </div>
+
 </main>

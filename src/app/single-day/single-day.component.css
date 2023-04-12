@@ -1,17 +1,27 @@
 main{
     width: 100%;
+    background-color: white;
+    padding: 40px;
+    border-radius: 20px;
+    position: relative;
 }
 
 .single-day-popup{
+    background-color: var(--mainBackground);
+    width: 100%;
+    padding-top: 40px;
+    border-radius: 10px;
     position: relative;
+    overflow: auto;
 }
 
 .time-row-wrap{
     display: flex;
     height: 40px;
     margin-bottom: 0px;
-    border-bottom: 1px solid rgb(216, 216, 216);;
+    border-top: 1px solid rgb(216, 216, 216);;
 }
+
 .time-row{
     padding-left: 10px;
     width: 50px;
@@ -29,4 +39,25 @@ main{
 .times-wrapper {
     width: 100%;
     height: 100%;
+}
+
+.times{
+    width: 40px;
+    position: absolute;
+    left: 0;
+    top: 138.5px;
+}
+.times-div{
+    height: 40px;
+}
+.times-span{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transform: translateY(-50%);
+    width: 100%;
+    height: 100%;
+    font-size: 10px;
+    color: #666;
+    background-color: white;
 }

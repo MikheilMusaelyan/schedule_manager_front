@@ -15,22 +15,21 @@ export class EventComponent {
   @ViewChild('thisDiv', {static: false}) thisDiv: any;
 
   thisEvent: any;
-  WINDOW: number;
 
   ngOnInit() {
-    this.WINDOW = this.divList.innerWidth
-    window.addEventListener('resize', () => { this.WINDOW = this.divList.innerWidth })
     this.level += 1;
     this.thisEvent = this.parent[this.index];
   }
 
-  deleteEvent(){ }
+  deleteEvent(){ 
+    
+  }
 
   moveEvent() {
     nodes.moveEvent(this.thisEvent, this.parent, this.index)
   }
 
-  resizeEvent(event: any) {
+  resizeEvent(event: boolean) {
     nodes.resizeEvent(event, this.thisEvent, this.parent, this.index)
   }
 
@@ -50,11 +49,11 @@ export class EventComponent {
 
     timeData.start.hours = this.getHours(this.thisEvent.start).hour
     timeData.start.meridiem = this.getHours(this.thisEvent.start).meridiem
-    timeData.start.minutes = (this.thisEvent.start % 4) * 15;
+    timeData.start.minutes = this.getMinutes(this.thisEvent.start);
     
     timeData.end.hours = this.getHours(this.thisEvent.end).hour
     timeData.end.meridiem = this.getHours(this.thisEvent.end).meridiem
-    timeData.end.minutes = (this.thisEvent.end % 4) * 15;
+    timeData.end.minutes = this.getMinutes(this.thisEvent.end);
     return timeData
   }
 

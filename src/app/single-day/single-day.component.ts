@@ -11,9 +11,7 @@ export class SingleDayComponent implements OnInit, AfterViewInit{
   @ViewChild('divList', {static: false}) divList: any
 
   nodes: any[]
-
   myDivList: any;
-
   rows: any[] = []
 
   constructor() {
@@ -39,7 +37,6 @@ export class SingleDayComponent implements OnInit, AfterViewInit{
       this.nodes = nodes.childs;
     }, 0);
   }   
-
   ngAfterViewInit(): void  {
   }
 

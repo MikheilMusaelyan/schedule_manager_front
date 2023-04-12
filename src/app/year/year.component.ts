@@ -1,5 +1,5 @@
 import { animate, state, style, transition, trigger } from '@angular/animations';
-import { Component, Input } from '@angular/core';
+import { ChangeDetectorRef, Component, Input } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 import { AppState } from '../reducers';
 import { selectOpenComponent } from '../UI-store/UI.selectors'
@@ -26,6 +26,7 @@ import { selectToday } from '../calendar/calendar.selectors';
 })
 
 export class YearComponent {
+  today: Date;
   currentMonth: string;
   currentYear: number;
   months: any[] = [
@@ -36,7 +37,7 @@ export class YearComponent {
   ];
   years: number[] = [];
 
-  today$: Observable<Date> = this.store.select(selectToday);
+  today$: Observable<Date> = this.store.pipe(select(selectToday))
   todaySubscription: Subscription;
 
   openComponent$: Observable<string> = this.store.pipe(select(selectOpenComponent))
@@ -45,15 +46,17 @@ export class YearComponent {
   )
 
   constructor(
-    private store: Store<AppState>
+    private store: Store<AppState>,
   ) {
     for(let i = -1; i < 11; i++) {
       this.years.push(new Date().getFullYear() + i)
     }
+  
   }
   
   ngOnInit() {
     this.todaySubscription = this.today$.subscribe((today: Date) => {
+      this.today = today
       this.currentYear = today.getFullYear();
       this.currentMonth = this.months[Math.floor((today.getMonth() / 3))][today.getMonth() % 3];
     });
@@ -69,14 +72,16 @@ export class YearComponent {
 
   pickMonth(i: number, j: number) {
     const monthIndex = (i * 3) + j; // get monthindex locally
-    let newDate: Date = new Date()
+    const newDate: any = this.today
     newDate.setMonth(monthIndex)
-    const dateToString: Date = newDate; // create new date from that month and send it
-    this.store.dispatch(selectDate({date: dateToString}))
+    this.store.dispatch(selectDate({date: newDate}))
   }
 
-  pickYear(i: number) { 
-    // this.store.dispatch(selectDate({date: dateToString}))
+  pickYear(year: number) {
+    // this.today.setFullYear(year)
+    const newDate: Date = this.today
+    newDate.setFullYear(year)
+    this.store.dispatch(selectDate({date: newDate}))
   }
 
   ngOnDestroy(): void {

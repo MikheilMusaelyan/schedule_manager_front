@@ -1,7 +1,7 @@
 export interface Eventt {
     id: number | null;
-    start: Date;
-    end: Date;
+    start: number;
+    end: number;
     name: string;
     description?: string;
     place?: string;

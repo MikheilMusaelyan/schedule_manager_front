@@ -9,8 +9,8 @@
     [resizeDiv]="resize"
     
     [ngStyle]="{
-        'width': '',
-        'left': (level * 150) + 60 + 'px',
+        'width': '100%',
+        'left': (level * 150) + 'px',
         'height': (40 * (+thisEvent.end - +thisEvent.start)) - 1 + 'px',
         'top': (+divList.offsetTop) + (+thisEvent.start * 40) + 'px',
     }"

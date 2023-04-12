@@ -3,21 +3,20 @@ import { createReducer, on } from "@ngrx/store";
 import { Eventt } from "src/app/single-day/event-model";
 import { selectDate } from "../calendar.actions";
 
-export const adapter = createEntityAdapter<Eventt>({});
 
-export interface CalendarState extends EntityState<Eventt>{
+export interface CalendarState {
     dateObject: {
         today: Date,
         timezone: string
     }
 }
 
-export const initialCalendarState = adapter.getInitialState({
+export const initialCalendarState = {
     dateObject : {
         today: new Date(),
         timezone: 'Etc/GMT',
     }
-})
+}
 
 export const calendarReducer = createReducer(
     initialCalendarState,
