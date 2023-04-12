@@ -1,13 +1,14 @@
-import { createSelector } from "@ngrx/store";
-import { AppState } from "../reducers";
+import { createFeatureSelector, createSelector } from "@ngrx/store";
+import { CalendarState } from "./reducers/calendar.reducer";
 
-export const selectDateObject = (state: AppState) => state.calendar.dateObject;
+export const selectCalendarState = createFeatureSelector<CalendarState>('calendar');
 
-export const selectDay = createSelector(
-  selectDateObject,
-  (dateObject) => dateObject
+export const selectToday = createSelector(
+  selectCalendarState,
+  (state: CalendarState) => state.dateObject.today
 );
 
-// export const selectTimezone = createSelector(
-//   selectDateObject
-// )
+export const selectTimezone = createSelector(
+  selectCalendarState,
+  (state: CalendarState) => state.dateObject.timezone
+);

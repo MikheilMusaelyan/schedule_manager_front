@@ -2,7 +2,7 @@ main{
     display: flex;
     justify-content: center;
     position: relative;
-    padding-bottom: 60px;
+    padding-bottom: 30px;
 }
 .search-form {
     width: 800px;

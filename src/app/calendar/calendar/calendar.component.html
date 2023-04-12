@@ -1,5 +1,8 @@
 <main>
 <div class="container">
+    <section class="year-wrap"> 
+        <app-year [today]="today"></app-year>
+    </section>
     <table>
         <thead>
             <tr>
@@ -22,7 +25,7 @@
                         routerLink="singleday"
                     >
                         <div class="c-day-events" *ngIf="currentDay == day">
-                            <h2 class="c-day-events-c">10</h2>
+                            <h2 class="c-day-events-c">0</h2>
                             <h2 class="c-day-events-s">Events</h2>
                         </div>
                     </div>

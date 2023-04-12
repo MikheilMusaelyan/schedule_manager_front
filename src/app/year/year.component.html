@@ -2,21 +2,24 @@
 
   <button>
     <div class="month" (click)="openMonths()">
-      <span class="month-span">Jan</span>
+      <span class="month-span">{{currentMonth}}</span>
     </div>
     <aside class="line"></aside>
     <div class="year" (click)="openYears()">
-      <span class="year-span">2023</span>
+      <span class="year-span">{{today.getFullYear()}}</span>
     </div>
   </button>
 
   
-    <div class="container">
+    <div class="container zIndexMax" *ngIf='monthOpen$ | async' [@container]="container$">
       <table>
         <tbody>
-          <tr *ngFor="let row of months">
-            <td *ngFor="let column of row" class="cell">
-                <span class="cell-span">{{column}}</span>
+          <tr *ngFor="let row of months; let i = index">
+            <td *ngFor="let column of row; let j = index" class="cell">
+                <span class="cell-span"
+                [ngClass]="{ 'activeMonth' : currentMonth == column }"
+                (click)="pickMonth(i, j)"
+                >{{column}}</span>
             </td>
           </tr>
         </tbody>

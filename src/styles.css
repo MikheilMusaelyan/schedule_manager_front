@@ -10,7 +10,7 @@
     /* colors */
     --mainBackground: #f4f4f4; /* #f3f9ff; */
     --rootColor: rgb(83, 3, 255);
-    --hoverrootColor: rgb(77, 0, 243);
+    --hoverrootColor: rgb(74, 3, 227);
     --lGrey: #f4f4f4;
     --hoverlGrey: rgb(229, 229, 229);
     --grey: #717070;
@@ -44,4 +44,8 @@ body {
     display: block;
     font-size: var(--fsH);
     padding-bottom: 20px !important;
+}
+
+.zIndexMax{
+    z-index: 10000;
 }

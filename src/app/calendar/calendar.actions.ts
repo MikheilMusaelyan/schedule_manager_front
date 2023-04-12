@@ -1,6 +1,6 @@
 import { createAction, props } from "@ngrx/store";
 
-export const addEvent = createAction(
-    '[singleday] Move Event',
-    props<{ event: any, parent: any, index: number }>()
+export const selectDate = createAction(
+    '[main page] Select Day',
+    props<{ date: Date }>()
 );

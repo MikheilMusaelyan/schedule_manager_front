@@ -18,9 +18,9 @@ export class EventComponent {
   WINDOW: number;
 
   ngOnInit() {
-    this.WINDOW = window.innerWidth
-    window.addEventListener('resize', () => { this.WINDOW = window.innerWidth })
-    this.level += 1
+    this.WINDOW = this.divList.innerWidth
+    window.addEventListener('resize', () => { this.WINDOW = this.divList.innerWidth })
+    this.level += 1;
     this.thisEvent = this.parent[this.index];
   }
 

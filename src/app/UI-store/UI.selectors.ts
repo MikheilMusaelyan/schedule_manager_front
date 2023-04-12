@@ -1,0 +1,11 @@
+import { createFeatureSelector, createSelector } from '@ngrx/store';
+import { UIState } from './index';
+
+export const getUI = createFeatureSelector<UIState>('UI');
+
+export const getMonthOpenState = createSelector(
+    getUI, (state: UIState) => state.monthOpen
+);
+export const getYearOpenState = createSelector(
+    getUI, (state: UIState) => state.yearOpen
+);

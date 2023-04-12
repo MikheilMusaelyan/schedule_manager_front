@@ -20,15 +20,15 @@ import { faClock } from "@fortawesome/free-solid-svg-icons"
     ])
   ]
 })
+
 export class CurrentTimeComponent {
   clockIcon = faClock;
   wrapperState: string = 'void';
+  expanded: boolean = false;
   
-  selectedTimezone = 'Etc/GMT';
+  selectedTimezone = 'Etc/GMT+12';
   currentTime: string = new Date().toLocaleString('en-US', { timeZone: this.selectedTimezone });
   
-  expanded: boolean = false;
-
 
   expandTimeZones() {
     this.expanded = !this.expanded

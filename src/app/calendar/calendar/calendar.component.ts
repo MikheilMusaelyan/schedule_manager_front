@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
-import { Observable } from 'rxjs'
+import { Store, select } from '@ngrx/store';
+import { AppState } from 'src/app/reducers';
+import { selectToday } from '../calendar.selectors';
 
 @Component({
   selector: 'app-calendar',
@@ -9,21 +10,35 @@ import { Observable } from 'rxjs'
 })
 
 export class CalendarComponent {
-  currentYear$: Observable<number>;
-  currentMonth$: Observable<number>;
-  currentDay$: Observable<number>;
-  currentYear: number = new Date().getFullYear();
-  currentMonth: number = new Date().getMonth();
-  currentDay: number = new Date().getDate()
-  daysInMonth: number = new Date(this.currentYear, this.currentMonth + 1, 0).getDate();
-  firstDayOfMonth: number = new Date(this.currentYear, this.currentMonth, 1).getDay();
+  today: Date;
+  currentYear: number;
+  currentMonth: number;
+  currentDay: number;
+  daysInMonth: number;
+  firstDayOfMonth: number;
   
   rows: any[] = [];
  
-  constructor() {
-    setTimeout(() => {
-      console.log(this.currentMonth)
-    }, 1000);
+  constructor(
+    private store: Store<AppState>
+  ) {
+    this.store.pipe(select(selectToday)).subscribe((today: Date) => {
+      console.log(today, 'unsubscribe')
+      this.today = today; // we have to unsub
+      this.currentYear = today.getFullYear();
+      this.currentMonth = today.getMonth();
+      this.currentDay = today.getDate();
+      this.daysInMonth = new Date(this.currentYear, this.currentMonth + 1, 0).getDate();
+      this.firstDayOfMonth = new Date(this.currentYear, this.currentMonth, 1).getDay();
+      this.renderCalendar();
+    },
+      error => console.error(error)
+    );
+    
+    
+  }
+
+  renderCalendar() {
     let row = [];
     for (let i = 0; i < this.firstDayOfMonth; i++) {
       row.push(null);

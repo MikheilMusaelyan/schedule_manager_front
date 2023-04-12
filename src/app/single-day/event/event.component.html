@@ -9,7 +9,7 @@
     [resizeDiv]="resize"
     
     [ngStyle]="{
-        'width': 300 > (WINDOW  - (level * 150)) ? '300px' : WINDOW - (level * 150) + 'px',
+        'width': '',
         'left': (level * 150) + 60 + 'px',
         'height': (40 * (+thisEvent.end - +thisEvent.start)) - 1 + 'px',
         'top': (+divList.offsetTop) + (+thisEvent.start * 40) + 'px',

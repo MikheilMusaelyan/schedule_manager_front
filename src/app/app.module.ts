@@ -26,6 +26,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { YearComponent } from './year/year.component';
 import { SearchbarComponent } from './searchbar/searchbar.component';
 import { CurrentTimeComponent } from './current-time/current-time.component';
+import { UpcomingeventsComponent } from './upcomingevents/upcomingevents.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import { CurrentTimeComponent } from './current-time/current-time.component';
     EventComponent,
     YearComponent,
     SearchbarComponent,
-    CurrentTimeComponent
+    CurrentTimeComponent,
+    UpcomingeventsComponent
   ],
   imports: [
     BrowserModule,
