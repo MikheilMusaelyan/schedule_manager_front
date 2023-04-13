@@ -6,10 +6,10 @@ import { EventReducer, EventState } from "../single-day/reducers";
 export interface AppState {
     calendar: CalendarState,
     UI: UIState,
-    Events: EventState
+    events: EventState
 }
  export const reducers: ActionReducerMap<AppState> = {
     calendar: calendarReducer,
     UI: UIReducer,
-    Events: EventReducer
+    events: EventReducer
  }
