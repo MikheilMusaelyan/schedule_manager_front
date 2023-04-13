@@ -22,7 +22,21 @@
   .absolute:hover {
     background-color: rgb(5, 160, 238);
   }
-  
+
+  .smallEvent > .event-info{
+    padding: 3px 2px 0 6px !important;
+    display: flex !important;
+  }
+
+  .smallEvent > .event-info > .event-time{
+    display: block !important;
+  }
+  .smallEvent > .resize-div-wrap > .resize-div{
+    top: -1px !important;
+  }
+  .smallEvent > .editIcon {
+    transform: translate(64px, 18px);
+  }
 
   .resize-div-wrap{
     min-height: 8px;
@@ -46,21 +60,36 @@
   }
 
   .event-info{
-    padding: 5px 5px 0 6px;
+    padding: 3px 5px 3px 6px;
     position: relative;
   }
-  .event-info::before{
+  /* .event-info::before{
     content: "";
     width: 100%;
     height: 100%;
     position: absolute;
-  }
+  } */
   .event-time{
     font-size: 12px;
     padding-right: 7px;
+    display: flex;
   }
 
   .evenEvent{
     background-color: #B8E8FC;
     color: rgb(0, 0, 0);
+  }
+  .evenEvent > .editIcon > .line{
+    color: #666;
+  }
+
+  .editIcon{
+    padding: 3px;
+    position: absolute;
+    transform: translate(88px, 17px);
+  }
+  .line{
+    width: 14px;
+    height: 3px;
+    border-bottom: 1.7px solid;
   }

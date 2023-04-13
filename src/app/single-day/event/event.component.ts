@@ -4,6 +4,7 @@ import * as nodes from "src/app/nodes";
 import { AppState } from 'src/app/reducers';
 import { changeTree } from '../event.actions';
 
+
 @Component({
   selector: 'app-event',
   templateUrl: './event.component.html',
@@ -25,7 +26,7 @@ export class EventComponent {
   ){}
 
   ngOnInit() {
-    this.WINDOW = window.innerWidth - 280
+    this.WINDOW = window.innerWidth - 287
     this.level += 1;
     this.thisEvent = this.parent[this.index];
   }

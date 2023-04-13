@@ -34,9 +34,7 @@ export class CalendarComponent {
       this.daysInMonth = new Date(this.currentYear, this.currentMonth + 1, 0).getDate();
       this.firstDayOfMonth = new Date(this.currentYear, this.currentMonth, 1).getDay();
       this.renderCalendar();
-    },
-      error => console.error(error)
-    );
+    }, error => console.error(error));
   }
 
   renderCalendar() {

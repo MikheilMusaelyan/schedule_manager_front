@@ -7,6 +7,7 @@
     [divList]=divList
     [event]="thisEvent"
     [resizeDiv]="resize"
+    [editIcon]="editIcon"
     
     [ngStyle]="{
         'width': 250 > WINDOW - (level * 150) ? '250px' : WINDOW - (level * 150) + 'px',
@@ -15,16 +16,14 @@
         'top': (+divList.offsetTop) + (+thisEvent.start * 40) + 'px',
     }"
 
-    [ngClass]="{'evenEvent' : level % 2 == 0}"
+    [ngClass]="{
+        'evenEvent' : level % 2 == 0,
+        'smallEvent': 2 > (+thisEvent.end - +thisEvent.start)
+    }"
     
     >
-    <div class="event-info"
-        [ngStyle]="{
-            'padding': (+thisEvent.end - +thisEvent.start) >= 2 ? '3px 5px 3px 6px' : '3px 2px 0 6px',
-            'display': (+thisEvent.end - +thisEvent.start) >= 2 ? 'block' : 'flex',
-        }"
-    >
-        <span class="event-time" [ngStyle]="{'display': (+thisEvent.end - +thisEvent.start) >= 2 ? 'flex' : 'block'}">
+    <div class="event-info">
+        <span class="event-time">
             <div>{{getEventTime().start.hours}}:{{getEventTime().start.minutes == 0 ? '00' : getEventTime().start.minutes }}{{getEventTime().start.meridiem}} -</div>
             <div style="width: 4px; height: 2px;"></div>
             <div>{{getEventTime().end.hours}}:{{getEventTime().end.minutes == 0 ? '00' : getEventTime().end.minutes }}{{getEventTime().end.meridiem}}</div>
@@ -34,10 +33,14 @@
         </span>
     </div>
 
+    <div #editIcon class="editIcon">
+        <div class="line"></div>
+        <div class="line"></div>
+        <div class="line"></div>
+    </div>
+
     <div #resize class="resize-div-wrap">
-        <div class="resize-div"
-        [ngStyle]="{'top': (+thisEvent.end - +thisEvent.start) >= 2 ? '4px' : '-1px'}"
-        ></div>
+        <div class="resize-div"></div>
     </div>
 </div>
 

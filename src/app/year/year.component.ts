@@ -37,7 +37,7 @@ export class YearComponent {
   ];
   years: number[] = [];
 
-  today$: Observable<Date> = this.store.pipe(select(selectToday))
+  today$: Observable<any> = this.store.pipe(select(selectToday))
   todaySubscription: Subscription;
 
   openComponent$: Observable<string> = this.store.pipe(select(selectOpenComponent))
@@ -72,15 +72,16 @@ export class YearComponent {
 
   pickMonth(i: number, j: number) {
     const monthIndex = (i * 3) + j; // get monthindex locally
-    const newDate: any = this.today
+    let newDate: Date = new Date(this.today)
     newDate.setMonth(monthIndex)
+    newDate = new Date(newDate)
     this.store.dispatch(selectDate({date: newDate}))
   }
 
   pickYear(year: number) {
-    // this.today.setFullYear(year)
-    const newDate: Date = this.today
+    let newDate: Date = new Date(this.today)
     newDate.setFullYear(year)
+    newDate = new Date(newDate)
     this.store.dispatch(selectDate({date: newDate}))
   }
 

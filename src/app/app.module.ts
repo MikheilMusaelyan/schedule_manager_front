@@ -17,7 +17,6 @@ import { RouterModule } from '@angular/router';
 import { CalendarComponent } from './calendar/calendar/calendar.component';
 import { MainComponent } from './main/main.component';
 
-import { CalendarModule } from './calendar/calendar.module';
 import { NavbarComponent } from './navbar/navbar.component';
 import { DragdropDirective } from './directives/dragdrop.directive';
 import { EventComponent } from './single-day/event/event.component';
@@ -54,7 +53,6 @@ import { EventService } from './single-day/event.service';
     CommonModule,
     BrowserAnimationsModule,
     RouterModule,
-    CalendarModule,
     FontAwesomeModule
   ],
   providers: [],
