@@ -151,8 +151,13 @@ export class DragdropDirective{
   }
 
   handleResizeMouseUp = (event: any) => {
-    this.resizeEmitter.emit(this.initialObject.end < this.event.end);
-    this.initialObject.end = this.event.end;
+    if(
+      this.initialObject.end != this.event.end
+    ) {
+      this.resizeEmitter.emit(this.initialObject.end < this.event.end);
+      this.initialObject.end = this.event.end;
+    }
+    
     
     this.clearTouch()
   }
