@@ -18,14 +18,22 @@ export class EventComponent {
   @ViewChild('thisDiv', {static: false}) thisDiv: any;
 
   thisEvent: any;
+  WINDOW: number;
 
   constructor(
     private store: Store<AppState>
   ){}
 
   ngOnInit() {
+    this.WINDOW = window.innerWidth - 280
     this.level += 1;
     this.thisEvent = this.parent[this.index];
+  }
+
+  ngAfterViewInit(){
+    window.addEventListener('resize', () => {
+      this.WINDOW = window.innerWidth - 287
+    })
   }
 
   deleteEvent(){ 

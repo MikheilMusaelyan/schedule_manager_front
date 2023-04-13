@@ -9,22 +9,25 @@
     [resizeDiv]="resize"
     
     [ngStyle]="{
-        'width': '100%',
+        'width': 250 > WINDOW - (level * 150) ? '250px' : WINDOW - (level * 150) + 'px',
         'left': (level * 150) + 'px',
         'height': (40 * (+thisEvent.end - +thisEvent.start)) - 1 + 'px',
         'top': (+divList.offsetTop) + (+thisEvent.start * 40) + 'px',
     }"
+
+    [ngClass]="{'evenEvent' : level % 2 == 0}"
     
     >
     <div class="event-info"
         [ngStyle]="{
-            'padding': (+thisEvent.end - +thisEvent.start) >= 2 ? '2px 5px 3px 6px' : '0.5px 2px 0 6px',
-            'display': (+thisEvent.end - +thisEvent.start) >= 2 ? 'block' : 'flex'
+            'padding': (+thisEvent.end - +thisEvent.start) >= 2 ? '3px 5px 3px 6px' : '3px 2px 0 6px',
+            'display': (+thisEvent.end - +thisEvent.start) >= 2 ? 'block' : 'flex',
         }"
     >
-        <span class="event-time">
-            {{getEventTime().start.hours}}:{{getEventTime().start.minutes == 0 ? '00' : getEventTime().start.minutes }}{{getEventTime().start.meridiem}} - 
-            {{getEventTime().end.hours}}:{{getEventTime().end.minutes == 0 ? '00' : getEventTime().end.minutes }}{{getEventTime().end.meridiem}}
+        <span class="event-time" [ngStyle]="{'display': (+thisEvent.end - +thisEvent.start) >= 2 ? 'flex' : 'block'}">
+            <div>{{getEventTime().start.hours}}:{{getEventTime().start.minutes == 0 ? '00' : getEventTime().start.minutes }}{{getEventTime().start.meridiem}} -</div>
+            <div style="width: 4px; height: 2px;"></div>
+            <div>{{getEventTime().end.hours}}:{{getEventTime().end.minutes == 0 ? '00' : getEventTime().end.minutes }}{{getEventTime().end.meridiem}}</div>
         </span>
         <span class="event-name">
             (event name)

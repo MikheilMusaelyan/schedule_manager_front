@@ -158,7 +158,6 @@ export class DragdropDirective{
       this.initialObject.end = this.event.end;
     }
     
-    
     this.clearTouch()
   }
   

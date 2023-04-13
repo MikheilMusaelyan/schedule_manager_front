@@ -63,7 +63,7 @@ export class SingleDayComponent implements OnInit, AfterViewInit{
   }
 
   changeWidthValue() {
-    this.mainScrollWidth = 100;
+    this.mainScrollWidth = 0;
     setTimeout(() => {
       this.mainScrollWidth = this.main.nativeElement.scrollWidth
     }, 0);
