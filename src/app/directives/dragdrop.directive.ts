@@ -1,5 +1,10 @@
 import { Directive, ElementRef, EventEmitter, Host, HostListener, Input, Output, Renderer2} from '@angular/core';
+import { Store, select } from '@ngrx/store';
 import * as nodes from 'src/app/nodes'
+import { UIState } from '../UI-store';
+import { Observable, Subscription } from 'rxjs';
+import { selectAbsoluteOpen } from '../UI-store/UI.selectors';
+import { openAbsolute } from '../UI-store/UI.actions';
 
 @Directive({
   selector: '[appDragdrop]'
@@ -26,26 +31,32 @@ export class DragdropDirective{
   private scrollThreshhold: number;
   private opened: boolean = false;
 
+  // isOpenSubscription: Subscription;
+  // isAbsoluteOpen: boolean;
+
   @Output() moveNodeEmitter: EventEmitter<nodes.Node> = new EventEmitter();
   @Output() deleteEmitter: EventEmitter<any> = new EventEmitter();
   @Output() resizeEmitter: EventEmitter<boolean> = new EventEmitter();
 
   constructor(
     private el: ElementRef,
-  ) { }
+    private store: Store<UIState>
+  ) {
+    // this.isOpenSubscription = this.store.pipe(select(selectAbsoluteOpen))
+    // .subscribe((data: boolean) => {
+    //   console.log(data)
+    //   this.isAbsoluteOpen = data;
+    // })
+  }
   
   ngAfterViewInit() {
-    this.scrollThreshhold =  window.innerHeight / 5; //for autoscroll
-    //add mousedown
+    this.scrollThreshhold =  window.innerHeight / 6; //for autoscroll
     this.resizeDiv.addEventListener('mousedown', this.handleResizeTouchStart)
     this.resizeDiv.addEventListener('touchstart', this.handleResizeTouchStart)
     this.absoluteDiv.addEventListener('mousedown', this.handleTouchStart)
     this.absoluteDiv.addEventListener('touchstart', this.handleTouchStart)
-
-    this.editIcon.addEventListener('click', this.handleEditClick)
   }
 
-  //initialize things
   ngOnInit(): void {
     this.initialObject = {start: this.event.start, end: this.event.end}
     this.absoluteDiv = this.el.nativeElement;
@@ -54,20 +65,30 @@ export class DragdropDirective{
 
   ngOnDestroy() {
     this.clearTouch()
-    this.editIcon.removeEventListener('click', this.handleEditClick)
   }
   
   handleTouchStart = (event: any) => {
+    // if(this.opened) {
+    //   this.store.dispatch(openAbsolute({bool: false}))
+    // } else {
+    //   if(this.isAbsoluteOpen){
+    //     return
+    //   }
+    // }
+    
     this.handleMouseDown(event)
   }
 
   handleResizeTouchStart = (event: any) => {
+    // if(this.opened) {
+    //   console.log('dispatch')
+    //   this.store.dispatch(openAbsolute({bool: false}))
+    // } else {
+    //   if(this.isAbsoluteOpen){
+    //     return
+    //   }
+    // }
     this.handleMouseDown(event, true);
-  }
-
-  handleEditClick = () => {
-    console.log('tes')
-    // this.popOut(true)
   }
   
   handleMouseDown(event: any, element?: boolean) {
@@ -76,7 +97,6 @@ export class DragdropDirective{
 
     const isTouchEvent = event.type.startsWith('touch');
     const clientY = isTouchEvent ? event.touches[0].clientY : event.clientY;
-    const timeout = 800
     this.initialMouseY = clientY;
     this.initialRelativeTop = this.absoluteDiv.getBoundingClientRect().top;
 
@@ -104,13 +124,15 @@ export class DragdropDirective{
       }
     }
 
+ 
     this.poputTimeOut = setTimeout(() => {
       if(this.initialObject.end == this.event.end && this.initialObject.start == this.event.start){
         this.removeListeners()
         this.removeResizeListeners()
         clearTimeout(this.poputTimeOut)
+        // this.store.dispatch(openAbsolute({bool: true}))
       }
-    }, timeout);
+    }, 800);
   }
 
   popOut(bool: boolean) {

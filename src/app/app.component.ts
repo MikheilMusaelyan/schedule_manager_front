@@ -1,12 +1,10 @@
-import { Component, HostListener } from '@angular/core';
+import { Component } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 import { AppState } from './reducers';
 import { Observable, map} from 'rxjs';
 import { selectOpenComponent } from './UI-store/UI.selectors';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { openComponent } from './UI-store/UI.actions';
-
-
 
 @Component({
   selector: 'app-root',

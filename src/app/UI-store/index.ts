@@ -1,12 +1,14 @@
 import { Action, createReducer, on } from '@ngrx/store';
-import { openComponent } from './UI.actions';
+import { openAbsolute, openComponent } from './UI.actions';
 
 export interface UIState {
-  componentOpen: string
+  componentOpen: string,
+  absoluteOpen: boolean
 }
 
 export const initialState: UIState = {
-  componentOpen: ''
+  componentOpen: '',
+  absoluteOpen: false
 };
 
 export const UIReducer = createReducer(
@@ -14,6 +16,10 @@ export const UIReducer = createReducer(
   on(openComponent, (state, { component }) => ({
     ...state,
     componentOpen: component
+  })),
+  on(openAbsolute, (state, {bool}) => ({
+    ...state,
+    absoluteOpen: bool
   }))
 );
 
