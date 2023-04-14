@@ -6,11 +6,7 @@ import { selectOpenComponent } from './UI-store/UI.selectors';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { openComponent } from './UI-store/UI.actions';
 
-export function setZIndexToAuto(className: string){
-  document.querySelectorAll(`.${className}`).forEach((element: HTMLDivElement) => {
-    element.style.background = 'auto'
-  })
-}
+
 
 @Component({
   selector: 'app-root',
@@ -44,21 +40,5 @@ export class AppComponent {
     this.store.dispatch(openComponent({component: ''}))
   }
 
-  @HostListener('document:click', ['$event'])
-  onDocumentClick(event: MouseEvent) {
-    if (!this.clickedOnAbsoluteDiv(event.target)) {
-     setZIndexToAuto('absolute')
-    }
-  }
-
-  clickedOnAbsoluteDiv(element: any) {
-    while (element) {
-      if (element.classList.contains('absolute')) {
-        return true;
-      }
-      element = element.parentElement;
-    }
-    return false;
-  }
 }
 
