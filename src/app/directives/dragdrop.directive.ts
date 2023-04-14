@@ -124,7 +124,7 @@ export class DragdropDirective{
       //if we held down for more than 400ms, it doesn't work
       document.addEventListener('mouseup', () => {
         endTime = new Date().getTime();
-        if (endTime - startTime < 400 && this.counter % 2 == 0) {
+        if (endTime - startTime < 400 && this.counter % 2 == 0 && this.initialObject.end == this.event.end && this.initialObject.start == this.event.start) {
           this.openDetailsWindow.emit(true);
           this.popOut(true)
           this.removeResizeListeners()

@@ -1,6 +1,16 @@
-
 <main>
-    
+    <div class="scroller" *ngIf="mainScrollWidth - main.clientWidth > 20 && !touchEvent">
+        <fa-icon [icon]="scrollRight" 
+        (mousedown)="startScroll(true)"
+        (mouseup)="stopScroll()"
+        ></fa-icon>
+
+        <fa-icon [icon]="scrollLeft" 
+        (mousedown)="startScroll(false)"
+        (mouseup)="stopScroll()"
+        ></fa-icon>
+    </div>
+
     <div class="times">
         <div *ngFor="let row of rows" class="times-div">
             <span class="times-span" *ngIf="row.minute == 0" >{{row.string}}</span>
@@ -15,7 +25,7 @@
                 <div class="time-row-wrap"></div>
             </div>
         </div>
-       
+
         <app-event
             *ngFor="let event of nodes; let i = index;"
             [parent]="nodes"
@@ -23,9 +33,6 @@
             [divList]="divList"
             [level]="-1"
         ></app-event>
-    
-        
-
     </div>
 
 </main>

@@ -77,13 +77,14 @@ td {
 
 /* current day */
 .c-day {
-    /* background: var(--mainBackground) !important; */
+    background: var(--mainBackground) !important;
 }
 .c-day-span{
     background-color: var(--rootColor) !important;
     color: white !important;
     margin: 0 !important;
-    top: -1px !important;
+    top: -1.2px ;
+    left: -1.2px ;
     border-radius: 2px 2px 50% 2px;
 }
 

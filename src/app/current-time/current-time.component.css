@@ -95,3 +95,19 @@
 .timezone-span{
     line-height: 18px;
 }
+
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+    background-color: rgba(0, 0, 0, 0.1); /* Thin transparent black background */
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    background-color: blue;
+    border-radius: 4px;
+  }
+  
+  .scrollable-element {
+    scrollbar-width: thin;
+    scrollbar-color: blue rgba(0, 0, 0, 0.1);
+  }

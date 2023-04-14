@@ -63,11 +63,10 @@ export class EventComponent {
     this.level += 1;
     this.thisEvent = this.parent[this.index];
     if(!this.thisEvent.colorSet) {
-      if(this.level % 2 == 0) {
-        this.thisEvent.color = {value: 'B8E8FC', pastel: false}
-        return
-      }
-      this.thisEvent.color = {value: 'rgb(152, 251, 152)', pastel: true}
+      // if(this.level % 2 == 0) {
+      //   return
+      // }
+      this.thisEvent.color = {value: 'B8E8FC', pastel: false}
     }
   }
 

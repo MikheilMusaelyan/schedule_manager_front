@@ -28,6 +28,13 @@ body {
 * {
     box-sizing: border-box !important;
 }
+.times-span, .month{
+    pointer-events: none ;
+    -webkit-user-select: none;
+    -moz-user-select: none; 
+    -ms-user-select: none;
+    user-select: none; 
+}
 .event-info span, tr, th, table, .time-row{
     user-select: none;
     -webkit-user-select: none;

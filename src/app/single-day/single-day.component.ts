@@ -2,8 +2,9 @@ import { AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
 import * as nodes from '../nodes'
 import { Store, select } from '@ngrx/store';
 import { AppState } from '../reducers';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { detectChange } from './event.selectors';
+import { faArrowLeft, faArrowRight } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-single-day',
@@ -19,6 +20,13 @@ export class SingleDayComponent implements OnInit, AfterViewInit{
   rows: any[] = [];
   detectEventChanges$: Observable<boolean>;
   mainScrollWidth: number;
+  changeSubscription: Subscription;
+
+  scrollRight = faArrowRight;
+  scrollLeft = faArrowLeft;
+
+  intervalTimeout: any;
+  touchEvent: boolean;
 
   constructor(
     private store: Store<AppState>
@@ -47,17 +55,18 @@ export class SingleDayComponent implements OnInit, AfterViewInit{
   }   
   
   ngAfterViewInit(): void  {
+    this.touchEvent = 'ontouchstart' in window;
+
     window.addEventListener('resize', () => {
       this.changeWidthValue()
-    })
+    });
     setTimeout(() => {
       this.mainScrollWidth = this.main.nativeElement.scrollWidth;
 
-      this.store.pipe(
+      this.changeSubscription = this.store.pipe(
         select(detectChange)
-      )
-      .subscribe((bool: boolean) => {
-       this.changeWidthValue()
+      ).subscribe((bool: boolean) => {
+       this.changeWidthValue();
       })
     }, 0);
   }
@@ -69,15 +78,23 @@ export class SingleDayComponent implements OnInit, AfterViewInit{
     }, 0);
   }
 
-  ngAfterViewChecked() {
-    
+  startScroll(bool: boolean) {
+    clearInterval(this.intervalTimeout);
+    const scrollValue = bool ? -20 : 20;
+    this.intervalTimeout = setInterval(() => {
+      this.main.nativeElement.scrollLeft -= scrollValue;
+    }, 10);
   }
-
-  closeDay(){
+  
+  stopScroll() {
+    clearInterval(this.intervalTimeout);
   }
 
   ngOnDestroy() {
-    
+    window.removeEventListener('resize', () => {
+      this.changeWidthValue()
+    });
+    this.changeSubscription.unsubscribe()
   }
 
 }
