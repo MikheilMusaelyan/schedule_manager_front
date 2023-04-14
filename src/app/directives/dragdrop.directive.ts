@@ -105,7 +105,7 @@ export class DragdropDirective{
     this.initialMouseY = clientY;
     this.initialRelativeTop = this.absoluteDiv.getBoundingClientRect().top;
 
-    const timeout = isTouchEvent ? 350 : 200;
+    const timeout = 200;
     const mouseEndName = isTouchEvent ? 'touchend' : 'mouseup';
 
     //(1) on web, we have to hold down for minimum of 200 ms to move an event
@@ -119,12 +119,16 @@ export class DragdropDirective{
       clearTimeout(this.mouseDownTimeOut)
     }, timeout);
 
+    //color pallete popout
     if(!isTouchEvent){
       //if we held down for more than 400ms, it doesn't work
       document.addEventListener('mouseup', () => {
         endTime = new Date().getTime();
         if (endTime - startTime < 400 && this.counter % 2 == 0) {
           this.openDetailsWindow.emit(true);
+          this.popOut(true)
+          this.removeResizeListeners()
+          this.removeListeners()
         }
       }, {once: true});
 

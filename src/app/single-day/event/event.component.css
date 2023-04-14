@@ -27,7 +27,7 @@
     display: block !important;
   }
   .smallEvent > .resize-div-wrap > .resize-div{
-    top: -1px !important;
+    top: -5px !important;
   }
 
   .resize-div-wrap{
