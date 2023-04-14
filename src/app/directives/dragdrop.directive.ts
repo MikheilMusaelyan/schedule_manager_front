@@ -1,10 +1,8 @@
-import { Directive, ElementRef, EventEmitter, Host, HostListener, Input, Output, Renderer2} from '@angular/core';
-import { Store, select } from '@ngrx/store';
+import { Directive, ElementRef, EventEmitter, Input, Output} from '@angular/core';
+import { Store } from '@ngrx/store';
 import * as nodes from 'src/app/nodes'
 import { UIState } from '../UI-store';
-import { Observable, Subscription } from 'rxjs';
-import { selectAbsoluteOpen } from '../UI-store/UI.selectors';
-import { openAbsolute } from '../UI-store/UI.actions';
+
 
 @Directive({
   selector: '[appDragdrop]'
@@ -14,7 +12,6 @@ export class DragdropDirective{
   @Input('event') event: any;
   @Input('resizeDiv') resizeDiv: any;
   @Input('editIcon') editIcon: any
-  @Output() droppedEvent = new EventEmitter<any>();
 
   private absoluteDiv: any;
   private initialRelativeTop: any;
@@ -31,22 +28,16 @@ export class DragdropDirective{
   private scrollThreshhold: number;
   private opened: boolean = false;
 
-  // isOpenSubscription: Subscription;
-  // isAbsoluteOpen: boolean;
 
   @Output() moveNodeEmitter: EventEmitter<nodes.Node> = new EventEmitter();
-  @Output() deleteEmitter: EventEmitter<any> = new EventEmitter();
   @Output() resizeEmitter: EventEmitter<boolean> = new EventEmitter();
+  @Output() openDetailsWindow: EventEmitter<boolean> = new EventEmitter();
 
   constructor(
     private el: ElementRef,
     private store: Store<UIState>
   ) {
-    // this.isOpenSubscription = this.store.pipe(select(selectAbsoluteOpen))
-    // .subscribe((data: boolean) => {
-    //   console.log(data)
-    //   this.isAbsoluteOpen = data;
-    // })
+
   }
   
   ngAfterViewInit() {
@@ -75,7 +66,9 @@ export class DragdropDirective{
     //     return
     //   }
     // }
-    
+    if(!this.opened) {
+      this.openDetailsWindow.emit(false)
+    }
     this.handleMouseDown(event)
   }
 
@@ -124,13 +117,17 @@ export class DragdropDirective{
       }
     }
 
- 
+    document.addEventListener('touchend', () => clearTimeout(this.poputTimeOut), {once: true});
+    document.addEventListener('mouseup', () => clearTimeout(this.poputTimeOut), {once: true})
     this.poputTimeOut = setTimeout(() => {
+      document.removeEventListener('touchend', () => clearTimeout(this.poputTimeOut));
+      document.removeEventListener('mouseup', () => clearTimeout(this.poputTimeOut))
       if(this.initialObject.end == this.event.end && this.initialObject.start == this.event.start){
         this.removeListeners()
         this.removeResizeListeners()
         clearTimeout(this.poputTimeOut)
         // this.store.dispatch(openAbsolute({bool: true}))
+        this.openDetailsWindow.emit(true)
       }
     }, 800);
   }

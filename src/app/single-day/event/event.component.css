@@ -34,9 +34,6 @@
   .smallEvent > .resize-div-wrap > .resize-div{
     top: -1px !important;
   }
-  .smallEvent > .editIcon {
-    transform: translate(64px, 18px);
-  }
 
   .resize-div-wrap{
     min-height: 8px;
@@ -81,15 +78,4 @@
   }
   .evenEvent > .editIcon > .line{
     color: #666;
-  }
-
-  .editIcon{
-    padding: 3px;
-    position: absolute;
-    transform: translate(88px, 17px);
-  }
-  .line{
-    width: 14px;
-    height: 3px;
-    border-bottom: 1.7px solid;
   }

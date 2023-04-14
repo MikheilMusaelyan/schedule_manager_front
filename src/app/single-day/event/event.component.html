@@ -1,8 +1,8 @@
 <div  
     class="absolute"
     appDragdrop 
-    (deleteEmitter)="deleteEvent()"
     (moveNodeEmitter)="moveEvent()"
+    (openDetailsWindow)="openDetails($event)"
     (resizeEmitter)="resizeEvent($event)"
     [divList]=divList
     [event]="thisEvent"
@@ -31,12 +31,6 @@
         <span class="event-name">
             (event name)
         </span>
-    </div>
-
-    <div #editIcon class="editIcon">
-        <div class="line"></div>
-        <div class="line"></div>
-        <div class="line"></div>
     </div>
 
     <div #resize class="resize-div-wrap">

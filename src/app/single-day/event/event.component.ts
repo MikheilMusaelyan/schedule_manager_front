@@ -4,7 +4,6 @@ import * as nodes from "src/app/nodes";
 import { AppState } from 'src/app/reducers';
 import { changeTree } from '../event.actions';
 
-
 @Component({
   selector: 'app-event',
   templateUrl: './event.component.html',
@@ -20,6 +19,7 @@ export class EventComponent {
 
   thisEvent: any;
   WINDOW: number;
+  detailsOpen: boolean;
 
   constructor(
     private store: Store<AppState>
@@ -37,8 +37,13 @@ export class EventComponent {
     })
   }
 
-  deleteEvent(){ 
-    
+  openDetails(bool: boolean) {
+    this.detailsOpen = bool;
+    console.log(this.detailsOpen)
+  }
+
+  deleteEvent(){
+
   }
 
   moveEvent() {
