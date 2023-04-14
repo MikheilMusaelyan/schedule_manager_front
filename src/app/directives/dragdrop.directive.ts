@@ -1,6 +1,5 @@
 import { Directive, ElementRef, EventEmitter, Host, HostListener, Input, Output, Renderer2} from '@angular/core';
 import * as nodes from 'src/app/nodes'
-import { setZIndexToAuto } from '../app.component';
 
 @Directive({
   selector: '[appDragdrop]'
@@ -21,10 +20,11 @@ export class DragdropDirective{
   private initialObject: any;
   private resizeAt: any;
 
+  private poputTimeOut: any
   private mouseDownTimeOut: any; // hold timeout on mobile, activating touch
   private touchTimeOut: any; // timeout for zIndex animation
   private scrollThreshhold: number;
-  private touched: boolean = false;
+  private opened: boolean = false;
 
   @Output() moveNodeEmitter: EventEmitter<nodes.Node> = new EventEmitter();
   @Output() deleteEmitter: EventEmitter<any> = new EventEmitter();
@@ -35,21 +35,17 @@ export class DragdropDirective{
   ) { }
   
   ngAfterViewInit() {
-
     this.scrollThreshhold =  window.innerHeight / 5; //for autoscroll
-
+    //add mousedown
     this.resizeDiv.addEventListener('mousedown', this.handleResizeTouchStart)
     this.resizeDiv.addEventListener('touchstart', this.handleResizeTouchStart)
     this.absoluteDiv.addEventListener('mousedown', this.handleTouchStart)
     this.absoluteDiv.addEventListener('touchstart', this.handleTouchStart)
-  }
-  removeTouchStarts() {
-    this.resizeDiv.removeEventListener('mousedown', this.handleResizeTouchStart)
-    this.resizeDiv.removeEventListener('touchstart', this.handleResizeTouchStart)
-    this.absoluteDiv.removeEventListener('mousedown', this.handleTouchStart)
-    this.absoluteDiv.removeEventListener('touchstart', this.handleTouchStart)
+
+    this.editIcon.addEventListener('click', this.handleEditClick)
   }
 
+  //initialize things
   ngOnInit(): void {
     this.initialObject = {start: this.event.start, end: this.event.end}
     this.absoluteDiv = this.el.nativeElement;
@@ -58,15 +54,21 @@ export class DragdropDirective{
 
   ngOnDestroy() {
     this.clearTouch()
+    this.editIcon.removeEventListener('click', this.handleEditClick)
   }
   
-  handleTouchStart(event: any, bool: boolean) {
+  handleTouchStart = (event: any) => {
     this.handleMouseDown(event)
   }
-  handleResizeTouchStart() {
+
+  handleResizeTouchStart = (event: any) => {
     this.handleMouseDown(event, true);
   }
 
+  handleEditClick = () => {
+    console.log('tes')
+    // this.popOut(true)
+  }
   
   handleMouseDown(event: any, element?: boolean) {
     event.stopPropagation();
@@ -74,48 +76,48 @@ export class DragdropDirective{
 
     const isTouchEvent = event.type.startsWith('touch');
     const clientY = isTouchEvent ? event.touches[0].clientY : event.clientY;
-
+    const timeout = 800
     this.initialMouseY = clientY;
     this.initialRelativeTop = this.absoluteDiv.getBoundingClientRect().top;
-    
-    
-  
-    if (isTouchEvent) {
-          if(!this.touched){
-            this.mouseDownTimeOut = setTimeout(() => { 
-              this.popOut(true)
-              navigator.vibrate(4000)
-              // activate listeners
-              this.activateMouseUpListeners()
-              this.activateMoveListeners()
 
-              document.removeEventListener('touchend', this.clearTouch)
-              clearTimeout(this.mouseDownTimeOut)
-            }, 300);
-            document.addEventListener('touchend', this.clearTouch, { once: true });
-          } 
-          else {
-            clearTimeout(this.mouseDownTimeOut)
-            this.mouseDownTimeOut = setTimeout(() => {
-              // activate listeners
-              this.activateMouseUpListeners()
-              this.activateMoveListeners()
-            }, 150);
-            document.addEventListener('touchend', this.clearTouch, { once: true })
-          }
-      return 
-    } 
+    if(isTouchEvent) {
+      document.addEventListener('touchend', this.clearTouch, { once: true });
 
-    this.popOut(true)
-    this.activateMoveListeners()
-    this.activateMouseUpListeners()
+      this.mouseDownTimeOut = setTimeout(() => {
+        this.popOut(true)
+        navigator.vibrate(4000)
+        // activate listeners
+        if(element) {
+          this.activateResizeListeners();
+        } else {
+          this.activateListeners();
+        }
+        document.removeEventListener('touchend', this.clearTouch)
+        clearTimeout(this.mouseDownTimeOut)
+      }, 300);
+    } else {    
+      this.popOut(true);
+      if(element) {
+        this.activateResizeListeners();
+      } else {
+        this.activateListeners();
+      }
+    }
+
+    this.poputTimeOut = setTimeout(() => {
+      if(this.initialObject.end == this.event.end && this.initialObject.start == this.event.start){
+        this.removeListeners()
+        this.removeResizeListeners()
+        clearTimeout(this.poputTimeOut)
+      }
+    }, timeout);
   }
 
-  popOut(bool: boolean) { // 
-    this.touched = bool;
-    this.touched ? this.absoluteDiv.classList.add('touched') : this.absoluteDiv.classList.remove('touched')
+  popOut(bool: boolean) {
+    this.opened = bool;
+    this.opened ? this.absoluteDiv.classList.add('touched') : this.absoluteDiv.classList.remove('touched')
     clearTimeout(this.touchTimeOut)
-    if(this.touched) {
+    if(this.opened) {
       this.touchTimeOut = setTimeout(() => { // from touch to touch there has to be 200ms, or anim will fail.
         this.absoluteDiv.style.zIndex = 10000;
       }, 200);
@@ -124,10 +126,10 @@ export class DragdropDirective{
     this.absoluteDiv.style.zIndex = 'auto';
   }
 
-  clearTouch = () => { 
+  clearTouch = () => { // when we move something and we wanna finish it
     clearTimeout(this.mouseDownTimeOut);
-    this.removeMoveListeners()
-    this.removeMouseUpListeners()
+    this.removeResizeListeners()
+    this.removeListeners()
     this.popOut(false)
     this.changeMouseCursor('default');
   };
@@ -230,36 +232,36 @@ export class DragdropDirective{
     document.body.style.cursor = cursor
   }
 
-  activateMoveListeners = () => {
+  activateListeners = () => {
     document.addEventListener('touchmove', this.handleMouseMove);
     document.addEventListener('mousemove', this.handleMouseMove);
-    //resize v
-    document.addEventListener('touchmove', this.handleResizeMouseMove);
-    document.addEventListener('mousemove', this.handleResizeMouseMove);
-  }
 
-  removeMoveListeners = () => {
-    document.removeEventListener('touchmove', this.handleMouseMove);
-    document.removeEventListener('mousemove', this.handleMouseMove);
-    // resize v
-    document.removeEventListener('touchmove', this.handleResizeMouseMove);
-    document.removeEventListener('mousemove', this.handleResizeMouseMove);
-  };
-
-  activateMouseUpListeners = () => {
     document.addEventListener('mouseup', this.handleMouseUp);
     document.addEventListener('touchend', this.handleMouseUp);
-    //resize v
+  }
+  removeListeners = () => {
+    document.removeEventListener('touchend', this.handleMouseUp);
+    document.removeEventListener('mouseup', this.handleMouseUp);
+    // mousemove
+    document.removeEventListener('touchmove', this.handleMouseMove);
+    document.removeEventListener('mousemove', this.handleMouseMove);
+  };
+  
+
+  activateResizeListeners = () => {
+    document.addEventListener('touchmove', this.handleResizeMouseMove);
+    document.addEventListener('mousemove', this.handleResizeMouseMove);
+    //activate mouseup
     document.addEventListener('mouseup', this.handleResizeMouseUp);
     document.addEventListener('touchend', this.handleResizeMouseUp);
   }
-  
-  removeMouseUpListeners = () => {
-    document.removeEventListener('touchend', this.handleMouseUp);
-    document.removeEventListener('mouseup', this.handleMouseUp);
-    // resize v
-    document.removeEventListener('touchend', this.handleResizeMouseUp);
+  removeResizeListeners = () => {
+    document.removeEventListener('touchmove', this.handleResizeMouseMove);
+    document.removeEventListener('mousemove', this.handleResizeMouseMove);
+    // remove mouseup
     document.removeEventListener('mouseup', this.handleResizeMouseUp);
-  }
+    document.removeEventListener('touchend', this.handleResizeMouseUp);
+  };
   
+ 
 }

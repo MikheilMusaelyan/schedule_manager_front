@@ -8,7 +8,7 @@ import { openComponent } from './UI-store/UI.actions';
 
 export function setZIndexToAuto(className: string){
   document.querySelectorAll(`.${className}`).forEach((element: HTMLDivElement) => {
-    element.style.zIndex = 'auto'
+    element.style.background = 'auto'
   })
 }
 
@@ -45,13 +45,13 @@ export class AppComponent {
   }
 
   @HostListener('document:click', ['$event'])
-  onDocumentClick(event: MouseEvent): void {
-    if (!this.clickedOnAbsoluteDiv(event.target as HTMLElement)) {
+  onDocumentClick(event: MouseEvent) {
+    if (!this.clickedOnAbsoluteDiv(event.target)) {
      setZIndexToAuto('absolute')
     }
   }
 
-  clickedOnAbsoluteDiv(element: HTMLElement): boolean {
+  clickedOnAbsoluteDiv(element: any) {
     while (element) {
       if (element.classList.contains('absolute')) {
         return true;
@@ -60,10 +60,5 @@ export class AppComponent {
     }
     return false;
   }
-
-  ngAfterViewInit() {
-    
-  }
- 
 }
 
