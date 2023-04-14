@@ -4,7 +4,9 @@ export let childs: Node[] = []
     start: number;
     end: number;
     children: Node[];
-    id?: number;
+    id: number;
+    color: any;
+    colorSet: boolean;
   }
 
   let nodesCount: number = 0
@@ -200,21 +202,16 @@ export function resizeEvent(e: any, thisEvent: Node, parent: Node[], index: numb
   } 
 }
 
-
-newNode(childs, { start: 2, end: 20, children: []}) 
-newNode(childs, { start: 3, end: 14, children: []}) 
-newNode(childs, { start: 5, end: 10, children: []}) 
-newNode(childs, { start: 8, end: 10, children: []}) 
-newNode(childs, { start: 8, end: 10, children: []}) 
-newNode(childs, { start: 8, end: 10, children: []}) 
-
-newNode(childs, { start: 8, end: 10, children: []}) 
-newNode(childs, { start: 8, end: 10, children: []}) 
-
-newNode(childs, { start: 8, end: 10, children: []}) 
-
-newNode(childs, { start: 8, end: 10, children: []}) 
-
-newNode(childs, { start: 8, end: 10, children: []}) 
+newNode(childs, { start: 2, end: 20, children: [], id: null, color: {}, colorSet: false}) 
+newNode(childs, { start: 3, end: 14, children: [], id: null, color: {}, colorSet: false}) 
+newNode(childs, { start: 5, end: 10, children: [], id: null, color: {}, colorSet: false}) 
+newNode(childs, { start: 8, end: 10, children: [], id: null, color: {}, colorSet: false}) 
+newNode(childs, { start: 8, end: 10, children: [], id: null, color: {}, colorSet: false}) 
+newNode(childs, { start: 8, end: 10, children: [], id: null, color: {}, colorSet: false}) 
+newNode(childs, { start: 8, end: 10, children: [], id: null, color: {}, colorSet: false}) 
+newNode(childs, { start: 8, end: 10, children: [], id: null, color: {}, colorSet: false}) 
+newNode(childs, { start: 8, end: 10, children: [], id: null, color: {}, colorSet: false}) 
+newNode(childs, { start: 8, end: 10, children: [], id: null, color: {}, colorSet: false}) 
+newNode(childs, { start: 8, end: 10, children: [], id: null, color: {}, colorSet: false}) 
 
 

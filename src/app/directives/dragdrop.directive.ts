@@ -1,4 +1,4 @@
-import { Directive, ElementRef, EventEmitter, Input, Output} from '@angular/core';
+import { Directive, ElementRef, EventEmitter, Input, Output, SimpleChanges} from '@angular/core';
 import { Store } from '@ngrx/store';
 import * as nodes from 'src/app/nodes'
 import { UIState } from '../UI-store';
@@ -11,7 +11,17 @@ export class DragdropDirective{
   @Input('divList') divList: any;
   @Input('event') event: any;
   @Input('resizeDiv') resizeDiv: any;
-  @Input('editIcon') editIcon: any
+  @Input('editIcon') editIcon: any;
+    
+  counter: number = 0
+
+  @Input() set pickedColor(value: any) {
+    this.counter++
+    if(this.counter > 1) {
+      this.clearTouch()
+    }
+  }
+
 
   private absoluteDiv: any;
   private initialRelativeTop: any;
@@ -35,7 +45,6 @@ export class DragdropDirective{
 
   constructor(
     private el: ElementRef,
-    private store: Store<UIState>
   ) {
 
   }
@@ -68,6 +77,7 @@ export class DragdropDirective{
     // }
     this.openDetailsWindow.emit(false)    
     this.handleMouseDown(event)
+    this.counter++
   }
 
   handleResizeTouchStart = (event: any) => {
@@ -87,48 +97,51 @@ export class DragdropDirective{
     event.stopPropagation();
     event.preventDefault();
 
+    let startTime = new Date().getTime();
+    let endTime = 0;
+
     const isTouchEvent = event.type.startsWith('touch');
     const clientY = isTouchEvent ? event.touches[0].clientY : event.clientY;
     this.initialMouseY = clientY;
     this.initialRelativeTop = this.absoluteDiv.getBoundingClientRect().top;
 
-    if(isTouchEvent) {
-      document.addEventListener('touchend', this.clearTouch, { once: true });
+    const timeout = isTouchEvent ? 350 : 200;
+    const mouseEndName = isTouchEvent ? 'touchend' : 'mouseup';
 
-      this.mouseDownTimeOut = setTimeout(() => {
-        this.popOut(true)
-        navigator.vibrate(4000)
-        // activate listeners
-        if(element) {
-          this.activateResizeListeners();
-        } else {
-          this.activateListeners();
+    //(1) on web, we have to hold down for minimum of 200 ms to move an event
+    document.addEventListener(mouseEndName, this.clearTouch, { once: true }); //(1)
+      
+    this.mouseDownTimeOut = setTimeout(() => {
+      this.popOut(true)
+      // activate listeners
+      element ? this.activateResizeListeners() : this.activateListeners();
+      document.removeEventListener(mouseEndName, this.clearTouch); //(1)
+      clearTimeout(this.mouseDownTimeOut)
+    }, timeout);
+
+    if(!isTouchEvent){
+      //if we held down for more than 400ms, it doesn't work
+      document.addEventListener('mouseup', () => {
+        endTime = new Date().getTime();
+        if (endTime - startTime < 400 && this.counter % 2 == 0) {
+          this.openDetailsWindow.emit(true);
         }
-        document.removeEventListener('touchend', this.clearTouch)
-        clearTimeout(this.mouseDownTimeOut)
-      }, 300);
-    } else {    
-      this.popOut(true);
-      if(element) {
-        this.activateResizeListeners();
-      } else {
-        this.activateListeners();
-      }
-    }
+      }, {once: true});
 
-    document.addEventListener('touchend', () => clearTimeout(this.poputTimeOut), {once: true});
-    document.addEventListener('mouseup', () => clearTimeout(this.poputTimeOut), {once: true})
-    this.poputTimeOut = setTimeout(() => {
-      document.removeEventListener('touchend', () => clearTimeout(this.poputTimeOut));
-      document.removeEventListener('mouseup', () => clearTimeout(this.poputTimeOut))
-      if(this.initialObject.end == this.event.end && this.initialObject.start == this.event.start){
-        this.removeListeners()
-        this.removeResizeListeners()
-        clearTimeout(this.poputTimeOut)
-        // this.store.dispatch(openAbsolute({bool: true}))
-        this.openDetailsWindow.emit(true)
-      }
-    }, 800);
+    } else {
+      document.addEventListener('touchend', () => clearTimeout(this.poputTimeOut), {once: true});
+
+      this.poputTimeOut = setTimeout(() => {
+        document.removeEventListener('touchend', () => clearTimeout(this.poputTimeOut));
+        if(this.initialObject.end == this.event.end && this.initialObject.start == this.event.start){
+          this.removeListeners()
+          this.removeResizeListeners()
+          clearTimeout(this.poputTimeOut)
+          // this.store.dispatch(openAbsolute({bool: true}))
+          this.openDetailsWindow.emit(true)
+        }
+      }, 600);
+    };
   }
 
   popOut(bool: boolean) {
@@ -172,18 +185,14 @@ export class DragdropDirective{
   }
 
   handleResizeMouseUp = (event: any) => {
-    if(
-      this.initialObject.end != this.event.end
-    ) {
+    if(this.initialObject.end != this.event.end) {
       this.resizeEmitter.emit(this.initialObject.end < this.event.end);
       this.initialObject.end = this.event.end;
     }
-    
     this.clearTouch()
   }
   
   autoScroll(e: any) {    
-    
     const isTouchEvent = e.type.startsWith('touch');
     const clientY = isTouchEvent ? e.touches[0].clientY : e.clientY;
     
@@ -191,11 +200,11 @@ export class DragdropDirective{
     const distanceFromTop = clientY;
     
     if (distanceFromBottom <= this.scrollThreshhold) {
-      window.scrollBy(0, 30);
+      window.scrollBy(0, 20);
     }
     
     if (distanceFromTop <= this.scrollThreshhold) {
-      window.scrollBy(0, -30);
+      window.scrollBy(0, -20);
     }
   }
 

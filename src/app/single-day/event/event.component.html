@@ -4,8 +4,10 @@
         'left': (level * 150) + 50 + 'px',
     }"
 >
-    <div class="color" *ngFor="let color of colors" [ngStyle]="{'background': color.value}" (click)="selectColor(color.value)">
-        <div *ngIf="color == selectedColor" class="selected-color"></div>
+    <div class="color-wrap">
+        <div class="color" *ngFor="let color of colors" [ngStyle]="{'background': color.value}" (click)="selectColor(color)">
+            <div *ngIf="color.value == thisEvent.color.value" class="selected-color"></div>
+        </div>
     </div>
 
     <button class="delete-wrap">
@@ -23,22 +25,21 @@
     [divList]=divList
     [event]="thisEvent"
     [resizeDiv]="resize"
+    [pickedColor]="pickedColor"
     
     [ngStyle]="{
         'width': 250 > WINDOW - (level * 150) ? '250px' : WINDOW - (level * 150) + 'px',
         'left': (level * 150) + 'px',
         'height': (40 * (+thisEvent.end - +thisEvent.start)) - 1 + 'px',
         'top': (+divList.offsetTop) + (+thisEvent.start * 40) + 'px',
-        'background': selectedColor
+        'background': thisEvent.color.value
     }"
 
     [ngClass]="{
-        'evenEvent' : level % 2 == 0,
         'smallEvent': 2 > (+thisEvent.end - +thisEvent.start)
     }"
-    
     >
-    <div class="event-info">
+    <div class="event-info" [ngStyle]="{'color': thisEvent.color.pastel ? 'black' : 'white'}">
         <span class="event-time">
             <div>{{getEventTime().start.hours}}:{{getEventTime().start.minutes == 0 ? '00' : getEventTime().start.minutes }}{{getEventTime().start.meridiem}} -</div>
             <div style="width: 4px; height: 2px;"></div>
@@ -47,6 +48,7 @@
         <span class="event-name">
             (event name)
         </span>
+        
     </div>
 
     <div #resize class="resize-div-wrap">

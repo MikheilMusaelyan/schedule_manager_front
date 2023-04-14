@@ -12,13 +12,17 @@ import { faTrash } from '@fortawesome/free-solid-svg-icons';
   styleUrls: ['./event.component.css'],
   animations: [
     trigger('wrapper', [
-      state('false', style({
+      state('void', style({
         'opacity': '0',
+        'width' : '0',
+        'height': '0',
       })),
-      state('true', style({
+      state('normal', style({
         'opacity': '1',
-      })),
-      transition('false <=> true', animate('300ms ease'))
+        'width': '170px',
+        'height': '107px',
+      })),  
+      transition('normal <=> void', animate('450ms cubic-bezier(0.68, -0.55, 0.265, 1.2)'))
     ])
   ]
 })
@@ -35,24 +39,21 @@ export class EventComponent {
   detailsOpen: boolean;
   wrapper: string = 'false';
   deleteIcon = faTrash;
-
+  pickedColor: boolean = false;
    colors: any[] = [
-    {value: 'red'},
-    {value: 'orange'},
-    {value: 'blue'},
-    {value: 'green'},
-    {value: 'pink'},
-    {value: 'yellow'},
-    {value: '#FFB6C1'},
-    {value: '#FFDAB9'},
-    {value: '#ADD8E6'},
-    {value: '#98FB98'},
-    {value: '#FFC0CB'},
-    {value: '#F0E68C'}
+    { value: 'red', pastel: false },
+    { value: 'orange', pastel: false },
+    { value: 'blue', pastel: false },
+    { value: 'green', pastel: false },
+    { value: 'rgb(250 137 157)', pastel: false },
+    { value: 'yellow', pastel: true },
+    { value: '#fc5454', pastel: true },
+    { value: '#FFDAB9', pastel: true },
+    { value: '#B8E8FC', pastel: true },
+    { value: '#98FB98', pastel: true },
+    { value: 'pink', pastel: true },
+    { value: '#F0E68C', pastel: true }
   ];
-  
-  selectedColor: string;
-
   constructor(
     private store: Store<AppState>
   ){}
@@ -61,11 +62,21 @@ export class EventComponent {
     this.WINDOW = window.innerWidth - 287
     this.level += 1;
     this.thisEvent = this.parent[this.index];
+    if(!this.thisEvent.colorSet) {
+      if(this.level % 2 == 0) {
+        this.thisEvent.color = {value: 'B8E8FC', pastel: false}
+        return
+      }
+      this.thisEvent.color = {value: 'rgb(152, 251, 152)', pastel: true}
+    }
   }
 
   selectColor(color: string){
-    this.selectedColor = color
-    console.log(this.selectedColor)
+    this.thisEvent.color = color;
+    this.thisEvent.colorSet = true;
+    this.wrapper = 'void';
+    this.detailsOpen = false;
+    this.pickedColor = !this.pickedColor;
   }
 
   ngAfterViewInit(){
@@ -75,7 +86,7 @@ export class EventComponent {
   }
 
   openDetails(bool: boolean) {
-    this.wrapper = String(bool);
+    this.wrapper = bool ? 'normal' : 'void';
     this.detailsOpen = bool;
   }
 

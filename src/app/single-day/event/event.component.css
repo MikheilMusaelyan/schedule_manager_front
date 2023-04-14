@@ -18,10 +18,6 @@
     transition: background-color 200ms;
   }
 
-  .absolute:hover {
-    background-color: rgb(5, 160, 238);
-  }
-
   .smallEvent > .event-info{
     padding: 3px 2px 0 6px !important;
     display: flex !important;
@@ -71,24 +67,18 @@
     display: flex;
   }
 
-  .evenEvent{
-    background-color: #B8E8FC;
-    color: rgb(0, 0, 0);
-  }
-  .evenEvent > .editIcon > .line{
-    color: #666;
-  }
-
   .details{
     position: absolute;
-    display: flex;
-    flex-wrap: wrap;
     width: 170px;
+    height: 107px;
     background-color: white;
     box-shadow: 0 4px 15px rgba(125, 125, 125, 0.433);
     z-index: 10001;
     border-radius: 15px;
     padding: 10px;
+    transform-origin: top left;
+    overflow: hidden;
+    transition: 300ms;
   }
 
   .color{
@@ -102,6 +92,11 @@
     margin: 0 2px 7px 2px;
     cursor: pointer;
   }
+  .color-wrap{
+    display: flex;
+    flex-wrap: wrap;
+    width: 150px;
+  }
 
   .selected-color{
     position: absolute;
@@ -112,7 +107,7 @@
   }
 
   .delete-wrap{
-    width: 100%;
+    width: 150px;
     padding: 5px;
     margin-top: 4px;
     border: none !important;
