@@ -12,7 +12,8 @@ main{
     padding-top: 40px;
     border-radius: 10px;
     position: relative;
-    overflow: auto;
+    overflow-x: auto;
+    overflow-y: hidden
 }
 
 .time-row-wrap{

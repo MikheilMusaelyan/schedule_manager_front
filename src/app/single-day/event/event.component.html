@@ -1,3 +1,19 @@
+<div class="details" *ngIf="detailsOpen" [@wrapper]="wrapper"
+    [ngStyle]="{
+        'top': +thisEvent.start > 92 ? ((+divList.offsetTop) + (+thisEvent.start * 40)) - 130 + 'px' : ((+divList.offsetTop) + (+thisEvent.start * 40)) + 50 + 'px',
+        'left': (level * 150) + 50 + 'px',
+    }"
+>
+    <div class="color" *ngFor="let color of colors" [ngStyle]="{'background': color.value}" (click)="selectColor(color.value)">
+        <div *ngIf="color == selectedColor" class="selected-color"></div>
+    </div>
+
+    <button class="delete-wrap">
+        <span class="delete-span">Delete</span>
+        <fa-icon class="delete-icon" [icon]="deleteIcon"></fa-icon>
+    </button>
+</div>
+
 <div  
     class="absolute"
     appDragdrop 
@@ -7,13 +23,13 @@
     [divList]=divList
     [event]="thisEvent"
     [resizeDiv]="resize"
-    [editIcon]="editIcon"
     
     [ngStyle]="{
         'width': 250 > WINDOW - (level * 150) ? '250px' : WINDOW - (level * 150) + 'px',
         'left': (level * 150) + 'px',
         'height': (40 * (+thisEvent.end - +thisEvent.start)) - 1 + 'px',
         'top': (+divList.offsetTop) + (+thisEvent.start * 40) + 'px',
+        'background': selectedColor
     }"
 
     [ngClass]="{

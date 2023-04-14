@@ -66,9 +66,7 @@ export class DragdropDirective{
     //     return
     //   }
     // }
-    if(!this.opened) {
-      this.openDetailsWindow.emit(false)
-    }
+    this.openDetailsWindow.emit(false)    
     this.handleMouseDown(event)
   }
 
@@ -81,6 +79,7 @@ export class DragdropDirective{
     //     return
     //   }
     // }
+    this.openDetailsWindow.emit(false)    
     this.handleMouseDown(event, true);
   }
   

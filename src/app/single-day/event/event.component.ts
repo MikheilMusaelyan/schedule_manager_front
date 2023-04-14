@@ -3,11 +3,24 @@ import { Store } from '@ngrx/store';
 import * as nodes from "src/app/nodes";
 import { AppState } from 'src/app/reducers';
 import { changeTree } from '../event.actions';
+import { animate, state, style, transition, trigger } from '@angular/animations';
+import { faTrash } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-event',
   templateUrl: './event.component.html',
-  styleUrls: ['./event.component.css']
+  styleUrls: ['./event.component.css'],
+  animations: [
+    trigger('wrapper', [
+      state('false', style({
+        'opacity': '0',
+      })),
+      state('true', style({
+        'opacity': '1',
+      })),
+      transition('false <=> true', animate('300ms ease'))
+    ])
+  ]
 })
 export class EventComponent {
   @Input('parent') parent: nodes.Node[];
@@ -20,6 +33,25 @@ export class EventComponent {
   thisEvent: any;
   WINDOW: number;
   detailsOpen: boolean;
+  wrapper: string = 'false';
+  deleteIcon = faTrash;
+
+   colors: any[] = [
+    {value: 'red'},
+    {value: 'orange'},
+    {value: 'blue'},
+    {value: 'green'},
+    {value: 'pink'},
+    {value: 'yellow'},
+    {value: '#FFB6C1'},
+    {value: '#FFDAB9'},
+    {value: '#ADD8E6'},
+    {value: '#98FB98'},
+    {value: '#FFC0CB'},
+    {value: '#F0E68C'}
+  ];
+  
+  selectedColor: string;
 
   constructor(
     private store: Store<AppState>
@@ -31,6 +63,11 @@ export class EventComponent {
     this.thisEvent = this.parent[this.index];
   }
 
+  selectColor(color: string){
+    this.selectedColor = color
+    console.log(this.selectedColor)
+  }
+
   ngAfterViewInit(){
     window.addEventListener('resize', () => {
       this.WINDOW = window.innerWidth - 287
@@ -38,12 +75,11 @@ export class EventComponent {
   }
 
   openDetails(bool: boolean) {
+    this.wrapper = String(bool);
     this.detailsOpen = bool;
-    console.log(this.detailsOpen)
   }
 
   deleteEvent(){
-
   }
 
   moveEvent() {

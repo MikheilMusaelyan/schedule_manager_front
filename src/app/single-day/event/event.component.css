@@ -16,7 +16,6 @@
     cursor: pointer;
     transform-origin: top left;
     transition: background-color 200ms;
-    overflow: hidden;
   }
 
   .absolute:hover {
@@ -78,4 +77,58 @@
   }
   .evenEvent > .editIcon > .line{
     color: #666;
+  }
+
+  .details{
+    position: absolute;
+    display: flex;
+    flex-wrap: wrap;
+    width: 170px;
+    background-color: white;
+    box-shadow: 0 4px 15px rgba(125, 125, 125, 0.433);
+    z-index: 10001;
+    border-radius: 15px;
+    padding: 10px;
+  }
+
+  .color{
+    position: relative;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 20px;
+    height: 20px;
+    margin: 0 2px 7px 2px;
+    cursor: pointer;
+  }
+
+  .selected-color{
+    position: absolute;
+    width: 7px;
+    height: 7.2px;
+    background-color: white;
+    border-radius: 50%;
+  }
+
+  .delete-wrap{
+    width: 100%;
+    padding: 5px;
+    margin-top: 4px;
+    border: none !important;
+    outline: none !important;
+    background: var(--rootColor);
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px;
+  }
+  .delete-icon{
+    font-size: var(--fsM);
+  }
+  .delete-span{
+    display: block;
+    padding-right: 5px;
+    font-size: var(--fsM);
   }
