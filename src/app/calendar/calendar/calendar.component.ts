@@ -3,6 +3,9 @@ import { Store, select } from '@ngrx/store';
 import { AppState } from 'src/app/reducers';
 import { selectToday } from '../calendar.selectors';
 import { Subscription } from 'rxjs';
+import { Router } from '@angular/router';
+import { selectDate } from '../calendar.actions';
+
 
 @Component({
   selector: 'app-calendar',
@@ -11,39 +14,35 @@ import { Subscription } from 'rxjs';
 })
 
 export class CalendarComponent {
-  today: Date;
-  currentYear: number;
-  currentMonth: number;
-  currentDay: number;
-  daysInMonth: number;
-  firstDayOfMonth: number;
-
-  realToday: Date = this.getDateWithoutHours(new Date()); // current date, no hours
-  
+  selectedDate: Date;
   rows: any[] = [];
-
   todaySubscription: Subscription;
  
   constructor(
-    private store: Store<AppState>
+    private store: Store<AppState>,
+    private router: Router
   ) {
     this.todaySubscription = this.store.pipe(select(selectToday))
     .subscribe((today: Date) => {
-      const fixedToday = this.getDateWithoutHours(today)
-      this.setNewDate(fixedToday)
-      this.renderCalendar();
-    }, error => console.error(error));
+      this.renderCalendar(this.setNewDate(today));
+    }, (error) => console.error(error))
   }
 
-  renderCalendar() {
+  goToSingleDay(day: number) {
+    let newDate: Date = new Date(this.selectedDate.setDate(day))
+    this.store.dispatch(selectDate({date: newDate}))
+    // this.store.dispatch(selectDate({date: newDate}))
+  };
+
+  renderCalendar(today: any) {
     this.rows = []
     let row = [];
-    for (let i = 0; i < this.firstDayOfMonth; i++) {
+    for (let i = 0; i < today.firstDayOfMonth; i++) {
       row.push(null);
     }
-    for (let i = 1; i <= this.daysInMonth; i++) {
+    for (let i = 1; i <= today.daysInMonth; i++) {
       row.push(i);
-      if ((i + this.firstDayOfMonth) % 7 === 0) {
+      if ((i + today.firstDayOfMonth) % 7 === 0) {
         this.rows.push(row);
         row = [];
       }
@@ -57,32 +56,21 @@ export class CalendarComponent {
   }
 
   setNewDate(today: Date) {
-    this.today = today;
-    this.currentYear = today.getFullYear();
-    this.currentMonth = today.getMonth();
-    this.currentDay = today.getDate();
-    this.daysInMonth = new Date(this.currentYear, this.currentMonth + 1, 0).getDate();
-    this.firstDayOfMonth = new Date(this.currentYear, this.currentMonth, 1).getDay();
+    this.selectedDate = new Date(today);
+    const newDate: any = { // to render the calendar
+      daysInMonth: new Date(this.selectedDate.getFullYear(), this.selectedDate.getMonth() + 1, 0).getDate(),
+      firstDayOfMonth: new Date(this.selectedDate.getFullYear(), this.selectedDate.getMonth(), 1).getDay(),
+    }; 
+    return newDate
   }
+
+  isDayToday(day: number) {
+    return this.selectedDate.getMonth() == new Date().getMonth() &&
+    this.selectedDate.getFullYear() == new Date().getFullYear() &&
+    new Date().getDate() == day;
+  };
 
   ngOnDestroy(): void {
     this.todaySubscription.unsubscribe();
   }
-
-  gotToday() {
-    if(!this.today){
-      return false
-    } else {
-      return new Date(this.today).toString() == this.getDateWithoutHours(new Date()).toString()
-    }
-  }
-
-  getDateWithoutHours(date: Date) {
-    date.setHours(0)
-    date.setMinutes(0);
-    date.setSeconds(0);
-    date.setMilliseconds(0);
-    return date
-  }
-
 }

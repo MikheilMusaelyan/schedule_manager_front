@@ -50,7 +50,7 @@ export class DragdropDirective{
   }
   
   ngAfterViewInit() {
-    this.scrollThreshhold =  window.innerHeight / 6; //for autoscroll
+    this.scrollThreshhold =  window.innerHeight / 4; //for autoscroll
     this.resizeDiv.addEventListener('mousedown', this.handleResizeTouchStart)
     this.resizeDiv.addEventListener('touchstart', this.handleResizeTouchStart)
     this.absoluteDiv.addEventListener('mousedown', this.handleTouchStart)
@@ -204,11 +204,11 @@ export class DragdropDirective{
     const distanceFromTop = clientY;
     
     if (distanceFromBottom <= this.scrollThreshhold) {
-      window.scrollBy(0, 20);
+      window.scrollBy(0, 25);
     }
     
     if (distanceFromTop <= this.scrollThreshhold) {
-      window.scrollBy(0, -20);
+      window.scrollBy(0, -25);
     }
   }
 

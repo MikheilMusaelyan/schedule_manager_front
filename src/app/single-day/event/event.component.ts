@@ -43,7 +43,7 @@ export class EventComponent {
    colors: any[] = [
     { value: 'red', pastel: false },
     { value: 'orange', pastel: false },
-    { value: 'blue', pastel: false },
+    { value: 'var(--eventColor)', pastel: false },
     { value: 'green', pastel: false },
     { value: 'rgb(250 137 157)', pastel: false },
     { value: 'yellow', pastel: true },
@@ -62,12 +62,6 @@ export class EventComponent {
     this.WINDOW = window.innerWidth - 287
     this.level += 1;
     this.thisEvent = this.parent[this.index];
-    if(!this.thisEvent.colorSet) {
-      // if(this.level % 2 == 0) {
-      //   return
-      // }
-      this.thisEvent.color = {value: 'B8E8FC', pastel: false}
-    }
   }
 
   selectColor(color: string){

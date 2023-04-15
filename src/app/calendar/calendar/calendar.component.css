@@ -76,16 +76,22 @@ td {
 }
 
 /* current day */
-.c-day {
+.c-day, .busy-day{
     background: var(--mainBackground) !important;
 }
-.c-day-span{
-    background-color: var(--rootColor) !important;
+.c-day > .day-span,
+.busy-day > .day-span{
     color: white !important;
     margin: 0 !important;
-    top: -1.2px ;
-    left: -1.2px ;
-    border-radius: 2px 2px 50% 2px;
+    top: -1.2px !important;
+    left: -1.2px !important;
+    border-radius: 2px 2px 50% 2px !important;
+}
+.c-day > .day-span{
+    background-color: var(--rootColor) !important;
+}
+.busy-day > .day-span{
+    background-color: var(--orange) !important;
 }
 
 .c-day-events{
@@ -100,7 +106,7 @@ td {
     display: inline-block;
 }
 .c-day-events-c {
-    padding-right: 7px;
+    padding-right: 5px;
     font-size: 30px;
     color: var(--rootColor) ;
 }

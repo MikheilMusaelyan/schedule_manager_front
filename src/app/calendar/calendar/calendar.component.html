@@ -1,4 +1,4 @@
-<main *ngIf="today">
+<main>
 <div class="container">
     <section class="year-wrap"> 
         <app-year></app-year>
@@ -17,14 +17,18 @@
         </thead>
         <tbody>
             <tr *ngFor="let row of rows">
-                <td *ngFor="let day of row" #td [ngClass]="{ 'c-day': currentDay == day && gotToday() }">
-                    <span class="day-span" [ngClass]="{ 'c-day-span': currentDay == day && gotToday() }">{{ day }}</span>
+                <td *ngFor="let day of row" #td 
+                [ngClass]="{
+                    'c-day': isDayToday(day),
+                    'busy-day': false,
+                }">
+                    <span class="day-span">{{ day }}</span>
                     <div 
                         class="toggle-wrapper" 
                         *ngIf="day != null"
-                        routerLink="singleday"
+                        (click)="goToSingleDay(day)"
                     >
-                        <div class="c-day-events" *ngIf="currentDay == day && gotToday()">
+                        <div class="c-day-events" *ngIf="isDayToday(day)">
                             <h2 class="c-day-events-c">0</h2>
                             <h2 class="c-day-events-s">Events</h2>
                         </div>

@@ -8,7 +8,8 @@
         <div class="color" *ngFor="let color of colors" [ngStyle]="{'background': color.value}" (click)="selectColor(color)">
             <div *ngIf="color.value == thisEvent.color.value" class="selected-color"></div>
         </div>
-    </div>
+    </div>   
+
 
     <button class="delete-wrap">
         <span class="delete-span">Delete</span>

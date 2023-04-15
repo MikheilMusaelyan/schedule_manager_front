@@ -51,7 +51,6 @@ export class YearComponent {
     for(let i = -1; i < 11; i++) {
       this.years.push(new Date().getFullYear() + i)
     }
-  
   }
   
   ngOnInit() {

@@ -12,7 +12,7 @@ const routes: Routes = [
     //   // { path: ''}
     // ],
   },
-  { path: 'singleday', component: SingleDayComponent }
+  { path: 'singleday/:day/:month/:year', component: SingleDayComponent }
 ];
 
 @NgModule({

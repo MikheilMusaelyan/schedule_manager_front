@@ -5,6 +5,8 @@ import { AppState } from '../reducers';
 import { Observable, Subscription } from 'rxjs';
 import { detectChange } from './event.selectors';
 import { faArrowLeft, faArrowRight } from '@fortawesome/free-solid-svg-icons';
+import { selectToday } from '../calendar/calendar.selectors';
+import { selectDate } from '../calendar/calendar.actions';
 
 @Component({
   selector: 'app-single-day',
@@ -13,21 +15,23 @@ import { faArrowLeft, faArrowRight } from '@fortawesome/free-solid-svg-icons';
 })
 export class SingleDayComponent implements OnInit, AfterViewInit{
   @ViewChild('main', {static: false}) main: any;
-  @ViewChild('divList', {static: false}) divList: any
-
-  nodes: any[];
-  myDivList: any;
-  rows: any[] = [];
-  detectEventChanges$: Observable<boolean>;
-  mainScrollWidth: number;
-  changeSubscription: Subscription;
+  @ViewChild('divList', {static: false}) divList: any;
 
   scrollRight = faArrowRight;
   scrollLeft = faArrowLeft;
 
+  nodes: any[];
+  myDivList: any;
+  rows: any[] = [];
+  mainScrollWidth: number;
+  changeSubscription: Subscription;
+
   intervalTimeout: any;
   touchEvent: boolean;
 
+  todaySubscription: Subscription
+  
+  //designs
   constructor(
     private store: Store<AppState>
   ) {
@@ -46,6 +50,10 @@ export class SingleDayComponent implements OnInit, AfterViewInit{
       }
     }
     this.rows.push({})
+
+    this.todaySubscription = this.store.pipe(select(selectToday))
+    .subscribe((today: Date) => {
+    })
   }
 
   ngOnInit() {
@@ -53,13 +61,15 @@ export class SingleDayComponent implements OnInit, AfterViewInit{
       this.nodes = nodes.childs;
     }, 0);
   }   
-  
+
+  // change designs 
   ngAfterViewInit(): void  {
     this.touchEvent = 'ontouchstart' in window;
 
     window.addEventListener('resize', () => {
       this.changeWidthValue()
     });
+
     setTimeout(() => {
       this.mainScrollWidth = this.main.nativeElement.scrollWidth;
 
@@ -94,6 +104,7 @@ export class SingleDayComponent implements OnInit, AfterViewInit{
     window.removeEventListener('resize', () => {
       this.changeWidthValue()
     });
+    this.todaySubscription.unsubscribe()
     this.changeSubscription.unsubscribe()
   }
 
