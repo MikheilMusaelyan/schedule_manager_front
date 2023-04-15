@@ -126,23 +126,6 @@ export class EventComponent {
     const treeSlice = JSON.parse(JSON.stringify(nodes.childs))
     this.store.dispatch(changeTree({tree: treeSlice}))
   }
-  
-  // flattenTree(node: any) {
-  //   const flattened = [];
-    
-  //   function traverse(node: any) {
-  //     flattened.push(node);
-  //     if (node.children) {
-  //       for (let child of node.children) {
-  //         traverse(child);
-  //       }
-  //     }
-  //   }
-    
-  //   traverse(node);
-    
-  //   return flattened;
-  // }
 
   getEventTime() {
     let timeData: any = {

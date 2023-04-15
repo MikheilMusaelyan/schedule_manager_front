@@ -7,6 +7,7 @@ import { Observable, Subscription, map, tap } from 'rxjs';
 import { selectDate } from '../calendar/calendar.actions';
 import { openComponent } from '../UI-store/UI.actions';
 import { selectToday } from '../calendar/calendar.selectors';
+import { months } from '../shared/shared';
 
 @Component({
   selector: 'app-year',
@@ -29,12 +30,7 @@ export class YearComponent {
   today: Date;
   currentMonth: string;
   currentYear: number;
-  months: any[] = [
-    ['Jan', 'Feb', 'Mar'], 
-    ['Apr', 'May', 'Jun'], 
-    ['Jul', 'Aug', 'Sept'], 
-    ['Oct', 'Nov', 'Dec']
-  ];
+  months: any[] = months;
   years: number[] = [];
 
   today$: Observable<any> = this.store.pipe(select(selectToday))

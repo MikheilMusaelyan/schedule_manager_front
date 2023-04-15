@@ -17,7 +17,19 @@
         </div>
     </div>
 
-    <div></div>
+    <div class="toggle-day">
+        <div class="left-icon arrow-icon"></div>
+        <h2 class="date-header">
+            <h2 class="day-header">{{(selectToday$ | async).getDate()}}</h2>
+            <div class="month-year-wrap">
+                <div class="slash">/</div>
+                <span>{{getMonthName((selectToday$ | async).getMonth())}}</span>
+                <div class="slash">/</div>
+                <span>{{(selectToday$ | async).getFullYear()}}</span>
+            </div>
+        </h2>
+        <div class="right-icon arrow-icon"></div>
+    </div>
 
     <div #main class="single-day-popup">
         <div class="times-wrapper" #divList [ngStyle]="{'width': mainScrollWidth + 'px'}">

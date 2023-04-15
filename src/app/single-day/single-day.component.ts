@@ -6,7 +6,7 @@ import { Observable, Subscription } from 'rxjs';
 import { detectChange } from './event.selectors';
 import { faArrowLeft, faArrowRight } from '@fortawesome/free-solid-svg-icons';
 import { selectToday } from '../calendar/calendar.selectors';
-import { selectDate } from '../calendar/calendar.actions';
+import { months } from '../shared/shared';
 
 @Component({
   selector: 'app-single-day',
@@ -28,6 +28,9 @@ export class SingleDayComponent implements OnInit, AfterViewInit{
 
   intervalTimeout: any;
   touchEvent: boolean;
+
+  selectToday$: Observable<Date> = this.store.pipe(select(selectToday));
+  months: any[] = months;
   
   //designs
   constructor(
@@ -48,6 +51,10 @@ export class SingleDayComponent implements OnInit, AfterViewInit{
       }
     }
     this.rows.push({});
+  }
+
+  getMonthName(monthIndex: number) {
+    return this.months[Math.floor((monthIndex / 3))][monthIndex % 3]
   }
 
   addEvent(index: number) {
