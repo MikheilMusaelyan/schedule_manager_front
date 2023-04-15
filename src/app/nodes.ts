@@ -7,6 +7,7 @@ export let childs: Node[] = []
     id: number;
     color: any;
     colorSet: boolean;
+    isNew: boolean
   }
 
   let nodesCount: number = 0
@@ -202,16 +203,16 @@ export function resizeEvent(e: any, thisEvent: Node, parent: Node[], index: numb
   } 
 }
 
-newNode(childs, { start: 2, end: 20, children: [], id: null, color: {value: 'var(--eventColor)', pastel: false}, colorSet: false}) 
-newNode(childs, { start: 3, end: 14, children: [], id: null, color: {value: 'var(--eventColor)', pastel: false}, colorSet: false}) 
-newNode(childs, { start: 5, end: 10, children: [], id: null, color: {value: 'var(--eventColor)', pastel: false}, colorSet: false}) 
-newNode(childs, { start: 8, end: 10, children: [], id: null, color: {value: 'var(--eventColor)', pastel: false}, colorSet: false}) 
-newNode(childs, { start: 8, end: 10, children: [], id: null, color: {value: 'var(--eventColor)', pastel: false}, colorSet: false}) 
-newNode(childs, { start: 8, end: 10, children: [], id: null, color: {value: 'var(--eventColor)', pastel: false}, colorSet: false}) 
-newNode(childs, { start: 8, end: 10, children: [], id: null, color: {value: 'var(--eventColor)', pastel: false}, colorSet: false}) 
-newNode(childs, { start: 8, end: 10, children: [], id: null, color: {value: 'var(--eventColor)', pastel: false}, colorSet: false}) 
-newNode(childs, { start: 8, end: 10, children: [], id: null, color: {value: 'var(--eventColor)', pastel: false}, colorSet: false}) 
-newNode(childs, { start: 8, end: 10, children: [], id: null, color: {value: 'var(--eventColor)', pastel: false}, colorSet: false}) 
-newNode(childs, { start: 8, end: 10, children: [], id: null, color: {value: 'var(--eventColor)', pastel: false}, colorSet: false}) 
+newNode(childs, { start: 2, end: 20, children: [], id: null, color: {value: 'var(--eventColor)', pastel: false}, colorSet: false, isNew: false}) 
+newNode(childs, { start: 3, end: 14, children: [], id: null, color: {value: 'var(--eventColor)', pastel: false}, colorSet: false, isNew: false}) 
+newNode(childs, { start: 5, end: 10, children: [], id: null, color: {value: 'var(--eventColor)', pastel: false}, colorSet: false, isNew: false}) 
+newNode(childs, { start: 8, end: 10, children: [], id: null, color: {value: 'var(--eventColor)', pastel: false}, colorSet: false, isNew: false}) 
+newNode(childs, { start: 8, end: 10, children: [], id: null, color: {value: 'var(--eventColor)', pastel: false}, colorSet: false, isNew: false}) 
+newNode(childs, { start: 8, end: 10, children: [], id: null, color: {value: 'var(--eventColor)', pastel: false}, colorSet: false, isNew: false}) 
+newNode(childs, { start: 8, end: 10, children: [], id: null, color: {value: 'var(--eventColor)', pastel: false}, colorSet: false, isNew: false}) 
+newNode(childs, { start: 8, end: 10, children: [], id: null, color: {value: 'var(--eventColor)', pastel: false}, colorSet: false, isNew: false}) 
+newNode(childs, { start: 8, end: 10, children: [], id: null, color: {value: 'var(--eventColor)', pastel: false}, colorSet: false, isNew: false}) 
+newNode(childs, { start: 8, end: 10, children: [], id: null, color: {value: 'var(--eventColor)', pastel: false}, colorSet: false, isNew: false}) 
+newNode(childs, { start: 8, end: 10, children: [], id: null, color: {value: 'var(--eventColor)', pastel: false}, colorSet: false, isNew: false}) 
 
 

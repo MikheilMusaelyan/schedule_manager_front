@@ -18,10 +18,11 @@
         <tbody>
             <tr *ngFor="let row of rows">
                 <td *ngFor="let day of row" #td 
-                [ngClass]="{
-                    'c-day': isDayToday(day),
-                    'busy-day': false,
-                }">
+                    [ngClass]="{
+                        'c-day': isDayToday(day),
+                        'busy-day': false,
+                    }"
+                >
                     <span class="day-span">{{ day }}</span>
                     <div 
                         class="toggle-wrapper" 

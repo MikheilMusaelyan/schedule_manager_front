@@ -28,8 +28,6 @@ export class SingleDayComponent implements OnInit, AfterViewInit{
 
   intervalTimeout: any;
   touchEvent: boolean;
-
-  todaySubscription: Subscription
   
   //designs
   constructor(
@@ -49,11 +47,11 @@ export class SingleDayComponent implements OnInit, AfterViewInit{
         this.rows.push(object)
       }
     }
-    this.rows.push({})
+    this.rows.push({});
+  }
 
-    this.todaySubscription = this.store.pipe(select(selectToday))
-    .subscribe((today: Date) => {
-    })
+  addEvent(index: number) {
+    nodes.newNode(nodes.childs, { start: index, end: Math.min(96, index + 4), children: [], id: null, color: {value: 'var(--eventColor)', pastel: false}, colorSet: false, isNew: true}) 
   }
 
   ngOnInit() {
@@ -104,7 +102,6 @@ export class SingleDayComponent implements OnInit, AfterViewInit{
     window.removeEventListener('resize', () => {
       this.changeWidthValue()
     });
-    this.todaySubscription.unsubscribe()
     this.changeSubscription.unsubscribe()
   }
 

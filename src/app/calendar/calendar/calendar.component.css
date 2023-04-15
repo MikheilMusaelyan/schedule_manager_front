@@ -57,6 +57,8 @@ th{
     color: var(--grey);
     border: 1px solid #e7e7e7;
 }
+
+
 .day-span {
     pointer-events: none;
     position: absolute;
@@ -67,8 +69,10 @@ th{
     left: 0;
     font-weight: bold;
     width: 24px;
-    height: 24px;
+    height: 28px;
     margin: 5px;
+    color: var(--grey);
+    font-size: 13px;
 }
 td {
     background-color: white;
@@ -88,6 +92,7 @@ td {
     border-radius: 2px 2px 50% 2px !important;
 }
 .c-day > .day-span{
+    height: 24px !important;
     background-color: var(--rootColor) !important;
 }
 .busy-day > .day-span{
@@ -134,10 +139,6 @@ td {
     align-items: center;
     transition: 200ms;
     cursor: pointer;
-}
-.day-span{
-    color: var(--grey);
-    font-size: 13px;
 }
 
 

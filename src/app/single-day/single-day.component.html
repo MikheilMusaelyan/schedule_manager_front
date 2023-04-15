@@ -12,14 +12,16 @@
     </div>
 
     <div class="times">
-        <div *ngFor="let row of rows" class="times-div">
-            <span class="times-span" *ngIf="row.minute == 0" >{{row.string}}</span>
+        <div *ngFor="let row of rows; let i = index" class="times-div" (click)="addEvent(i)">
+            <span class="times-span" *ngIf="row.minute == 0">{{row.string}}</span>
         </div>
     </div>
 
+    <div></div>
+
     <div #main class="single-day-popup">
         <div class="times-wrapper" #divList [ngStyle]="{'width': mainScrollWidth + 'px'}">
-            <div *ngFor="let row of rows" class="time-row-wrap-wrap">
+            <div *ngFor="let row of rows; let i = index" class="time-row-wrap-wrap"  (click)="addEvent(i)">
                 <div class="time-row-wrap"></div>
             </div>
         </div>

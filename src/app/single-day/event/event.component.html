@@ -11,7 +11,7 @@
     </div>   
 
 
-    <button class="delete-wrap">
+    <button class="delete-wrap" (click)="deleteNode()">
         <span class="delete-span">Delete</span>
         <fa-icon class="delete-icon" [icon]="deleteIcon"></fa-icon>
     </button>
@@ -31,7 +31,7 @@
     [ngStyle]="{
         'width': 250 > WINDOW - (level * 150) ? '250px' : WINDOW - (level * 150) + 'px',
         'left': (level * 150) + 'px',
-        'height': (40 * (+thisEvent.end - +thisEvent.start)) - 1 + 'px',
+        'height': (40 * (+thisEvent.end - +thisEvent.start)) + 'px',
         'top': (+divList.offsetTop) + (+thisEvent.start * 40) + 'px',
         'background': thisEvent.color.value
     }"
@@ -39,6 +39,10 @@
     [ngClass]="{
         'smallEvent': 2 > (+thisEvent.end - +thisEvent.start)
     }"
+
+    [@absolute]="absoluteState"
+
+    #thisDiv
     >
     <div class="event-info" [ngStyle]="{'color': thisEvent.color.pastel ? 'black' : 'white'}">
         <span class="event-time">

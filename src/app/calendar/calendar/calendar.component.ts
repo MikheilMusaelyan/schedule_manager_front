@@ -31,7 +31,7 @@ export class CalendarComponent {
   goToSingleDay(day: number) {
     let newDate: Date = new Date(this.selectedDate.setDate(day))
     this.store.dispatch(selectDate({date: newDate}))
-    // this.store.dispatch(selectDate({date: newDate}))
+    this.router.navigate(['singleday', newDate.getDate(), newDate.getMonth(), newDate.getFullYear()])
   };
 
   renderCalendar(today: any) {
