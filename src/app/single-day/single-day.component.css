@@ -1,18 +1,35 @@
+.main-wrapper{
+  background-color: white;
+  border-radius: 20px;
+  overflow: hidden;
+}
+
 main{
     width: 100%;
     background-color: white;
     padding: 0 40px 40px 40px;
-    border-radius: 20px;
+    border-radius: 0 0 20px 20px;
     position: relative;
 }
 
+.single-day-popup-wrap{
+  background-color: var(--mainBackground);
+  border-radius: 10px;
+  position: relative;
+  overflow: hidden;
+}
+.abs{
+  position: absolute;
+  border-radius: 10px;
+  padding-top: 40px;
+}
 .single-day-popup{
     background-color: var(--mainBackground);
     width: 100%;
     padding-top: 40px;
-    border-radius: 10px;
     position: relative;
     overflow-x: auto;
+    border-radius: 10px;
     overflow-y: hidden
 }
 
@@ -49,7 +66,7 @@ main{
     width: 40px;
     position: absolute;
     left: 0;
-    top: 100px;
+    top: 40px;
 }
 .times-div{
     height: 40px;
@@ -89,49 +106,57 @@ main{
   .scroller{
     position: fixed;
     display: flex;
-    flex-direction: column;
-    align-items: center;
+    justify-content: center;
     right: 0;
     width: 40px;
+    height: 60px;
     transform: translateX(-50px);
   }
   .scroller fa-icon{
     font-size: 15px;
-    display: block;
-    width: 100%;
-    height: 22px;
-    background-color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 50%;
     cursor: pointer;
-    display: grid;
     color: var(--rootColor);
-    place-content: center;
   }
 
   .toggle-day{
     height: 60px;
     width: 100%;
     display: flex;
-    align-items: center;
     padding-left: 70px;
+    background-color: white;
+    border-radius: 20px 20px 0 0;
   }
 
   .date-header{
+    height: 100%;
     display: flex;
-    color: var(--rootColor);
-
+    align-items: center;
   }
   .day-header{
     margin: 0;
     padding-right: 2px;
     font-weight: normal;
-  }
-  .month-year-wrap{
-    display: flex;
-    font-size: 17px;
-    font-weight: normal;
+    color: var(--rootColor);
+    font-size: 27px;
   }
   .slash{
-    color: black !important;
-    font-weight: bolder;
+    color: #b1b0b0 !important;
     padding: 0 4px;
+    margin: 0;
+  }
+
+  .arrow-icon{
+    height: 100%;
+    padding: 0 10px;
+    cursor: pointer;
+  }
+  .arrow-icon fa-icon{
+    height: 100%;
+    display: flex;
+    align-items: center;
+    color: #9b9a9a;
   }

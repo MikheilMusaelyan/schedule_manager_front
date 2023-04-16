@@ -1,50 +1,65 @@
-<main>
-    <div class="scroller" *ngIf="mainScrollWidth - main.clientWidth > 20 && !touchEvent">
-        <fa-icon [icon]="scrollRight" 
-        (mousedown)="startScroll(true)"
-        (mouseup)="stopScroll()"
-        ></fa-icon>
-
-        <fa-icon [icon]="scrollLeft" 
-        (mousedown)="startScroll(false)"
-        (mouseup)="stopScroll()"
-        ></fa-icon>
-    </div>
-
-    <div class="times">
-        <div *ngFor="let row of rows; let i = index" class="times-div" (click)="addEvent(i)">
-            <span class="times-span" *ngIf="row.minute == 0">{{row.string}}</span>
-        </div>
-    </div>
+<div class="main-wrapper">
 
     <div class="toggle-day">
-        <div class="left-icon arrow-icon"></div>
-        <h2 class="date-header">
-            <h2 class="day-header">{{(selectToday$ | async).getDate()}}</h2>
-            <div class="month-year-wrap">
-                <div class="slash">/</div>
-                <span>{{getMonthName((selectToday$ | async).getMonth())}}</span>
-                <div class="slash">/</div>
-                <span>{{(selectToday$ | async).getFullYear()}}</span>
-            </div>
-        </h2>
-        <div class="right-icon arrow-icon"></div>
+        <div class="arrow-icon" (click)="changeDay(-1)">
+            <fa-icon [icon]="scrollLeft" class="left-icon"></fa-icon>
+        </div>
+
+        <div class="date-header">
+            <h2 class="day-header">{{today.getDate()}}</h2>
+            <h2 class="day-header slash">/</h2>
+            <h2 class="day-header">{{getMonthName(today.getMonth())}}</h2>
+            <h2 class="day-header slash">/</h2>
+            <h2 class="day-header">{{today.getFullYear()}}</h2>
+        </div>
+
+        <div class="arrow-icon" (click)="changeDay(1)">
+            <fa-icon [icon]="scrollRight" class="right-icon"></fa-icon>
+        </div>
     </div>
 
-    <div #main class="single-day-popup">
-        <div class="times-wrapper" #divList [ngStyle]="{'width': mainScrollWidth + 'px'}">
-            <div *ngFor="let row of rows; let i = index" class="time-row-wrap-wrap"  (click)="addEvent(i)">
-                <div class="time-row-wrap"></div>
+    <main>
+        <div class="scroller" *ngIf="mainScrollWidth - main.clientWidth > 20 && !touchEvent">
+            <fa-icon [icon]="scrollLeft" 
+            (mousedown)="startScroll(false)"
+            (mouseup)="stopScroll()"
+            ></fa-icon>
+
+            <fa-icon [icon]="scrollRight" 
+            (mousedown)="startScroll(true)"
+            (mouseup)="stopScroll()"
+            ></fa-icon>
+        </div>
+
+        <div class="times">
+            <div *ngFor="let row of rows; let i = index" class="times-div" (click)="addEvent(i)">
+                <span class="times-span" *ngIf="row.minute == 0">{{row.string}}</span>
             </div>
         </div>
 
-        <app-event
-            *ngFor="let event of nodes; let i = index;"
-            [parent]="nodes"
-            [index]="i"
-            [divList]="divList"
-            [level]="-1"
-        ></app-event>
-    </div>
+        <div class="single-day-popup-wrap">
+            <div class="times-wrapper abs" [ngStyle]="{'width': mainScrollWidth + 'px'}">
+                <div *ngFor="let row of rows" class="time-row-wrap-wrap">
+                    <div class="time-row-wrap"></div>
+                </div>
+            </div>
+            <div #main class="single-day-popup">
+                <div class="times-wrapper" #divList [ngStyle]="{'width': mainScrollWidth + 'px'}">
+                    <div *ngFor="let row of rows; let i = index" class="time-row-wrap-wrap"  (click)="addEvent(i)">
+                        <div class="time-row-wrap"></div>
+                    </div>
+                </div>
+    
+                <app-event
+                    *ngFor="let event of nodes; let i = index;"
+                    [parent]="nodes"
+                    [index]="i"
+                    [divList]="divList"
+                    [level]="-1"
+                ></app-event>
+            </div>
+        </div>
+    </main>
 
-</main>
+</div>
+

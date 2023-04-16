@@ -71,11 +71,8 @@ export class EventComponent {
   ){}
 
   ngOnInit() {
-    this.WINDOW = window.innerWidth - 287
     this.level += 1;
-    this.thisEvent = this.parent[this.index];
-
-    
+    this.thisEvent = this.parent[this.index];    
   }
 
   selectColor(color: string){
@@ -87,9 +84,11 @@ export class EventComponent {
   }
 
   ngAfterViewInit(){
-    window.addEventListener('resize', () => {
+    setTimeout(() => {
       this.WINDOW = window.innerWidth - 287
-    })
+    }, 0);
+    window.addEventListener('resize', this.checkWindow)
+
     setTimeout(() => {
       if(this.thisEvent.isNew){
         this.absoluteState = 'hidden';
@@ -102,6 +101,10 @@ export class EventComponent {
         this.absoluteState = 'open'
       }, 0);
     }, 0);
+  }
+
+  checkWindow = () => {
+    this.WINDOW = window.innerWidth - 287
   }
 
   openDetails(bool: boolean) {
@@ -159,5 +162,9 @@ export class EventComponent {
 
   getMinutes(index: number) {
     return (index % 4) * 15;
+  }
+
+  ngOnDestroy() {
+    window.removeEventListener('resize', this.checkWindow)
   }
 }

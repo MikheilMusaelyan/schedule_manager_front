@@ -7,6 +7,7 @@ import { detectChange } from './event.selectors';
 import { faArrowLeft, faArrowRight } from '@fortawesome/free-solid-svg-icons';
 import { selectToday } from '../calendar/calendar.selectors';
 import { months } from '../shared/shared';
+import { selectDate } from '../calendar/calendar.actions';
 
 @Component({
   selector: 'app-single-day',
@@ -16,6 +17,7 @@ import { months } from '../shared/shared';
 export class SingleDayComponent implements OnInit, AfterViewInit{
   @ViewChild('main', {static: false}) main: any;
   @ViewChild('divList', {static: false}) divList: any;
+  @ViewChild('mainDiv', {static: false}) mainDiv: any;
 
   scrollRight = faArrowRight;
   scrollLeft = faArrowLeft;
@@ -23,19 +25,19 @@ export class SingleDayComponent implements OnInit, AfterViewInit{
   nodes: any[];
   myDivList: any;
   rows: any[] = [];
+  months: any[] = months;
   mainScrollWidth: number;
-  changeSubscription: Subscription;
+  changeSubscription: Subscription; //////////
 
   intervalTimeout: any;
   touchEvent: boolean;
 
   selectToday$: Observable<Date> = this.store.pipe(select(selectToday));
-  months: any[] = months;
+  today: Date;
+  todaySubscription: Subscription; ////////////
   
   //designs
-  constructor(
-    private store: Store<AppState>
-  ) {
+  constructor(private store: Store<AppState>) {
     for (let i = 0; i < 24; i++) {
       const hour = String(i % 12 == 0 ? 12 : i % 12);
       const meridiem = i < 12 ? ' AM' : ' PM'
@@ -51,6 +53,31 @@ export class SingleDayComponent implements OnInit, AfterViewInit{
       }
     }
     this.rows.push({});
+    this.todaySubscription = this.selectToday$.subscribe((data: Date) => {
+      this.today = data
+    })
+  }
+
+  changeDay(newDay: number){
+    const selectedDay = this.today.getDate();
+    this.today.setDate(selectedDay + newDay)
+    this.store.dispatch(selectDate({date: this.today}))
+    newDay == 1 ? this.slide(true) : this.slide(false)
+  }  
+
+  slide(bool: boolean) {
+    const transformValue = bool ? 10 : -15;
+    this.main.nativeElement.style.transition = 'opacity 50ms';
+    this.main.nativeElement.style.opacity = '0';
+    setTimeout(() => {
+      this.main.nativeElement.style.transform = `translateX(${transformValue}%)`;
+    }, 100);
+    setTimeout(() => {
+      this.main.nativeElement.scrollLeft = 0
+      this.main.nativeElement.style.transition = 'all 200ms cubic-bezier(0.4, 0, 0.2, 1), opacity 200ms cubic-bezier(0.4, 0, 0.2, 1';
+      this.main.nativeElement.style.opacity = '1';
+      this.main.nativeElement.style.transform = `translateX(0)`;
+    }, 200);
   }
 
   getMonthName(monthIndex: number) {
@@ -58,7 +85,7 @@ export class SingleDayComponent implements OnInit, AfterViewInit{
   }
 
   addEvent(index: number) {
-    nodes.newNode(nodes.childs, { start: index, end: Math.min(96, index + 4), children: [], id: null, color: {value: 'var(--eventColor)', pastel: false}, colorSet: false, isNew: true}) 
+    nodes.newNode(nodes.childs, { start: Math.min(index, 96), end: Math.min(96, index + 4), children: [], id: null, color: {value: 'var(--eventColor)', pastel: false}, colorSet: false, isNew: true}) 
   }
 
   ngOnInit() {
@@ -71,9 +98,7 @@ export class SingleDayComponent implements OnInit, AfterViewInit{
   ngAfterViewInit(): void  {
     this.touchEvent = 'ontouchstart' in window;
 
-    window.addEventListener('resize', () => {
-      this.changeWidthValue()
-    });
+    window.addEventListener('resize', () => this.changeWidthValue);
 
     setTimeout(() => {
       this.mainScrollWidth = this.main.nativeElement.scrollWidth;
@@ -86,7 +111,7 @@ export class SingleDayComponent implements OnInit, AfterViewInit{
     }, 0);
   }
 
-  changeWidthValue() {
+  changeWidthValue = () => {
     this.mainScrollWidth = 0;
     setTimeout(() => {
       this.mainScrollWidth = this.main.nativeElement.scrollWidth
@@ -106,10 +131,9 @@ export class SingleDayComponent implements OnInit, AfterViewInit{
   }
 
   ngOnDestroy() {
-    window.removeEventListener('resize', () => {
-      this.changeWidthValue()
-    });
+    window.removeEventListener('resize', () => this.changeWidthValue);
     this.changeSubscription.unsubscribe()
+    this.todaySubscription.unsubscribe()
   }
 
 }
