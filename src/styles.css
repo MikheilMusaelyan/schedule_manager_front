@@ -28,7 +28,8 @@ body {
 * {
     box-sizing: border-box !important;
 }
-.times-span{
+.times-span, .event-desc, .upcoming-header, .time, .card-header, .select-timezone span,
+.event-time{
     pointer-events: none ;
     -webkit-user-select: none;
     -moz-user-select: none; 

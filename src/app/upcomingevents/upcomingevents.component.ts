@@ -6,5 +6,5 @@ import { Component } from '@angular/core';
   styleUrls: ['./upcomingevents.component.css']
 })
 export class UpcomingeventsComponent {
-
+  events = [1,2,3]
 }

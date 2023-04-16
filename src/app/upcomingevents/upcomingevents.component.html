@@ -1,1 +1,10 @@
-<p>upcomingevents works!</p>
+<main>
+    <h2 class="upcoming-header">Upcoming Events</h2>
+    <div class="event" *ngFor="let event of events" 
+    [ngStyle]="{'border-left': '3.5px solid green'}">
+        <h2 class="event-desc">event name this...</h2>
+        <div class="event-time">
+            12 AM - 5 PM
+        </div>
+    </div>
+</main>

@@ -38,11 +38,13 @@
         </div>
 
         <div class="single-day-popup-wrap">
+
             <div class="times-wrapper abs" [ngStyle]="{'width': mainScrollWidth + 'px'}">
                 <div *ngFor="let row of rows" class="time-row-wrap-wrap">
                     <div class="time-row-wrap"></div>
                 </div>
             </div>
+
             <div #main class="single-day-popup">
                 <div class="times-wrapper" #divList [ngStyle]="{'width': mainScrollWidth + 'px'}">
                     <div *ngFor="let row of rows; let i = index" class="time-row-wrap-wrap"  (click)="addEvent(i)">

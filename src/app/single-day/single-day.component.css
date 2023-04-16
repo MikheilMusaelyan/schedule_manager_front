@@ -141,7 +141,7 @@ main{
     padding-right: 2px;
     font-weight: normal;
     color: var(--rootColor);
-    font-size: 27px;
+    font-size: 24px;
   }
   .slash{
     color: #b1b0b0 !important;

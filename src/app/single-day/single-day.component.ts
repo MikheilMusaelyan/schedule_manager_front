@@ -66,18 +66,21 @@ export class SingleDayComponent implements OnInit, AfterViewInit{
   }  
 
   slide(bool: boolean) {
-    const transformValue = bool ? 10 : -15;
-    this.main.nativeElement.style.transition = 'opacity 50ms';
+    const transformValue = bool ? 15 : -15;
+    this.main.nativeElement.style.transition = 'opacity 150ms, transform 150ms';
     this.main.nativeElement.style.opacity = '0';
+    this.main.nativeElement.style.transform = `translateX(${-transformValue}%)`;
+
     setTimeout(() => {
-      this.main.nativeElement.style.transform = `translateX(${transformValue}%)`;
-    }, 100);
+      this.main.nativeElement.style.transition = '';
+      this.main.nativeElement.style.transform = `translateX(${transformValue * 3}%)`;
+    }, 150);
     setTimeout(() => {
       this.main.nativeElement.scrollLeft = 0
       this.main.nativeElement.style.transition = 'all 200ms cubic-bezier(0.4, 0, 0.2, 1), opacity 200ms cubic-bezier(0.4, 0, 0.2, 1';
       this.main.nativeElement.style.opacity = '1';
       this.main.nativeElement.style.transform = `translateX(0)`;
-    }, 200);
+    }, 250);
   }
 
   getMonthName(monthIndex: number) {
