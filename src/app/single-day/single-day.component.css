@@ -153,6 +153,7 @@ main{
     height: 100%;
     padding: 0 10px;
     cursor: pointer;
+    font-size: var(--fsXS);
   }
   .arrow-icon fa-icon{
     height: 100%;
