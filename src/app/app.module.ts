@@ -28,6 +28,8 @@ import { CurrentTimeComponent } from './current-time/current-time.component';
 import { UpcomingeventsComponent } from './upcomingevents/upcomingevents.component';
 import { EventEffects$ } from './single-day/event.effects';
 import { EventService } from './single-day/event.service';
+import { LoginComponent } from './login/login.component';
+import { ReactiveFormsModule } from "@angular/forms"
 
 @NgModule({
   declarations: [
@@ -42,7 +44,7 @@ import { EventService } from './single-day/event.service';
     SearchbarComponent,
     CurrentTimeComponent,
     UpcomingeventsComponent,
-    
+    LoginComponent,
   ],
   imports: [
     BrowserModule,
@@ -53,7 +55,8 @@ import { EventService } from './single-day/event.service';
     CommonModule,
     BrowserAnimationsModule,
     RouterModule,
-    FontAwesomeModule
+    FontAwesomeModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
