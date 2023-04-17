@@ -35,10 +35,12 @@ export class SingleDayComponent implements OnInit, AfterViewInit{
 
   selectToday$: Observable<Date> = this.store.pipe(select(selectToday));
   today: Date;
-  todaySubscription: Subscription; ////////////
+  todaySubscription: Subscription;
   
   //designs
-  constructor(private store: Store<AppState>) {
+  constructor(
+    private store: Store<AppState>,
+  ) {
     for (let i = 0; i < 24; i++) {
       const hour = String(i % 12 == 0 ? 12 : i % 12);
       const meridiem = i < 12 ? ' AM' : ' PM'
@@ -91,7 +93,7 @@ export class SingleDayComponent implements OnInit, AfterViewInit{
   addEvent(index: number) {
     nodes.newNode(nodes.childs, { start: Math.min(index, 96), end: Math.min(96, index + 4), children: [], id: null, color: {value: 'var(--eventColor)', pastel: false}, colorSet: false, isNew: true});
     const treeSlice = JSON.parse(JSON.stringify(nodes.childs))
-    this.store.dispatch(changeTree({tree: treeSlice}))
+    this.store.dispatch(changeTree({tree: treeSlice}));
   }
 
   ngOnInit() {
@@ -107,12 +109,12 @@ export class SingleDayComponent implements OnInit, AfterViewInit{
     window.addEventListener('resize', this.changeWidthValue);
 
     setTimeout(() => {
-      this.mainScrollWidth = this.main.nativeElement.scrollWidth;
+      this.changeWidthValue()
 
-      this.changeSubscription = this.store.pipe(
-        select(detectChange)
-      ).subscribe((bool: boolean) => {
-       this.changeWidthValue();
+      this.changeSubscription = this.store.pipe(select(detectChange)).subscribe((bool: boolean) => {
+       setTimeout(() => {
+        this.changeWidthValue();
+       }, 300);
       })
     }, 0);
   }

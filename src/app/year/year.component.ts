@@ -18,28 +18,30 @@ import { months } from '../shared/shared';
       state('void', style({
         'opacity': '0',        
       })),
-      state('normal', style({
+      state('*', style({
         'opacity': '1',        
       })),
-      transition('void <=> normal', animate(200))
+      transition('void <=> *', animate(200))
     ])
   ]
 })
 
 export class YearComponent {
+  // Dates
   today: Date;
   currentMonth: string;
   currentYear: number;
+
+  // representation of date
   months: any[] = months;
   years: number[] = [];
 
+  // calendar store
   today$: Observable<any> = this.store.pipe(select(selectToday))
   todaySubscription: Subscription;
-
+  
+  // UI store
   openComponent$: Observable<string> = this.store.pipe(select(selectOpenComponent))
-  openComponentState$: Observable<string> = this.openComponent$.pipe(
-    map(open => open == '' ? 'void' : 'normal')
-  )
 
   constructor(
     private store: Store<AppState>,
@@ -57,13 +59,7 @@ export class YearComponent {
     });
   }
 
-  openMonths() {
-    this.store.dispatch(openComponent({component : 'monthsCard'}))
-  }  
-
-  openYears() {
-    this.store.dispatch(openComponent({component: 'yearsCard'}))
-  }
+  // calendar store
 
   pickMonth(i: number, j: number) {
     const monthIndex = (i * 3) + j; // get monthindex locally
@@ -78,6 +74,15 @@ export class YearComponent {
     newDate.setFullYear(year)
     newDate = new Date(newDate)
     this.store.dispatch(selectDate({date: newDate}))
+  }
+
+  // UI store
+  openMonths() {
+    this.store.dispatch(openComponent({component : 'monthsCard'}))
+  }  
+
+  openYears() {
+    this.store.dispatch(openComponent({component: 'yearsCard'}))
   }
 
   ngOnDestroy(): void {

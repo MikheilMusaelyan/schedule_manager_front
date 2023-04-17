@@ -11,7 +11,7 @@
   </button>
 
   
-    <div class="container zIndexMax" *ngIf="(openComponent$ | async) == 'monthsCard'" [@container]="openComponentState$ | async">
+    <div class="container zIndexMax" *ngIf="(openComponent$ | async) == 'monthsCard'" [@container]>
       <table>
         <tbody>
           <tr *ngFor="let row of months; let i = index">
@@ -26,7 +26,7 @@
       </table>
     </div>
     
-    <div class="container zIndexMax" *ngIf="(openComponent$ | async) == 'yearsCard'" [@container]="openComponentState$ | async">
+    <div class="container zIndexMax" *ngIf="(openComponent$ | async) == 'yearsCard'" [@container]>
       <table>
         <tbody>
             <td *ngFor="let year of years; let i = index" class="year-cell">

@@ -12,7 +12,7 @@ const routes: Routes = [
     //   // { path: ''}
     // ],
   },
-  { path: 'singleday/:day/:month/:year', component: SingleDayComponent },
+  { path: 'singleday/:month/:day/:year', component: SingleDayComponent },
   { path: 'login', component: LoginComponent },
 ];
 

@@ -22,16 +22,15 @@ export class CalendarComponent {
     private store: Store<AppState>,
     private router: Router
   ) {
-    this.todaySubscription = this.store.pipe(select(selectToday))
-    .subscribe((today: Date) => {
+    this.todaySubscription = this.store.pipe(select(selectToday)).subscribe((today: Date) => {
       this.renderCalendar(this.setNewDate(today));
-    }, (error) => console.error(error))
+    })
   }
 
   goToSingleDay(day: number) {
     let newDate: Date = new Date(this.selectedDate.setDate(day))
     this.store.dispatch(selectDate({date: newDate}))
-    this.router.navigate(['singleday', newDate.getDate(), newDate.getMonth(), newDate.getFullYear()])
+    this.router.navigate(['singleday', newDate.getMonth() + 1, newDate.getDate(), newDate.getFullYear()])
   };
 
   renderCalendar(today: any) {
