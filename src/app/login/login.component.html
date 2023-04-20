@@ -1,15 +1,53 @@
-<div class="main">
-    <div class="mainC">
-        <h1 class="header">Login</h1>
-        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="authForm">
-            <div class="input-wrap">
-                <input class="auth-inp" type="email" placeholder="Email" formControlName="email">
-                <input class="auth-inp" type="password" placeholder="Password" formControlName="password">
-            </div>
-            <button [disabled]="loginForm.invalid" type="submit" class="submit">Login</button>
-        </form>
+<main>
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" class="main">
+
+    <h2>{{registering ? 'Sign up' : 'Login'}}</h2>
+  
+    <div class="form-input-wrap">
+      <input type="email" id="email" formControlName="email" placeholder="Email" name="username">
+      <div class="error-wrap" 
+          *ngIf="form.controls.email.invalid && 
+          (form.controls.email.dirty || form.controls.email.touched) && 
+          form.controls.email.value != '' && registering"
+        >
+        <div *ngIf="form.controls.email.errors.required">Email is required</div>
+        <div *ngIf="form.controls.email.errors.email">Invalid email format</div>
+        <div *ngIf="form.controls.email.errors.minlength">Email must be at least 8 characters long</div>
+      </div>
     </div>
-</div>
+  
+    <div class="form-input-wrap">
+      <input type="password" id="password" formControlName="password" placeholder="Password" autocomplete="current-password">
+      <div class="error-wrap" 
+          *ngIf="form.controls.password.invalid && 
+          (form.controls.password.dirty || form.controls.password.touched) && 
+          form.controls.password.value != '' && registering"
+        >
+        <div *ngIf="form.controls.password.errors.required">Password is required</div>
+        <div *ngIf="form.controls.password.errors.minlength">Password must be at least 8 characters long</div>
+      </div>
+    </div>
+
+    <div class="form-input-wrap" *ngIf="registering">
+      <input #confirm type="password" placeholder="Confirm password" autocomplete="current-password" >
+      <div class="error-wrap" 
+          *ngIf="form.controls.password.value != confirm.value && 
+          clicked == true">
+        <div>Passwords don't match</div>
+      </div>
+    </div>
+  
+    <button type="submit">
+      {{registering ? 'Sign up' : 'Login'}}
+    </button>
+  
+    <label (click)="toggleType()">
+      {{registering ? 'Login' : 'Sign up'}}
+    </label>
+  
+  </form>
+</main>
+
 
 <!-- <form [formGroup]="form" (ngSubmit)="onSubmit(signupForm)">
     <div class="form-group">

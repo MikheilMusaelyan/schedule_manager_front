@@ -1,64 +1,78 @@
-*{
-    box-sizing: border-box;
-}
-.main{
-    min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding-top: 5%;
-}
-.mainC{
-    box-shadow: 0 0 120px rgba(175, 174, 179, 0.409);
-    min-width: 400px;
-    max-width: 600px;
-    width: 40%;
-    display: flex;
-    background: white;
-    border-radius: 4px;
-    flex-direction: column;
-    align-items: center;
-    height: min-content;
-}
-form{
+main{
     width: 100%;
-    padding: 25px;
-}
-.auth-inp,.submit{
-    padding: 15px 10px;
-    margin: 7px 0;
-    width: 100%;
-    border-radius: 4px;
-    font-size: var(--inpText);
-    border: 1px solid lightgrey;
-    outline: none !important;
-}
-input{
-    color: var(--rootColor) !important;
+    height: 100svh;
+    display: grid;
+    place-content: center;
+    padding: 30px;
 }
 
-.header{
-    color: var(--rootColor);
-    font-size: var(--bigText);
-    margin: 30px 0 20px 0;
+form{
+    width: 500px;
+    padding: 30px 25px 20px 25px;
+    border-radius: 20px;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
-.submit{
-    margin-top: 30px;
+.form-input-wrap{
+    width: 100%;
+    margin-bottom: 15px;
+}
+.form-input-wrap input{
+    padding: 16px;
+    width: 100%;
+    border: none;
+    outline: none;
+    background: var(--mainBackground) !important;
+    border-radius: 4px;
+}
+
+button{
+    padding: 12px;
+    background: var(--rootColor);
+    color: white;
+    border: none;
+    outline: none;
+    border-radius: 4px;
+    width: 60%;
+    margin-top: 20px;
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 200ms;
+}
+.invalid-button{
+    background-color: var(--mainBackground);
+    cursor: initial;
+    color: var(--rootColor);
+}
+h2{
+    margin: 0 0 37px 0;
+    color: var(--rootColor);
+}
+
+label{
+    padding-top: 5px;
+    font-size: 14px;
+    width: 100%;
+    text-align: left;
+    color: var(--rootColor);
     cursor: pointer;
 }
-
-.input-wrap{
-    display: flex;
-    flex-direction: column;
-}
-label{
-    color: red;
-    margin-bottom: 7px;
+label:hover{
+    color: rgb(71, 4, 204);
 }
 
-@media screen and (max-width: 400px){
-    .mainC{
-        min-width: 250px;
-        width: 100%;
-    }
+button:hover{
+    background-color: var(--hoverrootColor);
+}
+
+.error-wrap{
+    padding: 5px 0;
+}
+.error-wrap div{
+    padding: 2px 0 0 0;
+    font-size: 12px;
+    color: orange;
 }
