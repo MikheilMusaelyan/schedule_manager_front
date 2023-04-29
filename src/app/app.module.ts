@@ -32,6 +32,9 @@ import { LoginComponent } from './login/login.component';
 import { ReactiveFormsModule } from "@angular/forms"
 
 import { WordPipe } from './pipes/wordPipe';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+
+import { AuthInterceptor } from './interceptors/token.interceptor';
 
 
 @NgModule({
@@ -48,7 +51,8 @@ import { WordPipe } from './pipes/wordPipe';
     CurrentTimeComponent,
     UpcomingeventsComponent,
     LoginComponent,
-    WordPipe
+    WordPipe,
+    HttpClientModule
   ],
   imports: [
     BrowserModule,
@@ -62,7 +66,13 @@ import { WordPipe } from './pipes/wordPipe';
     FontAwesomeModule,
     ReactiveFormsModule
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

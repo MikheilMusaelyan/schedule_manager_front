@@ -27,6 +27,8 @@ export class EventService{
         this.newNode(this.childs, { start: 8, end: 10, children: []}) 
     }
 
+    
+
 
     newNode(children: Node[], node: Node): any {
       
@@ -139,7 +141,6 @@ removeChildren(node: number, child: Node, queue: Node[]) {
   }
 }
 
-
 putInQueue(toPush: Node[], queue: Node[]) {
     for (let child of toPush) {
       let childChildren = child.children.splice(0)      
@@ -149,8 +150,6 @@ putInQueue(toPush: Node[], queue: Node[]) {
       }
     }
 }
-
-
 
 deleteEvent(thisEvent: Node, parent: Node[], index: number) {
   if(!thisEvent.id){

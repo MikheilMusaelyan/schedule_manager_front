@@ -77,7 +77,6 @@ export class EventComponent {
 
   selectColor(color: string){
     this.thisEvent.color = color;
-    this.thisEvent.colorSet = true;
     this.wrapper = 'void';
     this.detailsOpen = false;
     this.pickedColor = !this.pickedColor;

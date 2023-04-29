@@ -17,7 +17,7 @@ export const UIReducer = createReducer(
     ...state,
     componentOpen: component
   })),
-  on(openAbsolute, (state, {bool}) => ({
+  on(openAbsolute, (state, { bool }) => ({
     ...state,
     absoluteOpen: bool
   }))

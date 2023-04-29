@@ -6,7 +6,6 @@ export let childs: Node[] = []
     children: Node[];
     id: number;
     color: any;
-    colorSet: boolean;
     isNew: boolean
   }
 
