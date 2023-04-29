@@ -4,19 +4,13 @@ export let childs: Node[] = []
     start: number;
     end: number;
     children: Node[];
-    id: number;
+    id: null | number;
     color: any;
-    isNew: boolean
+    isNew: boolean;
+    date?: any
   }
 
-  let nodesCount: number = 0
-
   export function newNode(children: Node[], node: Node): any {
-    
-    if(!node?.id){
-      node.id = ++nodesCount
-    }
-
     let queue: Node[] = []
     let spliced = false
     if(children.length == 0) {
@@ -157,6 +151,9 @@ export function deleteEvent(thisEvent: Node, parent: Node[], index: number) {
 }
 
 export function moveEvent(thisEvent: Node, parent: Node[], index: number) {
+  if(!thisEvent.id){
+    return
+  }
   deleteEvent(thisEvent, parent, index)
   thisEvent.children.splice(0)
   newNode(childs, thisEvent)

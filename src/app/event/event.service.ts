@@ -1,5 +1,6 @@
 import { HttpClient } from "@angular/common/http";
 import {  Injectable } from "@angular/core";
+import { Eventt } from "./event-model";
 
 export interface Node {
     start: number;
@@ -30,14 +31,15 @@ export class EventService{
         this.newNode(this.childs, { start: 8, end: 10, children: []}) 
     }
 
-    addEvent(event: any) {
-      return this.http.post('http://127.0.0.1:8000/api/event/', 
-        {
-          start: event.event.start,
-          end: event.event.end,
-          date: event.event.date.toISOString().split('T')[0]
-        }
-      )
+    addEvent(myEvent: any) {
+      let event: Eventt = {
+        start: myEvent.event.start,
+        end: myEvent.event.end,
+        date: new Date(myEvent.event.date).toISOString().split('T')[0],
+        name: myEvent.event.name,
+        id: myEvent.event.id,
+      }
+      return this.http.post('http://127.0.0.1:8000/api/event/', event)
     }
 
 

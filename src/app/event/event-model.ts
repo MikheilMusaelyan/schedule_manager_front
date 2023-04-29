@@ -3,6 +3,5 @@ export interface Eventt {
     start: number;
     end: number;
     name: string;
-    description?: string;
-    place?: string;
+    date: string
 }
