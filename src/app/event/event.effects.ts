@@ -16,7 +16,7 @@ export class EventEffects$ {
         private store: Store<EventState>
     ) {}
     
-    loadData$ = createEffect(() =>
+    loadEvents$ = createEffect(() =>
         this.actions$.pipe(
           ofType(addEvent),
           concatMap((event: any) =>

@@ -18,17 +18,6 @@ export class EventService{
     constructor(
       private http: HttpClient
     ) {
-        this.newNode(this.childs, { start: 2, end: 20, children: []}) 
-        this.newNode(this.childs, { start: 3, end: 14, children: []}) 
-        this.newNode(this.childs, { start: 5, end: 10, children: []}) 
-        this.newNode(this.childs, { start: 8, end: 10, children: []}) 
-        this.newNode(this.childs, { start: 8, end: 10, children: []}) 
-        this.newNode(this.childs, { start: 8, end: 10, children: []}) 
-        this.newNode(this.childs, { start: 8, end: 10, children: []}) 
-        this.newNode(this.childs, { start: 8, end: 10, children: []}) 
-        this.newNode(this.childs, { start: 8, end: 10, children: []}) 
-        this.newNode(this.childs, { start: 8, end: 10, children: []}) 
-        this.newNode(this.childs, { start: 8, end: 10, children: []}) 
     }
 
     addEvent(myEvent: any) {
