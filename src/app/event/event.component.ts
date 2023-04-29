@@ -2,7 +2,7 @@ import { Component, Input, ViewChild} from '@angular/core';
 import { Store } from '@ngrx/store';
 import * as nodes from "src/app/nodes";
 import { AppState } from 'src/app/reducers';
-import { changeTree, moveEvent } from './event.actions';
+import { changeTree, deleteEvent, moveEvent } from './event.actions';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
 
@@ -115,12 +115,17 @@ export class EventComponent {
     nodes.deleteEvent(this.thisEvent, this.parent, this.index);
     const treeSlice = JSON.parse(JSON.stringify(nodes.childs))
     this.store.dispatch(changeTree({tree: treeSlice}))
+    
+    this.store.dispatch(deleteEvent({id: this.thisEvent.id}))
   }
 
   moveEvent() {
     nodes.moveEvent(this.thisEvent, this.parent, this.index);
     const treeSlice = JSON.parse(JSON.stringify(nodes.childs))
     this.store.dispatch(changeTree({tree: treeSlice}))
+
+    const eventCopy = JSON.parse(JSON.stringify(this.thisEvent))
+    this.store.dispatch(moveEvent({id: this.thisEvent.id, event: eventCopy}))
   }
 
   resizeEvent(event: boolean) {
@@ -128,8 +133,8 @@ export class EventComponent {
     const treeSlice = JSON.parse(JSON.stringify(nodes.childs))
     this.store.dispatch(changeTree({tree: treeSlice}))
 
-    const eventCopy = JSON.parse(JSON.stringify(event))
-    this.store.dispatch(moveEvent({id: this.thisEvent.id, event: this.thisEvent}))
+    const eventCopy = JSON.parse(JSON.stringify(this.thisEvent))
+    this.store.dispatch(moveEvent({id: this.thisEvent.id, event: eventCopy}))
   }
 
   getEventTime() {

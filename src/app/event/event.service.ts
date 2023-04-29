@@ -21,14 +21,13 @@ export class EventService{
     }
 
     addEvent(myEvent: any) {
-      
       let event = this.getTransofrmedEvent(myEvent.event)
       return this.http.post('http://127.0.0.1:8000/api/event/', event)
     }
 
     putEvent(myEvent: any){
       let event = this.getTransofrmedEvent(myEvent.event)
-      return this.http.put(`http://127.0.0.1:8000/api/event/${myEvent.event.id}`, event)
+      return this.http.put(`http://127.0.0.1:8000/api/event/${1}`, event)
     }
 
     getTransofrmedEvent(myEvent: Eventt) {
