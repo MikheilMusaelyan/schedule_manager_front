@@ -97,9 +97,9 @@ export class SingleDayComponent implements OnInit, AfterViewInit{
       start: Math.min(index, 96), 
       end: Math.min(96, index + 4), 
       children: [], 
-      id: null, 
+      id: null,
       color: {
-        value: 'var(--eventColor)', 
+        name: 'var(--eventColor)', 
         pastel: false
       }, 
       isNew: true,
@@ -111,9 +111,9 @@ export class SingleDayComponent implements OnInit, AfterViewInit{
       event
     );
 
-    let eventCopy = JSON.parse(JSON.stringify(event))
-
+    const eventCopy = JSON.parse(JSON.stringify(event))
     const treeSlice = JSON.parse(JSON.stringify(nodes.childs))
+
     this.store.dispatch(changeTree({tree: treeSlice}));
     this.store.dispatch(addEvent({event: eventCopy}))
   }
@@ -126,8 +126,6 @@ export class SingleDayComponent implements OnInit, AfterViewInit{
 
   // change designs 
   ngAfterViewInit(): void  {
-    this.touchEvent = 'ontouchstart' in window;
-
     window.addEventListener('resize', this.changeWidthValue);
 
     setTimeout(() => {

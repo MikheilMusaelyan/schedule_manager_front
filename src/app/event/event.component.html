@@ -5,8 +5,8 @@
     }"
 >
     <div class="color-wrap">
-        <div class="color" *ngFor="let color of colors" [ngStyle]="{'background': color.value}" (click)="selectColor(color)">
-            <div *ngIf="color.value == thisEvent.color.value" class="selected-color"></div>
+        <div class="color" *ngFor="let color of colors" [ngStyle]="{'background': color.name}" (click)="selectColor(color)">
+            <div *ngIf="color.name == thisEvent.color.name" class="selected-color"></div>
         </div>
     </div>   
 
@@ -33,7 +33,7 @@
         'left': (level * 150) + 'px',
         'height': (40 * (+thisEvent.end - +thisEvent.start)) + 'px',
         'top': (+divList.offsetTop) + (+thisEvent.start * 40) + 'px',
-        'background': thisEvent.color.value
+        'background': thisEvent.color.name
     }"
 
     [ngClass]="{

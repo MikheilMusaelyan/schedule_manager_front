@@ -8,30 +8,32 @@ export const changeTree = createAction(
 //add
 export const addEvent = createAction(
     '[Event] Add Event',
-    props<{event: any}>() // TYPE OF EVENT
+    props<{event: any}>()
 )
 export const addEventSuccess = createAction(
     '[Effect] Add Event Success',
 )
-export const addeventFailure = createAction(
+export const EventFailure = createAction(
     '[Effect] Add Event Failure',
 )
 
 // delete
 export const deleteEvent = createAction(
     '[Event] Delete Event',
-    props<{id: number}>() // TYPE OF EVENT
+    props<{id: number}>()
 )
 export const deleteEventSuccess = createAction(
     '[Event] Delete Event Success',
 )
 
+
 //move
 export const moveEvent = createAction(
     '[Event] Move Event',
-    props<{id: number, event: any}>() // TYPE OF EVENT
+    props<{id: number, event: any}>() 
 )
 export const moveEventSuccess = createAction(
     '[Event] Move Event Success',
 )
+
 

@@ -1,5 +1,5 @@
 import { createReducer, on } from "@ngrx/store";
-import { addEvent, addEventSuccess, addeventFailure, changeTree, deleteEvent, deleteEventSuccess, moveEvent, moveEventSuccess } from "../event.actions";
+import { addEvent, addEventSuccess, EventFailure, changeTree, deleteEvent, deleteEventSuccess, moveEvent, moveEventSuccess } from "../event.actions";
 
 export interface EventState {
     events: any[],
@@ -24,6 +24,8 @@ export const EventReducer = createReducer(
             changed: !state.changed
         }
     )),
+
+    //add
     on(addEvent, (state: EventState, {event}) => (
         {
             ...state,
@@ -36,20 +38,8 @@ export const EventReducer = createReducer(
             loading: false
         }
     )),
-    on(addeventFailure, (state: EventState) => {
-        setTimeout(() => {
-            return {
-              ...state,
-              loading: false,
-              errors: null
-            };
-        }, 3000);
-        return {
-          ...state,
-          loading: false,
-          errors: 'There is an error'
-        };
-    }),
+
+    //delete
     on(deleteEvent, (state: EventState, {id}) => (
         {
             ...state,
@@ -62,6 +52,8 @@ export const EventReducer = createReducer(
             loading: false
         }
     )),
+
+    //move
     on(moveEvent, (state: EventState) => (
         {
             ...state,
@@ -73,5 +65,21 @@ export const EventReducer = createReducer(
             ...state,
             loading: false
         }
-    ))
+    )),
+
+    //fail
+    on(EventFailure, (state: EventState) => {
+        setTimeout(() => {
+            return {
+              ...state,
+              loading: false,
+              errors: null
+            };
+        }, 2000);
+        return {
+          ...state,
+          loading: false,
+          errors: 'There is an error'
+        };
+    }),
 )

@@ -3,5 +3,6 @@ export interface Eventt {
     start: number;
     end: number;
     name: string;
-    date: string
+    date: string;
+    color: any
 }

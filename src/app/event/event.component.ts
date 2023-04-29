@@ -2,7 +2,7 @@ import { Component, Input, ViewChild} from '@angular/core';
 import { Store } from '@ngrx/store';
 import * as nodes from "src/app/nodes";
 import { AppState } from 'src/app/reducers';
-import { changeTree } from './event.actions';
+import { changeTree, moveEvent } from './event.actions';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
 
@@ -51,18 +51,18 @@ export class EventComponent {
   deleteIcon = faTrash;
   pickedColor: boolean = false;
   colors: any[] = [
-    { value: 'red', pastel: false },
-    { value: 'orange', pastel: false },
-    { value: 'var(--eventColor)', pastel: false },
-    { value: 'green', pastel: false },
-    { value: 'rgb(250 137 157)', pastel: false },
-    { value: 'yellow', pastel: true },
-    { value: '#fc5454', pastel: true },
-    { value: '#FFDAB9', pastel: true },
-    { value: '#B8E8FC', pastel: true },
-    { value: '#98FB98', pastel: true },
-    { value: 'pink', pastel: true },
-    { value: '#F0E68C', pastel: true }
+    { name: 'red', pastel: false },
+    { name: 'orange', pastel: false },
+    { name: 'var(--eventColor)', pastel: false },
+    { name: 'green', pastel: false },
+    { name: 'rgb(250 137 157)', pastel: false },
+    { name: 'yellow', pastel: true },
+    { name: '#fc5454', pastel: true },
+    { name: '#FFDAB9', pastel: true },
+    { name: '#B8E8FC', pastel: true },
+    { name: '#98FB98', pastel: true },
+    { name: 'pink', pastel: true },
+    { name: '#F0E68C', pastel: true }
   ];
   absoluteState: string;
   
@@ -127,6 +127,9 @@ export class EventComponent {
     nodes.resizeEvent(event, this.thisEvent, this.parent, this.index)
     const treeSlice = JSON.parse(JSON.stringify(nodes.childs))
     this.store.dispatch(changeTree({tree: treeSlice}))
+
+    const eventCopy = JSON.parse(JSON.stringify(event))
+    this.store.dispatch(moveEvent({id: this.thisEvent.id, event: this.thisEvent}))
   }
 
   getEventTime() {
