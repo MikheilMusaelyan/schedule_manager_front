@@ -16,7 +16,6 @@
     color: white;
     cursor: pointer;
     transform-origin: top left;
-    transition: background-color 250ms;
     opacity: 0;
   }
 

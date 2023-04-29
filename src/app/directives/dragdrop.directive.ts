@@ -1,8 +1,5 @@
 import { Directive, ElementRef, EventEmitter, Input, Output, SimpleChanges} from '@angular/core';
-import { Store } from '@ngrx/store';
 import * as nodes from 'src/app/nodes'
-import { UIState } from '../UI-store';
-
 
 @Directive({
   selector: '[appDragdrop]'
@@ -22,7 +19,6 @@ export class DragdropDirective{
     }
   }
 
-
   private absoluteDiv: any;
   private initialRelativeTop: any;
   private initialMouseY: any;
@@ -38,16 +34,13 @@ export class DragdropDirective{
   private scrollThreshhold: number;
   private opened: boolean = false;
 
-
   @Output() moveNodeEmitter: EventEmitter<nodes.Node> = new EventEmitter();
   @Output() resizeEmitter: EventEmitter<boolean> = new EventEmitter();
   @Output() openDetailsWindow: EventEmitter<boolean> = new EventEmitter();
 
   constructor(
     private el: ElementRef,
-  ) {
-
-  }
+  ) {}
   
   ngAfterViewInit() {
     this.scrollThreshhold =  window.innerHeight / 4; //for autoscroll
