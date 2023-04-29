@@ -52,7 +52,6 @@ import { AuthInterceptor } from './interceptors/token.interceptor';
     UpcomingeventsComponent,
     LoginComponent,
     WordPipe,
-    HttpClientModule
   ],
   imports: [
     BrowserModule,
@@ -64,7 +63,8 @@ import { AuthInterceptor } from './interceptors/token.interceptor';
     BrowserAnimationsModule,
     RouterModule,
     FontAwesomeModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    HttpClientModule
   ],
   providers: [
     {

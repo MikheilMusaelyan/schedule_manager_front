@@ -96,6 +96,7 @@ export class SingleDayComponent implements OnInit, AfterViewInit{
     nodes.newNode(nodes.childs, { start: Math.min(index, 96), end: Math.min(96, index + 4), children: [], id: null, color: {value: 'var(--eventColor)', pastel: false}, isNew: true});
     const treeSlice = JSON.parse(JSON.stringify(nodes.childs))
     this.store.dispatch(changeTree({tree: treeSlice}));
+    
   }
 
   ngOnInit() {

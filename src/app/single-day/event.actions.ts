@@ -5,3 +5,17 @@ export const changeTree = createAction(
     props<{tree: any[]}>()
 );
 
+export const addEvent = createAction(
+    '[Event] Add Event',
+    props<{event: any}>() // TYPE OF EVENT
+)
+
+export const removeEvent = createAction(
+    '[Event] Remove Event',
+    props<{id: number}>() // TYPE OF EVENT
+)
+
+export const moveEvent = createAction(
+    '[Event] Move Event',
+    props<{id: number, event: any}>() // TYPE OF EVENT
+)
