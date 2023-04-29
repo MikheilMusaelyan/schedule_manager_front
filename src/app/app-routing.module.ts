@@ -14,6 +14,7 @@ const routes: Routes = [
   },
   { path: 'singleday/:month/:day/:year', component: SingleDayComponent },
   { path: 'login', component: LoginComponent },
+  { path: 'register', component: LoginComponent },
 ];
 
 @NgModule({

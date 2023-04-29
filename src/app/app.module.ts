@@ -31,6 +31,9 @@ import { EventService } from './single-day/event.service';
 import { LoginComponent } from './login/login.component';
 import { ReactiveFormsModule } from "@angular/forms"
 
+import { WordPipe } from './pipes/wordPipe';
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -45,6 +48,7 @@ import { ReactiveFormsModule } from "@angular/forms"
     CurrentTimeComponent,
     UpcomingeventsComponent,
     LoginComponent,
+    WordPipe
   ],
   imports: [
     BrowserModule,

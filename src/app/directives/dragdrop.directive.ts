@@ -270,6 +270,7 @@ export class DragdropDirective{
     document.addEventListener('mouseup', this.handleMouseUp);
     document.addEventListener('touchend', this.handleMouseUp);
   }
+
   removeListeners = () => {
     document.removeEventListener('touchend', this.handleMouseUp);
     document.removeEventListener('mouseup', this.handleMouseUp);
@@ -286,6 +287,7 @@ export class DragdropDirective{
     document.addEventListener('mouseup', this.handleResizeMouseUp);
     document.addEventListener('touchend', this.handleResizeMouseUp);
   }
+  
   removeResizeListeners = () => {
     document.removeEventListener('touchmove', this.handleResizeMouseMove);
     document.removeEventListener('mousemove', this.handleResizeMouseMove);

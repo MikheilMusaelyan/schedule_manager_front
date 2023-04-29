@@ -70,7 +70,7 @@ export class SingleDayComponent implements OnInit, AfterViewInit{
 
   slide(bool: boolean) {
     const transformValue = bool ? 15 : -15;
-    this.main.nativeElement.style.transition = 'opacity 100ms, transform 150ms';
+    this.main.nativeElement.style.transition = 'opacity 150ms, transform 100ms';
     this.main.nativeElement.style.opacity = '0';
     this.main.nativeElement.style.transform = `translateX(${-transformValue}%)`;
 

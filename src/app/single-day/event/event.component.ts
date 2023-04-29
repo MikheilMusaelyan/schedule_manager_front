@@ -50,7 +50,7 @@ export class EventComponent {
   wrapper: string = 'false';
   deleteIcon = faTrash;
   pickedColor: boolean = false;
-   colors: any[] = [
+  colors: any[] = [
     { value: 'red', pastel: false },
     { value: 'orange', pastel: false },
     { value: 'var(--eventColor)', pastel: false },

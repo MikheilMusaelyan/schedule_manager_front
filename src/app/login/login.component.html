@@ -13,6 +13,7 @@
         <div *ngIf="form.controls.email.errors.required">Email is required</div>
         <div *ngIf="form.controls.email.errors.email">Invalid email format</div>
         <div *ngIf="form.controls.email.errors.minlength">Email must be at least 8 characters long</div>
+        <div *ngIf="form.controls.email.errors.maxlength">Email must less than 50 characters long</div>
       </div>
     </div>
   
@@ -25,14 +26,14 @@
         >
         <div *ngIf="form.controls.password.errors.required">Password is required</div>
         <div *ngIf="form.controls.password.errors.minlength">Password must be at least 8 characters long</div>
+        <div *ngIf="form.controls.password.errors.maxlength">Password must be less than 15 characters long</div>
       </div>
     </div>
 
     <div class="form-input-wrap" *ngIf="registering">
-      <input #confirm type="password" placeholder="Confirm password" autocomplete="current-password" >
+      <input #confirm type="password" placeholder="Confirm password" autocomplete="current-password">
       <div class="error-wrap" 
-          *ngIf="form.controls.password.value != confirm.value && 
-          clicked == true">
+          *ngIf="form.controls.password.value != confirm.value && clicked == true">
         <div>Passwords don't match</div>
       </div>
     </div>
@@ -47,25 +48,3 @@
   
   </form>
 </main>
-
-
-<!-- <form [formGroup]="form" (ngSubmit)="onSubmit(signupForm)">
-    <div class="form-group">
-      <input type="email" formControlName="email">
-      <div *ngIf="signupForm.controls['email'].invalid && (signupForm.controls['email'].dirty || signupForm.controls['email'].touched)" class="text-danger">
-        <div *ngIf="signupForm.controls['email'].errors.required">Email is required.</div>
-        <div *ngIf="signupForm.controls['email'].errors.email">Invalid email format.</div>
-      </div>
-    </div>
-    <div class="form-group">
-      <label for="password">Password</label>
-      <input type="password" class="form-control" id="password" name="password" [(ngModel)]="user.password" required minlength="8" pattern="(?=.*[A-Z]).*" #passwordInput>
-      <div *ngIf="signupForm.controls['password'].invalid && (signupForm.controls['password'].dirty || signupForm.controls['password'].touched)" class="text-danger">
-        <div *ngIf="signupForm.controls['password'].errors.required">Password is required.</div>
-        <div *ngIf="signupForm.controls['password'].errors.minlength">Password must be at least 8 characters long.</div>
-        <div *ngIf="signupForm.controls['password'].errors.pattern">Password must contain at least one capital letter.</div>
-      </div>
-    </div>
-    <button type="submit" class="btn btn-primary" [disabled]="signupForm.invalid">Sign Up</button>
-  </form>
-   -->
