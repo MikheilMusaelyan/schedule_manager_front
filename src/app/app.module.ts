@@ -19,15 +19,15 @@ import { MainComponent } from './main/main.component';
 
 import { NavbarComponent } from './navbar/navbar.component';
 import { DragdropDirective } from './directives/dragdrop.directive';
-import { EventComponent } from './single-day/event/event.component';
+import { EventComponent } from './event/event.component';
 
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { YearComponent } from './year/year.component';
 import { SearchbarComponent } from './searchbar/searchbar.component';
 import { CurrentTimeComponent } from './current-time/current-time.component';
 import { UpcomingeventsComponent } from './upcomingevents/upcomingevents.component';
-import { EventEffects$ } from './single-day/event.effects';
-import { EventService } from './single-day/event.service';
+import { EventEffects$ } from './event/event.effects';
+import { EventService } from './event/event.service';
 import { LoginComponent } from './login/login.component';
 import { ReactiveFormsModule } from "@angular/forms"
 

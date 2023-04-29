@@ -1,3 +1,4 @@
+import { HttpClient } from "@angular/common/http";
 import {  Injectable } from "@angular/core";
 
 export interface Node {
@@ -13,7 +14,9 @@ export class EventService{
     childs: Node[] = [];
     nodesCount: number = 0
 
-    constructor() {
+    constructor(
+      private http: HttpClient
+    ) {
         this.newNode(this.childs, { start: 2, end: 20, children: []}) 
         this.newNode(this.childs, { start: 3, end: 14, children: []}) 
         this.newNode(this.childs, { start: 5, end: 10, children: []}) 
@@ -27,7 +30,9 @@ export class EventService{
         this.newNode(this.childs, { start: 8, end: 10, children: []}) 
     }
 
-    
+    addEvent(event: any) {
+      return this.http.post('http://127.0.0.1:8000/event/', event)
+    }
 
 
     newNode(children: Node[], node: Node): any {

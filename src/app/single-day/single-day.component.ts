@@ -3,12 +3,12 @@ import * as nodes from '../nodes'
 import { Store, select } from '@ngrx/store';
 import { AppState } from '../reducers';
 import { Observable, Subscription } from 'rxjs';
-import { detectChange } from './event.selectors';
+import { detectChange } from '../event/event.selectors';
 import { faArrowLeft, faArrowRight } from '@fortawesome/free-solid-svg-icons';
 import { selectToday } from '../calendar/calendar.selectors';
 import { months } from '../shared/shared';
 import { selectDate } from '../calendar/calendar.actions';
-import { changeTree } from './event.actions';
+import { changeTree } from '../event/event.actions';
 
 @Component({
   selector: 'app-single-day',

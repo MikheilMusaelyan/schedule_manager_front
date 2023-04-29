@@ -2,7 +2,7 @@ import { Component, Input, ViewChild} from '@angular/core';
 import { Store } from '@ngrx/store';
 import * as nodes from "src/app/nodes";
 import { AppState } from 'src/app/reducers';
-import { changeTree } from '../event.actions';
+import { changeTree } from './event.actions';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
 

@@ -27,9 +27,6 @@
   .smallEvent > .event-info > .event-time{
     display: block !important;
   }
-  .smallEvent > .resize-div-wrap > .resize-div{
-    top: -5px !important;
-  }
 
   .resize-div-wrap{
     min-height: 8px;

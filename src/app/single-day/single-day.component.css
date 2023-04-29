@@ -13,7 +13,7 @@ main{
 }
 
 .single-day-popup-wrap{
-  background-color: var(--mainBackground);
+  background-color: white;
   border-radius: 10px;
   position: relative;
   overflow: hidden;
@@ -24,7 +24,7 @@ main{
   padding-top: 40px;
 }
 .single-day-popup{
-    background-color: var(--mainBackground);
+    background-color: white;
     width: 100%;
     padding-top: 40px;
     position: relative;
