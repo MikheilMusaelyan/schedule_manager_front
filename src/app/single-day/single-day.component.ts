@@ -8,7 +8,7 @@ import { faArrowLeft, faArrowRight } from '@fortawesome/free-solid-svg-icons';
 import { selectToday } from '../calendar/calendar.selectors';
 import { months } from '../shared/shared';
 import { selectDate } from '../calendar/calendar.actions';
-import { changeTree } from '../event/event.actions';
+import { addEvent, changeTree } from '../event/event.actions';
 
 @Component({
   selector: 'app-single-day',
@@ -93,10 +93,28 @@ export class SingleDayComponent implements OnInit, AfterViewInit{
   }
 
   addEvent(index: number) {
-    nodes.newNode(nodes.childs, { start: Math.min(index, 96), end: Math.min(96, index + 4), children: [], id: null, color: {value: 'var(--eventColor)', pastel: false}, isNew: true});
+    let event = { 
+      start: Math.min(index, 96), 
+      end: Math.min(96, index + 4), 
+      children: [], 
+      id: null, 
+      color: {
+        value: 'var(--eventColor)', 
+        pastel: false
+      }, 
+      isNew: true
+    }
+    
+    nodes.newNode(
+      nodes.childs, 
+      event
+    );
+
+    let eventCopy = JSON.parse(JSON.stringify(event))
+
     const treeSlice = JSON.parse(JSON.stringify(nodes.childs))
     this.store.dispatch(changeTree({tree: treeSlice}));
-    
+    this.store.dispatch(addEvent({event: eventCopy}))
   }
 
   ngOnInit() {

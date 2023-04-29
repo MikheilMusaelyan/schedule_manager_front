@@ -7,3 +7,4 @@ export const detectChange = createSelector(
     selectEventState, 
     (state: EventState) => state.changed
 )
+

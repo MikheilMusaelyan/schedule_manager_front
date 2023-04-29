@@ -211,7 +211,7 @@ export function resizeEvent(e: any, thisEvent: Node, parent: Node[], index: numb
 // newNode(childs, { start: 8, end: 10, children: [], id: null, color: {value: 'var(--eventColor)', pastel: false}, colorSet: false, isNew: false}) 
 // newNode(childs, { start: 8, end: 10, children: [], id: null, color: {value: 'var(--eventColor)', pastel: false}, colorSet: false, isNew: false}) 
 // newNode(childs, { start: 8, end: 10, children: [], id: null, color: {value: 'var(--eventColor)', pastel: false}, colorSet: false, isNew: false}) 
-// newNode(childs, { start: 8, end: 10, children: [], id: null, color: {value: 'var(--eventColor)', pastel: false}, colorSet: false, isNew: false}) 
+// newNode(childs, { start: 8, end: 10 }) 
 // newNode(childs, { start: 8, end: 10, children: [], id: null, color: {value: 'var(--eventColor)', pastel: false}, colorSet: false, isNew: false}) 
 
 

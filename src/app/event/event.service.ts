@@ -31,7 +31,13 @@ export class EventService{
     }
 
     addEvent(event: any) {
-      return this.http.post('http://127.0.0.1:8000/event/', event)
+      return this.http.post('http://127.0.0.1:8000/api/event/', 
+        {
+          start: event.event.start,
+          end: event.event.end,
+          date: event.event.date.toISOString().split('T')[0]
+        }
+      )
     }
 
 

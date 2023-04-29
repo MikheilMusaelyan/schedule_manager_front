@@ -1,9 +1,9 @@
 import { Injectable } from "@angular/core";
 import { Actions, createEffect, ofType } from "@ngrx/effects";
-import { concatMap, map, tap } from "rxjs";
+import { catchError, concatMap, map, of, tap } from "rxjs";
 import { EventService } from "./event.service";
 import { HttpClient } from "@angular/common/http";
-import { addEvent, addEventSuccess, changeTree } from "./event.actions";
+import { addEvent, addEventSuccess, addeventFailure, changeTree } from "./event.actions";
 import { Store } from "@ngrx/store";
 import { EventState } from "./reducers";
 
@@ -22,10 +22,11 @@ export class EventEffects$ {
           concatMap((event: any) =>
             this.service.addEvent(event).pipe(
                 map(data => {
-                    return this.store.dispatch(addEventSuccess())
-                })
+                    return addEventSuccess()
+                }),
+                catchError(error => of(addeventFailure()))
             )
           )
-        ), {dispatch: false}
+        )
     );
 }

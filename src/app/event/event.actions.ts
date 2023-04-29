@@ -13,6 +13,9 @@ export const addEvent = createAction(
 export const addEventSuccess = createAction(
     '[Effect] Add Event Success',
 )
+export const addeventFailure = createAction(
+    '[Effect] Add Event Failure',
+)
 
 // delete
 export const deleteEvent = createAction(
