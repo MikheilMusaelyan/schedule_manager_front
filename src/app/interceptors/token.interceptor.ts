@@ -10,7 +10,7 @@ export class AuthInterceptor implements HttpInterceptor {
     if (true) {
       request = request.clone({
         setHeaders: {
-          Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjgyODcyMDk5LCJpYXQiOjE2ODI4NzExOTksImp0aSI6IjI1OGU4OWEwODZkZDQ5NGE5MTM1MDU1YjQ0NjEyNGRiIiwidXNlcl9pZCI6MjJ9.Z04gxKMs6HPdKtVqRgNR3YK3DBxmt06jf435yXiIkTs'
+          Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjgyODc1MzkwLCJpYXQiOjE2ODI4NzQ0OTAsImp0aSI6ImFiNGU2ZjgzZGMwYjRmY2E4ZGYwMzA0YTEyNDZjZTZiIiwidXNlcl9pZCI6MjJ9.q2f16_GcniXlJyF-Uf6cAOeP8FdwowYHJ5vItQm06ww'
         }
       });
     }

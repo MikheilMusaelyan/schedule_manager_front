@@ -53,8 +53,16 @@
         <span class="event-name">
             (event name)
         </span>
-        
+        <div class="loader" *ngIf="!thisEvent?.ID">
+            <app-loading ></app-loading>
+        </div>
+        <div
+        [@error]="errorState"
+        class="error" *ngIf="0 > thisEvent?.ID">
+        An error occured
+        </div>
     </div>
+    
 
     <div #resize class="resize-div-wrap">
         <div class="resize-div"></div>

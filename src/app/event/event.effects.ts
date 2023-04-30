@@ -25,7 +25,10 @@ export class EventEffects$ {
             this.service.addEvent(event)
             .pipe(
                 tap((data: number) => nodes.setId(data, event.event.id, nodes.childs)),
-                catchError(() => of(EventFailure()))
+                catchError(() => {
+                    nodes.setId(-1, event.event.id, nodes.childs)
+                    return of(EventFailure())
+                })
             )
           )
         ), {dispatch: false}

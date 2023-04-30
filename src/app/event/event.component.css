@@ -27,6 +27,9 @@
   .smallEvent > .event-info > .event-time{
     display: block !important;
   }
+  .smallEvent > .event-info > .loader{
+    margin: 0 0 0 7px;
+  }
 
   .resize-div-wrap{
     min-height: 8px;
@@ -126,4 +129,8 @@
     display: block;
     padding-right: 5px;
     font-size: var(--fsM);
+  }
+
+  .loader{
+    margin: 5px 0 0 0;
   }

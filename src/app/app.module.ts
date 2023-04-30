@@ -35,6 +35,7 @@ import { WordPipe } from './pipes/wordPipe';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { AuthInterceptor } from './interceptors/token.interceptor';
+import { LoadingComponent } from './loading/loading.component';
 
 
 @NgModule({
@@ -52,6 +53,7 @@ import { AuthInterceptor } from './interceptors/token.interceptor';
     UpcomingeventsComponent,
     LoginComponent,
     WordPipe,
+    LoadingComponent
   ],
   imports: [
     BrowserModule,

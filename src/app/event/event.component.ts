@@ -33,7 +33,16 @@ import { faTrash } from '@fortawesome/free-solid-svg-icons';
         'opacity': '1'
       })),
       transition('hidden => open', animate(200))
-    ])
+    ]),
+    trigger('error', [
+      state('void', style({
+        'display': 'none',
+      })),
+      state('normal', style({
+        'display': 'block',
+      })),  
+      transition('normal <=> void', animate('450ms cubic-bezier(0.68, -0.55, 0.265, 1.2)'))
+    ]),
   ]
 })
 export class EventComponent {
@@ -65,6 +74,7 @@ export class EventComponent {
     { name: '#F0E68C', pastel: true }
   ];
   absoluteState: string;
+  errorState: string = 'normal';
   
   constructor(
     private store: Store<AppState>
@@ -75,6 +85,10 @@ export class EventComponent {
   ngOnInit() {
     this.level += 1;
     this.thisEvent = this.parent[this.index]; 
+
+    setTimeout(() => {
+      this.errorState = 'void'
+    }, 1000);
   }
 
   selectColor(color: string){
