@@ -18,7 +18,7 @@ import { CalendarComponent } from './calendar/calendar/calendar.component';
 import { MainComponent } from './main/main.component';
 
 import { NavbarComponent } from './navbar/navbar.component';
-import { DragdropDirective } from './directives/dragdrop.directive';
+import { DragdropDirective } from './shared/directives/dragdrop.directive';
 import { EventComponent } from './event/event.component';
 
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
@@ -34,8 +34,8 @@ import { ReactiveFormsModule } from "@angular/forms"
 import { WordPipe } from './pipes/wordPipe';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
-import { AuthInterceptor } from './interceptors/token.interceptor';
-import { LoadingComponent } from './loading/loading.component';
+import { AuthInterceptor } from './shared/interceptors/token.interceptor';
+import { LoadingComponent } from './shared/loading/loading.component';
 
 
 @NgModule({

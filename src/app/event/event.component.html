@@ -53,13 +53,15 @@
         <span class="event-name">
             (event name)
         </span>
-        <div class="loader" *ngIf="!thisEvent?.ID">
+        <div class="loader" *ngIf="thisEvent?.state == 'loading'">
             <app-loading ></app-loading>
         </div>
-        <div
-        [@error]="errorState"
-        class="error" *ngIf="0 > thisEvent?.ID">
-        An error occured
+        <div class="error" *ngIf="thisEvent?.state == 'error'"> 
+            <fa-icon [ngStyle]="{'color' : (thisEvent?.color.name == 'red' || thisEvent?.color.name == '#fc5454') ? 'white' : 'red'} " 
+            [icon]="errorIcon"></fa-icon>
+        </div>
+        <div class="success" *ngIf="thisEvent?.state == 'success'">
+            <fa-icon [icon]="checkIcon"></fa-icon>
         </div>
     </div>
     

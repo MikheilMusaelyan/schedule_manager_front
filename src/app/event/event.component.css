@@ -27,7 +27,9 @@
   .smallEvent > .event-info > .event-time{
     display: block !important;
   }
-  .smallEvent > .event-info > .loader{
+  .smallEvent > .event-info > .loader,
+  .smallEvent > .event-info > .error,
+  .smallEvent > .event-info > .success{
     margin: 0 0 0 7px;
   }
 
@@ -131,6 +133,12 @@
     font-size: var(--fsM);
   }
 
-  .loader{
+  .loader,.error,.success{
     margin: 5px 0 0 0;
+    font-size: 13px;
+    width: 20px;
+    height: 20px;
+  }
+  .success{
+    color: rgb(52, 255, 52);
   }

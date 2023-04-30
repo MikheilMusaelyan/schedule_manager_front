@@ -10,6 +10,7 @@
     isNew: boolean;
     ID: null | number;
     date?: any;
+    state: string;
   }
 
   export function newNode(children: Node[], node: Node): any {
@@ -200,13 +201,22 @@ export function resizeEvent(e: any, thisEvent: Node, parent: Node[], index: numb
   } 
 }
 
-export function setId(ID: number, id: number, Children: Node[]){
+export function setState(ID: number | string, id: number, Children: Node[]){
   for(let i = 0; i < Children.length; i++){
     if(Children[i].id == id){
-      Children[i].ID = ID
+      if(typeof(ID) == 'number'){
+        Children[i].ID = ID
+        Children[i].state = 'success'
+        let childReference: Node = Children[i]
+        setTimeout(() => {
+          childReference.state = '' // or find it again
+        }, 2000);
+        return
+      } 
+      Children[i].state = 'error'
       return
     }
-    setId(ID, id, Children[i].children)
+    setState(ID, id, Children[i].children)
   }
 }
 

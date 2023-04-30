@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
-import * as nodes from '../nodes'
+import * as nodes from '../shared/nodes'
 import { Store, select } from '@ngrx/store';
 import { AppState } from '../reducers';
 import { Observable, Subscription } from 'rxjs';
@@ -106,7 +106,8 @@ export class SingleDayComponent implements OnInit, AfterViewInit{
       }, 
       isNew: true,
       date: this.today,
-      ID: null
+      ID: null,
+      state: 'loading'
     }
     nodes.newNode(nodes.childs, event);
 

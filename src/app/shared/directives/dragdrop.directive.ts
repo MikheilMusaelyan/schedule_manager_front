@@ -1,5 +1,5 @@
 import { Directive, ElementRef, EventEmitter, Input, Output, SimpleChanges} from '@angular/core';
-import * as nodes from 'src/app/nodes'
+import * as nodes from 'src/app/shared/nodes'
 
 @Directive({
   selector: '[appDragdrop]'

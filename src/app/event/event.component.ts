@@ -1,10 +1,10 @@
 import { Component, Input, ViewChild} from '@angular/core';
 import { Store } from '@ngrx/store';
-import * as nodes from "src/app/nodes";
+import * as nodes from "src/app/shared/nodes";
 import { AppState } from 'src/app/reducers';
 import { changeTree, deleteEvent, moveEvent } from './event.actions';
 import { animate, state, style, transition, trigger } from '@angular/animations';
-import { faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faCheck, faTrash, faX, faXmark } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-event',
@@ -33,16 +33,7 @@ import { faTrash } from '@fortawesome/free-solid-svg-icons';
         'opacity': '1'
       })),
       transition('hidden => open', animate(200))
-    ]),
-    trigger('error', [
-      state('void', style({
-        'display': 'none',
-      })),
-      state('normal', style({
-        'display': 'block',
-      })),  
-      transition('normal <=> void', animate('450ms cubic-bezier(0.68, -0.55, 0.265, 1.2)'))
-    ]),
+    ])
   ]
 })
 export class EventComponent {
@@ -58,6 +49,8 @@ export class EventComponent {
   detailsOpen: boolean;
   wrapper: string = 'false';
   deleteIcon = faTrash;
+  errorIcon = faXmark;
+  checkIcon = faCheck;
   pickedColor: boolean = false;
   colors: any[] = [
     { name: 'red', pastel: false },
@@ -74,7 +67,6 @@ export class EventComponent {
     { name: '#F0E68C', pastel: true }
   ];
   absoluteState: string;
-  errorState: string = 'normal';
   
   constructor(
     private store: Store<AppState>
@@ -85,10 +77,6 @@ export class EventComponent {
   ngOnInit() {
     this.level += 1;
     this.thisEvent = this.parent[this.index]; 
-
-    setTimeout(() => {
-      this.errorState = 'void'
-    }, 1000);
   }
 
   selectColor(color: string){
