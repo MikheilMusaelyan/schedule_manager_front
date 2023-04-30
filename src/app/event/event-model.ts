@@ -1,8 +1,9 @@
-export interface Eventt {
-    id: number | null;
+export interface EventBackend {
+    // id: number | null;
     start: number;
     end: number;
     name: string;
     date: string;
-    color: any
+    color: any,
+    ID: null | number
 }

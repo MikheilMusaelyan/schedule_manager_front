@@ -146,15 +146,11 @@ main{
   }
   .day-header{
     margin: 0;
+    padding: 0 6px;
     padding-right: 2px;
     font-weight: normal;
     color: var(--rootColor);
     font-size: 24px;
-  }
-  .slash{
-    color: #b1b0b0 !important;
-    padding: 0 4px;
-    margin: 0;
   }
 
   .arrow-icon{

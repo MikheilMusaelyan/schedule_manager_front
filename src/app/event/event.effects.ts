@@ -6,6 +6,8 @@ import { HttpClient } from "@angular/common/http";
 import { addEvent, addEventSuccess, EventFailure, changeTree, moveEventSuccess, moveEvent } from "./event.actions";
 import { Store } from "@ngrx/store";
 import { EventState } from "./reducers";
+import { EventBackend } from "./event-model";
+import * as nodes from 'src/app/nodes'
 
 @Injectable()
 
@@ -22,23 +24,23 @@ export class EventEffects$ {
           concatMap((event: any) =>
             this.service.addEvent(event)
             .pipe(
-                map(data => addEventSuccess()),
-                catchError(error => of(EventFailure()))
+                tap((data: number) => nodes.setId(data, event.event.id, nodes.childs)),
+                catchError(() => of(EventFailure()))
             )
           )
-        )
+        ), {dispatch: false}
     );
 
     moveEvent$ = createEffect(() =>
         this.actions$.pipe(
-          ofType(moveEvent),
-          concatMap((event: any) =>
-            this.service.putEvent(event)
-            .pipe(
-                map(data => moveEventSuccess()),
-                catchError(error => of(EventFailure()))
+            ofType(moveEvent),
+            concatMap((event: any) =>
+              this.service.putEvent(event)
+              .pipe(
+                  map(data => moveEventSuccess()),
+                  catchError(error => of(EventFailure()))
+              )
             )
-          )
         )
     );
 }

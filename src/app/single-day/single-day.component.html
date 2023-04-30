@@ -1,5 +1,4 @@
 <div class="main-wrapper">
-
     <div class="toggle-day">
         <div class="arrow-icon" (click)="changeDay(-1)">
             <fa-icon [icon]="scrollLeft" class="left-icon"></fa-icon>
@@ -7,9 +6,7 @@
 
         <div class="date-header">
             <h2 class="day-header">{{today.getDate()}}</h2>
-            <h2 class="day-header slash">/</h2>
             <h2 class="day-header">{{getMonthName(today.getMonth())}}</h2>
-            <h2 class="day-header slash">/</h2>
             <h2 class="day-header">{{today.getFullYear()}}</h2>
         </div>
 

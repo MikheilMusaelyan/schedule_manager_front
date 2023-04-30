@@ -68,11 +68,13 @@ export class EventComponent {
   
   constructor(
     private store: Store<AppState>
-  ){}
+  ){
+   
+  }
 
   ngOnInit() {
     this.level += 1;
-    this.thisEvent = this.parent[this.index];    
+    this.thisEvent = this.parent[this.index]; 
   }
 
   selectColor(color: string){
@@ -113,16 +115,12 @@ export class EventComponent {
 
   deleteNode(){
     nodes.deleteEvent(this.thisEvent, this.parent, this.index);
-    const treeSlice = JSON.parse(JSON.stringify(nodes.childs))
-    this.store.dispatch(changeTree({tree: treeSlice}))
     
     this.store.dispatch(deleteEvent({id: this.thisEvent.id}))
   }
 
   moveEvent() {
     nodes.moveEvent(this.thisEvent, this.parent, this.index);
-    const treeSlice = JSON.parse(JSON.stringify(nodes.childs))
-    this.store.dispatch(changeTree({tree: treeSlice}))
 
     const eventCopy = JSON.parse(JSON.stringify(this.thisEvent))
     this.store.dispatch(moveEvent({id: this.thisEvent.id, event: eventCopy}))
@@ -130,8 +128,6 @@ export class EventComponent {
 
   resizeEvent(event: boolean) {
     nodes.resizeEvent(event, this.thisEvent, this.parent, this.index)
-    const treeSlice = JSON.parse(JSON.stringify(nodes.childs))
-    this.store.dispatch(changeTree({tree: treeSlice}))
 
     const eventCopy = JSON.parse(JSON.stringify(this.thisEvent))
     this.store.dispatch(moveEvent({id: this.thisEvent.id, event: eventCopy}))

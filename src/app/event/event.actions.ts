@@ -12,15 +12,13 @@ export const addEvent = createAction(
 )
 export const addEventSuccess = createAction(
     '[Effect] Add Event Success',
-)
-export const EventFailure = createAction(
-    '[Effect] Add Event Failure',
+    props<{addedId: number, id: number}>()
 )
 
 // delete
 export const deleteEvent = createAction(
     '[Event] Delete Event',
-    props<{id: number}>()
+    props<{id: number }>()
 )
 export const deleteEventSuccess = createAction(
     '[Event] Delete Event Success',
@@ -36,4 +34,8 @@ export const moveEventSuccess = createAction(
     '[Event] Move Event Success',
 )
 
+//failure
+export const EventFailure = createAction(
+    '[Effect] Add Event Failure',
+)
 

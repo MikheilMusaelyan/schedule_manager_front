@@ -3,12 +3,13 @@ import * as nodes from '../nodes'
 import { Store, select } from '@ngrx/store';
 import { AppState } from '../reducers';
 import { Observable, Subscription } from 'rxjs';
-import { detectChange } from '../event/event.selectors';
+import { detectChange, selectEventState } from '../event/event.selectors';
 import { faArrowLeft, faArrowRight } from '@fortawesome/free-solid-svg-icons';
 import { selectToday } from '../calendar/calendar.selectors';
 import { months } from '../shared/shared';
 import { selectDate } from '../calendar/calendar.actions';
 import { addEvent, changeTree } from '../event/event.actions';
+import { EventState } from '../event/reducers';
 
 @Component({
   selector: 'app-single-day',
@@ -40,6 +41,7 @@ export class SingleDayComponent implements OnInit, AfterViewInit{
   //designs
   constructor(
     private store: Store<AppState>,
+    private loadingStore: Store<EventState>
   ) {
     for (let i = 0; i < 24; i++) {
       const hour = String(i % 12 == 0 ? 12 : i % 12);
@@ -103,18 +105,12 @@ export class SingleDayComponent implements OnInit, AfterViewInit{
         pastel: false
       }, 
       isNew: true,
-      date: this.today
+      date: this.today,
+      ID: null
     }
-    
-    nodes.newNode(
-      nodes.childs, 
-      event
-    );
+    nodes.newNode(nodes.childs, event);
 
     const eventCopy = JSON.parse(JSON.stringify(event))
-    const treeSlice = JSON.parse(JSON.stringify(nodes.childs))
-
-    this.store.dispatch(changeTree({tree: treeSlice}));
     this.store.dispatch(addEvent({event: eventCopy}))
   }
 

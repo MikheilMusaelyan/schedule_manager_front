@@ -1,18 +1,25 @@
-export let childs: Node[] = []
+  export let childs: Node[] = []
+  let nodesCount: number = 0
 
- export interface Node {
+  export interface Node {
     start: number;
     end: number;
     children: Node[];
     id: null | number;
     color: any;
     isNew: boolean;
-    date?: any
+    ID: null | number;
+    date?: any;
   }
 
   export function newNode(children: Node[], node: Node): any {
-    let queue: Node[] = []
-    let spliced = false
+    let queue: Node[] = [];
+    let spliced = false;
+    
+    if(!node?.id){
+      node.id = ++nodesCount
+    }
+    
     if(children.length == 0) {
       children.push(node)
       return
@@ -56,15 +63,13 @@ export let childs: Node[] = []
                              // is overlapped
             } else {
               children.splice(i, 1)
-              i-- // gind kofila gind ara
+              i--
             }
             
             if(node.children[node.children.length - 1].children.length > 0) {
                 addToQueue(node.end, node.children[node.children.length - 1], queue)
                 queue.forEach(element => {
-                  //????? children or childs
-                   newNode(children, element);
-                  //?????
+                  newNode(children, element);
                 });
                 // queue = [] 
                 break
@@ -86,7 +91,6 @@ export let childs: Node[] = []
 
 export function addToQueue(node: number, child: Node, queue: Node[]) {
     let checkChildren: any[] = child.children
-    // console.log('added to queue: ', checkChildren.slice())
 
     for (let i = 0; i < checkChildren.length; i++) {
       if(node > checkChildren[i].start) {
@@ -116,7 +120,6 @@ export function removeChildren(node: number, child: Node, queue: Node[]) {
   }
 }
 
-
 export function putInQueue(toPush: Node[], queue: Node[]) {
     for (let child of toPush) {
       let childChildren = child.children.splice(0)      
@@ -126,8 +129,6 @@ export function putInQueue(toPush: Node[], queue: Node[]) {
       }
     }
 }
-
-
 
 export function deleteEvent(thisEvent: Node, parent: Node[], index: number) {
   if(!thisEvent.id){
@@ -197,6 +198,16 @@ export function resizeEvent(e: any, thisEvent: Node, parent: Node[], index: numb
       return
     }
   } 
+}
+
+export function setId(ID: number, id: number, Children: Node[]){
+  for(let i = 0; i < Children.length; i++){
+    if(Children[i].id == id){
+      Children[i].ID = ID
+      return
+    }
+    setId(ID, id, Children[i].children)
+  }
 }
 
 // newNode(childs, { start: 2, end: 20, children: [], id: null, color: {value: 'var(--eventColor)', pastel: false}, colorSet: false, isNew: false}) 
