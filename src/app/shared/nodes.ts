@@ -236,4 +236,3 @@ export function setState(ID: number | string, id: number, Children: Node[], type
 // newNode(childs, { start: 8, end: 10 }) 
 // newNode(childs, { start: 8, end: 10, children: [], id: null, color: {value: 'var(--eventColor)', pastel: false}, colorSet: false, isNew: false}) 
 
-
