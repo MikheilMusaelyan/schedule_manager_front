@@ -61,6 +61,9 @@ export class DragdropDirective{
   }
   
   handleTouchStart = (event: any) => {
+    if(this.event.state == 'loading'){
+      return
+    }
     // if(this.opened) {
     //   this.store.dispatch(openAbsolute({bool: false}))
     // } else {
@@ -74,6 +77,9 @@ export class DragdropDirective{
   }
 
   handleResizeTouchStart = (event: any) => {
+    if(this.event.state == 'loading'){
+      return
+    }
     // if(this.opened) {
     //   console.log('dispatch')
     //   this.store.dispatch(openAbsolute({bool: false}))

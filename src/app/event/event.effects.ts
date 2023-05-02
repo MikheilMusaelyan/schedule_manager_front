@@ -3,7 +3,7 @@ import { Actions, createEffect, ofType } from "@ngrx/effects";
 import { catchError, concatMap, exhaustMap, map, mergeMap, of, tap } from "rxjs";
 import { EventService } from "./event.service";
 import { HttpClient } from "@angular/common/http";
-import { addEvent, addEventSuccess, EventFailure, changeTree, moveEventSuccess, moveEvent, deleteEvent } from "./event.actions";
+import { addEvent, addEventSuccess, EventFailure, changeTree, moveEventSuccess, changeEvent, deleteEvent } from "./event.actions";
 import { Store } from "@ngrx/store";
 import { EventState } from "./reducers";
 import { EventBackend } from "./event-model";
@@ -36,15 +36,15 @@ export class EventEffects$ {
 
     moveEvent$ = createEffect(() =>
         this.actions$.pipe(
-            ofType(moveEvent),
+            ofType(changeEvent),
             mergeMap((event: any) =>
               this.service.putEvent(event)
               .pipe(
-                  tap((data: number) => nodes.setState(data, event.event.id, nodes.childs)),
-                  catchError(() => {
-                    nodes.setState('error', event.event.id, nodes.childs)
-                    return of(EventFailure({message: `Couldn\'t change ${event.start} - ${event.end}`}))
-                  })
+                tap(() => nodes.setState(1, event.event.id, nodes.childs, 'move')),
+                catchError(() => {
+                  nodes.setState('error', event.event.id, nodes.childs)
+                  return of(EventFailure({message: `Couldn\'t change ${event.start} - ${event.end}`}))
+                })
               )
             )
         ), {dispatch: false}
@@ -56,9 +56,7 @@ export class EventEffects$ {
         concatMap((eventInfo: any) => 
           this.service.deleteEvent(eventInfo.event.ID)
           .pipe(
-            tap(() => {
-              nodes.deleteEvent(eventInfo.event, eventInfo.parent, eventInfo.index)
-            }),
+            tap(() => nodes.deleteEvent(eventInfo.event, eventInfo.parent, eventInfo.index)),
             catchError(() => {
               return of(EventFailure({message: `Couldn\'t remove ${eventInfo.event.start} - ${eventInfo.event.end}`}))
             })

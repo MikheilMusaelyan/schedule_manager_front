@@ -2,7 +2,7 @@ import { Component, Input, ViewChild} from '@angular/core';
 import { Store } from '@ngrx/store';
 import * as nodes from "src/app/shared/nodes";
 import { AppState } from 'src/app/reducers';
-import { EventFailure, changeTree, deleteEvent, moveEvent } from './event.actions';
+import { EventFailure, changeTree, deleteEvent, changeEvent } from './event.actions';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { faCheck, faTrash, faX, faXmark } from '@fortawesome/free-solid-svg-icons';
 import { EventService } from './event.service';
@@ -87,8 +87,10 @@ export class EventComponent {
   selectColor(color: string){
     this.thisEvent.color = color;
     this.wrapper = 'void';
-    this.detailsOpen = false;
     this.pickedColor = !this.pickedColor;
+    const eventCopy = JSON.parse(JSON.stringify(this.thisEvent))
+    this.store.dispatch(changeEvent({id: this.thisEvent.ID, event: eventCopy}))
+    this.detailsOpen = false;
   }
 
   ngAfterViewInit(){
@@ -136,17 +138,19 @@ export class EventComponent {
   }
 
   moveEvent() {
+    this.thisEvent.state = 'loading'
     nodes.moveEvent(this.thisEvent, this.parent, this.index);
     
     const eventCopy = JSON.parse(JSON.stringify(this.thisEvent))
-    this.store.dispatch(moveEvent({id: this.thisEvent.ID, event: eventCopy}))
+    this.store.dispatch(changeEvent({id: this.thisEvent.ID, event: eventCopy}))
   }
 
   resizeEvent(event: boolean) {
+    this.thisEvent.state = 'loading'
     nodes.resizeEvent(event, this.thisEvent, this.parent, this.index)
 
     const eventCopy = JSON.parse(JSON.stringify(this.thisEvent))
-    this.store.dispatch(moveEvent({id: this.thisEvent.id, event: eventCopy}))
+    this.store.dispatch(changeEvent({id: this.thisEvent.id, event: eventCopy}))
   }
 
   getEventTime() {

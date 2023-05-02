@@ -5,5 +5,4 @@ export interface EventBackend {
     name: string;
     date: string;
     color: any,
-    ID: null | number
 }

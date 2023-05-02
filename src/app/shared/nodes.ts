@@ -201,22 +201,26 @@ export function resizeEvent(e: any, thisEvent: Node, parent: Node[], index: numb
   } 
 }
 
-export function setState(ID: number | string, id: number, Children: Node[]){
+export function setState(ID: number | string, id: number, Children: Node[], type?: string){
   for(let i = 0; i < Children.length; i++){
     if(Children[i].id == id){
       if(typeof(ID) == 'number'){
-        Children[i].ID = ID
-        Children[i].state = 'success'
+        if(type == 'move'){
+          Children[i].state = 'success'
+        } else {
+          Children[i].ID = ID
+          Children[i].state = 'success'
+        }
         let childReference: Node = Children[i]
         setTimeout(() => {
           childReference.state = '' // or find it again
-        }, 2000);
+        }, 1500);
         return
       } 
       Children[i].state = 'error'
       return
     }
-    setState(ID, id, Children[i].children)
+    setState(ID, id, Children[i].children, type)
   }
 }
 

@@ -17,7 +17,7 @@ export class EventService{
     
     putEvent(myEvent: any){
       let event = this.getTransofrmedEvent(myEvent.event)
-      return this.http.put(`http://127.0.0.1:8000/api/event/${myEvent.event.id}/`, event)
+      return this.http.put(`http://127.0.0.1:8000/api/event/${myEvent.event.ID}/`, event)
     }
 
     getTransofrmedEvent(myEvent: any): EventBackend {
@@ -26,9 +26,7 @@ export class EventService{
         end: myEvent.end,
         date: new Date(myEvent.date).toISOString().split('T')[0],
         name: myEvent.name,
-        // id: myEvent.id,
         color: myEvent.color,
-        ID: myEvent.ID
       }
     }
 

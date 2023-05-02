@@ -26,7 +26,7 @@ export const deleteEventSuccess = createAction(
 
 
 //move
-export const moveEvent = createAction(
+export const changeEvent = createAction(
     '[Event] Move Event',
     props<{id: number, event: any}>() 
 )

@@ -14,7 +14,7 @@ main{
 
 .single-day-popup-wrap{
   background-color: white;
-  border-radius: 10px;
+  border-radius: 4px;
   position: relative;
   overflow: hidden;
 }
