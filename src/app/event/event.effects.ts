@@ -68,14 +68,12 @@ export class EventEffects$ {
     getEvents$ = createEffect(() => 
       this.actions$.pipe(
         ofType(getEvents),
-        concatMap((date: any) => 
-          this.service.getEvents(date)
-          .pipe(
-            tap(info => console.log(info)),
+        exhaustMap((date: any) => 
+          this.service.getEvents(date).pipe(
             map(info => getEventsSuccess({data: info}))
           )
         )
-      ), {dispatch: false}
+      )
     )
 
 

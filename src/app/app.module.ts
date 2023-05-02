@@ -36,6 +36,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { AuthInterceptor } from './shared/interceptors/token.interceptor';
 import { LoadingComponent } from './shared/loading/loading.component';
+import { CalendarEffects$ } from './calendar/calendar.effects';
 
 
 @NgModule({
@@ -59,7 +60,7 @@ import { LoadingComponent } from './shared/loading/loading.component';
     BrowserModule,
     AppRoutingModule,
     StoreModule.forRoot(reducers),
-    EffectsModule.forRoot([EventEffects$]),
+    EffectsModule.forRoot([EventEffects$, CalendarEffects$]),
     StoreDevtoolsModule.instrument(),
     CommonModule,
     BrowserAnimationsModule,

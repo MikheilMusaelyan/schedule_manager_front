@@ -1,14 +1,16 @@
 import { createReducer, on } from "@ngrx/store";
-import { EventFailure } from "../event.actions";
+import { EventFailure, getEventsSuccess } from "../event.actions";
 
 export interface EventState {
     changed: boolean,
-    errors: string
+    errors: string,
+    events: any
 }
 
 export const initialEventState = {
     changed: false,
-    errors: ''
+    errors: '',
+    events: {}
 }
 
 export const EventReducer = createReducer(
@@ -25,4 +27,10 @@ export const EventReducer = createReducer(
           errors: 'There is an error'
         };
     }),
+    on(getEventsSuccess, (state: EventState, {data}) => {
+        return {
+            ...state,
+            events: data
+        }
+    })
 )

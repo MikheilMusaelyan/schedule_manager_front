@@ -7,11 +7,17 @@
     children: Node[];
     id: null | number;
     color: any;
-    isNew: boolean;
     ID: null | number;
     date?: any;
     state: string;
   }
+
+  // export function setNodes(days: any[]){
+  //   this.childs = []
+  //   for(let day of days){
+  //     newNode(childs, node)
+  //   }
+  // }
 
   export function newNode(children: Node[], node: Node): any {
     let queue: Node[] = [];
