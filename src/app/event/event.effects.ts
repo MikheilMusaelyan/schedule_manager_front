@@ -3,7 +3,7 @@ import { Actions, createEffect, ofType } from "@ngrx/effects";
 import { catchError, concatMap, exhaustMap, map, mergeMap, of, tap } from "rxjs";
 import { EventService } from "./event.service";
 import { HttpClient } from "@angular/common/http";
-import { addEvent, addEventSuccess, EventFailure, changeTree, moveEventSuccess, changeEvent, deleteEvent } from "./event.actions";
+import { addEvent, addEventSuccess, EventFailure, changeTree, moveEventSuccess, changeEvent, deleteEvent, getEvents, getEventsSuccess } from "./event.actions";
 import { Store } from "@ngrx/store";
 import { EventState } from "./reducers";
 import { EventBackend } from "./event-model";
@@ -64,4 +64,19 @@ export class EventEffects$ {
         )
       ), {dispatch: false}
     )
+
+    getEvents$ = createEffect(() => 
+      this.actions$.pipe(
+        ofType(getEvents),
+        concatMap((date: any) => 
+          this.service.getEvents(date)
+          .pipe(
+            tap(info => console.log(info)),
+            map(info => getEventsSuccess({data: info}))
+          )
+        )
+      ), {dispatch: false}
+    )
+
+
 }

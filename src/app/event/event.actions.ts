@@ -40,3 +40,12 @@ export const EventFailure = createAction(
     props<{message: string}>()
 )
 
+export const getEvents = createAction(
+    '[App Component] Add Event Failure',
+    props<{day: Date}>()
+)
+
+export const getEventsSuccess = createAction(
+    '[App Component] Add Event Failure',
+    props<{data: any}>()
+)

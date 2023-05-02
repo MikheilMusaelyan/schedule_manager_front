@@ -1,10 +1,12 @@
 import { Component } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 import { AppState } from './reducers';
-import { Observable, map} from 'rxjs';
+import { Observable, Subscription, map} from 'rxjs';
 import { selectOpenComponent } from './UI-store/UI.selectors';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { openComponent } from './UI-store/UI.actions';
+import { selectToday } from './calendar/calendar.selectors';
+import { getEvents } from './event/event.actions';
 
 @Component({
   selector: 'app-root',
@@ -30,13 +32,14 @@ export class AppComponent {
   )
 
   constructor(
-    private store: Store<AppState>
+    private store: Store<any>
   ){
+    const date: Date = new Date();
+    this.store.dispatch(getEvents({day: date}))
   }
   
   closeComponent() {
     this.store.dispatch(openComponent({component: ''}))
   }
-
+  
 }
-

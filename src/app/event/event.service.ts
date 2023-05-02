@@ -34,6 +34,14 @@ export class EventService{
       return this.http.delete(`http://127.0.0.1:8000/api/event/${id}/`) 
     }
 
+    getEvents(data: any){
+      const date: Date = data.day
+      const day = new Date(date).getDate();
+      const month = new Date(date).getMonth();
+      const year = new Date(date).getFullYear();
+      return this.http.get(`http://127.0.0.1:8000/api/event/${day}/${month}/${year}/`)
+    }
+
 
 //     newNode(children: Node[], node: Node): any {
       
