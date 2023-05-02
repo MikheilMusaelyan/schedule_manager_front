@@ -2,9 +2,11 @@ import { Component, Input, ViewChild} from '@angular/core';
 import { Store } from '@ngrx/store';
 import * as nodes from "src/app/shared/nodes";
 import { AppState } from 'src/app/reducers';
-import { changeTree, deleteEvent, moveEvent } from './event.actions';
+import { EventFailure, changeTree, deleteEvent, moveEvent } from './event.actions';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { faCheck, faTrash, faX, faXmark } from '@fortawesome/free-solid-svg-icons';
+import { EventService } from './event.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-event',
@@ -67,9 +69,12 @@ export class EventComponent {
     { name: '#F0E68C', pastel: true }
   ];
   absoluteState: string;
+
+  serviceSubscription: Subscription
   
   constructor(
-    private store: Store<AppState>
+    private store: Store,
+    private service: EventService
   ){
    
   }
@@ -116,16 +121,25 @@ export class EventComponent {
   }
 
   deleteNode(){
-    nodes.deleteEvent(this.thisEvent, this.parent, this.index);
-    
-    this.store.dispatch(deleteEvent({id: this.thisEvent.id}))
+    this.thisEvent.state = 'loading'
+    this.service.deleteEvent(this.thisEvent.ID)
+    .subscribe(data => {
+      nodes.deleteEvent(this.thisEvent, this.parent, this.index)
+    }, 
+    error => {
+      this.thisEvent.state = 'error'
+      setTimeout(() => {
+        this.thisEvent.state = ''
+      }, 2000);
+      this.store.dispatch(EventFailure({message: `Couldn\'t remove ${this.thisEvent.start} - ${this.thisEvent.end}`}))
+    })
   }
 
   moveEvent() {
     nodes.moveEvent(this.thisEvent, this.parent, this.index);
-
+    
     const eventCopy = JSON.parse(JSON.stringify(this.thisEvent))
-    this.store.dispatch(moveEvent({id: this.thisEvent.id, event: eventCopy}))
+    this.store.dispatch(moveEvent({id: this.thisEvent.ID, event: eventCopy}))
   }
 
   resizeEvent(event: boolean) {

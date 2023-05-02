@@ -14,10 +14,10 @@ export class EventService{
       let event = this.getTransofrmedEvent(myEvent.event)
       return this.http.post('http://127.0.0.1:8000/api/event/', event)
     }
-
+    
     putEvent(myEvent: any){
       let event = this.getTransofrmedEvent(myEvent.event)
-      return this.http.put(`http://127.0.0.1:8000/api/event/${1}`, event)
+      return this.http.put(`http://127.0.0.1:8000/api/event/${myEvent.event.id}/`, event)
     }
 
     getTransofrmedEvent(myEvent: any): EventBackend {
@@ -30,6 +30,10 @@ export class EventService{
         color: myEvent.color,
         ID: myEvent.ID
       }
+    }
+
+    deleteEvent(id: number){
+      return this.http.delete(`http://127.0.0.1:8000/api/event/${id}/`) 
     }
 
 

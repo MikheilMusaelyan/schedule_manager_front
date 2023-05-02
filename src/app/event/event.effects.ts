@@ -3,7 +3,7 @@ import { Actions, createEffect, ofType } from "@ngrx/effects";
 import { catchError, concatMap, exhaustMap, map, mergeMap, of, tap } from "rxjs";
 import { EventService } from "./event.service";
 import { HttpClient } from "@angular/common/http";
-import { addEvent, addEventSuccess, EventFailure, changeTree, moveEventSuccess, moveEvent } from "./event.actions";
+import { addEvent, addEventSuccess, EventFailure, changeTree, moveEventSuccess, moveEvent, deleteEvent } from "./event.actions";
 import { Store } from "@ngrx/store";
 import { EventState } from "./reducers";
 import { EventBackend } from "./event-model";
@@ -26,8 +26,8 @@ export class EventEffects$ {
             .pipe(
                 tap((data: number) => nodes.setState(data, event.event.id, nodes.childs)),
                 catchError(() => {
-                    nodes.setState('error', event.event.id, nodes.childs)
-                    return of(EventFailure())
+                  nodes.setState('error', event.event.id, nodes.childs)
+                  return of(EventFailure({message: `Couldn\'t add ${event.start} - ${event.end}`}))
                 })
             )
           )
@@ -37,13 +37,33 @@ export class EventEffects$ {
     moveEvent$ = createEffect(() =>
         this.actions$.pipe(
             ofType(moveEvent),
-            concatMap((event: any) =>
+            mergeMap((event: any) =>
               this.service.putEvent(event)
               .pipe(
-                  map(data => moveEventSuccess()),
-                  catchError(error => of(EventFailure()))
+                  tap((data: number) => nodes.setState(data, event.event.id, nodes.childs)),
+                  catchError(() => {
+                    nodes.setState('error', event.event.id, nodes.childs)
+                    return of(EventFailure({message: `Couldn\'t change ${event.start} - ${event.end}`}))
+                  })
               )
             )
-        )
+        ), {dispatch: false}
     );
+
+    deleteEvent$ = createEffect(() => 
+      this.actions$.pipe(
+        ofType(deleteEvent),
+        concatMap((eventInfo: any) => 
+          this.service.deleteEvent(eventInfo.event.ID)
+          .pipe(
+            tap(() => {
+              nodes.deleteEvent(eventInfo.event, eventInfo.parent, eventInfo.index)
+            }),
+            catchError(() => {
+              return of(EventFailure({message: `Couldn\'t remove ${eventInfo.event.start} - ${eventInfo.event.end}`}))
+            })
+          )
+        )
+      ), {dispatch: false}
+    )
 }
