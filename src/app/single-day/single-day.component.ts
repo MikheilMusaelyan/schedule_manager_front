@@ -67,11 +67,11 @@ export class SingleDayComponent implements OnInit, AfterViewInit{
     const todayMonthCopy = this.today.getMonth()
     const selectedDay = this.today.getDate();
     this.today = new Date(this.today.setDate(selectedDay + newDay))
-    // if(todayMonthCopy != this.today.getMonth()){
-    //   this.store.dispatch(getEvents({day: this.today}))
-    //   //and this does the things below
-    //   return
-    // }
+    if(todayMonthCopy != this.today.getMonth()){
+      this.store.dispatch(getEvents({day: this.today}))
+      //and this does the things below
+      return
+    }
     this.store.dispatch(selectDate({date: this.today}))
     newDay == 1 ? this.slide(true) : this.slide(false)
   }  

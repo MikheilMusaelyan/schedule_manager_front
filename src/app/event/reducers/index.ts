@@ -28,6 +28,7 @@ export const EventReducer = createReducer(
         };
     }),
     on(getEventsSuccess, (state: EventState, {data}) => {
+        console.log(data)
         return {
             ...state,
             events: data
