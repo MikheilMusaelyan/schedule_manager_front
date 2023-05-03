@@ -66,7 +66,7 @@ export class SingleDayComponent implements OnInit, AfterViewInit{
   changeDay(newDay: number){
     const todayMonthCopy = this.today.getMonth()
     const selectedDay = this.today.getDate();
-    this.today = new Date(this.today.setDate(selectedDay + newDay))
+    this.today.setDate(selectedDay + newDay)
     if(todayMonthCopy != this.today.getMonth()){
       this.store.dispatch(getEvents({day: this.today}))
       //and this does the things below
@@ -78,22 +78,22 @@ export class SingleDayComponent implements OnInit, AfterViewInit{
 
   slide(bool: boolean) {
     const transformValue = bool ? 15 : -15;
-    const transformSpeed = bool ? 200 : 300
 
-    this.main.nativeElement.style.transition = 'opacity 150ms, transform 100ms';
+    this.main.nativeElement.style.transition = 'opacity 130ms, transform 150ms';
     this.main.nativeElement.style.opacity = '0';
-    this.main.nativeElement.style.transform = `translateX(${-transformValue}%)`;
+    this.main.nativeElement.style.transform = `translateX(${-transformValue * 1.5}%)`;
 
     setTimeout(() => {
       this.main.nativeElement.style.transition = '';
       this.main.nativeElement.style.transform = `translateX(${transformValue * 3}%)`;
-    }, 150);
+    }, 200);
+
     setTimeout(() => {
       this.main.nativeElement.scrollLeft = 0
-      this.main.nativeElement.style.transition = 'all ' + transformSpeed + 'ms cubic-bezier(0.4, 0, 0.2, 1), opacity 200ms cubic-bezier(0.4, 0, 0.2, 1';
+      this.main.nativeElement.style.transition = 'all 300ms cubic-bezier(0.4, 0, 0.2, 1), opacity 200ms cubic-bezier(0.4, 0, 0.2, 1';
       this.main.nativeElement.style.opacity = '1';
       this.main.nativeElement.style.transform = `translateX(0)`;
-    }, 250);
+    }, 300);
   }
 
   getMonthName(monthIndex: number) {
@@ -135,9 +135,9 @@ export class SingleDayComponent implements OnInit, AfterViewInit{
       this.changeWidthValue()
 
       this.changeSubscription = this.store.pipe(select(detectChange)).subscribe((bool: boolean) => {
-       setTimeout(() => {
-        this.changeWidthValue();
-       }, 300);
+        setTimeout(() => {
+         this.changeWidthValue();
+        }, 300);
       })
     }, 0);
   }

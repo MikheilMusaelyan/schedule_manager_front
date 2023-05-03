@@ -21,10 +21,12 @@ export class EventService{
     }
 
     getTransofrmedEvent(myEvent: any): EventBackend {
+      const currentDay = new Date(myEvent.date).getDate()
+      const newDay = new Date(myEvent.date).setDate(currentDay - 1)
       return {
         start: myEvent.start,
         end: myEvent.end,
-        date: new Date(myEvent.date).toISOString().split('T')[0],
+        date: new Date(newDay).toISOString().split('T')[0],
         name: myEvent.name,
         color: myEvent.color,
       }
@@ -37,7 +39,7 @@ export class EventService{
     getEvents(data: any){
       const date: Date = data.day
       const day = new Date(date).getDate();
-      const month = new Date(date).getMonth();
+      const month = new Date(date).getMonth() + 1;
       const year = new Date(date).getFullYear();
       return this.http.get(`http://127.0.0.1:8000/api/event/${day}/${month}/${year}/`)
     }

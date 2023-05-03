@@ -1,8 +1,7 @@
 import { createAction, props } from "@ngrx/store";
 
 export const changeTree = createAction(
-    '[singleDay] Change Tree',
-    props<{tree: any[]}>()
+    '[singleDay] Change Tree'
 );
 
 //add
@@ -41,11 +40,11 @@ export const EventFailure = createAction(
 )
 
 export const getEvents = createAction(
-    '[App Component] Add Event Failure',
+    '[App Component] Get Events',
     props<{day: Date}>()
 )
 
-export const getEventsSuccess = createAction(
-    '[App Component] Add Event Failure',
+export const getEventSuccess = createAction(
+    '[App] Get Events Success',
     props<{data: any}>()
 )

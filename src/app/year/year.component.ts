@@ -8,6 +8,7 @@ import { selectDate } from '../calendar/calendar.actions';
 import { openComponent } from '../UI-store/UI.actions';
 import { selectToday } from '../calendar/calendar.selectors';
 import { months } from '../shared/shared';
+import { getEvents } from '../event/event.actions';
 
 @Component({
   selector: 'app-year',
@@ -63,16 +64,26 @@ export class YearComponent {
 
   pickMonth(i: number, j: number) {
     const monthIndex = (i * 3) + j; // get monthindex locally
+
     let newDate: Date = new Date(this.today)
     newDate.setMonth(monthIndex)
-    newDate = new Date(newDate)
-    this.store.dispatch(selectDate({date: newDate}))
+    
+    this.pickDate(newDate)
   }
 
   pickYear(year: number) {
     let newDate: Date = new Date(this.today)
     newDate.setFullYear(year)
+
+    this.pickDate(newDate)
+  }
+
+  pickDate(newDate: Date) {
     newDate = new Date(newDate)
+    if(new Date(newDate).toString() != new Date(this.today).toString()){
+      this.store.dispatch(getEvents({day: newDate}))
+    }
+    this.store.dispatch(openComponent({component: ''}))
     this.store.dispatch(selectDate({date: newDate}))
   }
 

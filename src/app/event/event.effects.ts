@@ -1,9 +1,9 @@
 import { Injectable } from "@angular/core";
 import { Actions, createEffect, ofType } from "@ngrx/effects";
-import { catchError, concatMap, exhaustMap, map, mergeMap, of, tap } from "rxjs";
+import { catchError, concatMap, exhaustMap, map, mergeMap, of, tap, switchMap} from "rxjs";
 import { EventService } from "./event.service";
 import { HttpClient } from "@angular/common/http";
-import { addEvent, addEventSuccess, EventFailure, changeTree, moveEventSuccess, changeEvent, deleteEvent, getEvents, getEventsSuccess } from "./event.actions";
+import { addEvent, addEventSuccess, EventFailure, changeTree, moveEventSuccess, changeEvent, deleteEvent, getEvents, getEventSuccess } from "./event.actions";
 import { Store } from "@ngrx/store";
 import { EventState } from "./reducers";
 import { EventBackend } from "./event-model";
@@ -24,14 +24,15 @@ export class EventEffects$ {
           mergeMap((event: any) =>
             this.service.addEvent(event)
             .pipe(
-                tap((data: number) => nodes.setState(data, event.event.id, nodes.childs)),
-                catchError(() => {
-                  nodes.setState('error', event.event.id, nodes.childs)
-                  return of(EventFailure({message: `Couldn\'t add ${event.start} - ${event.end}`}))
-                })
+              tap((data: number) => nodes.setState(data, event.event.id, nodes.childs)),
+              map(() => changeTree()),
+              catchError(() => {
+                nodes.setState('error', event.event.id, nodes.childs)
+                return of(EventFailure({message: `Couldn\'t add ${event.start} - ${event.end}`}))
+              })
             )
           )
-        ), {dispatch: false}
+        )
     );
 
     moveEvent$ = createEffect(() =>
@@ -41,36 +42,29 @@ export class EventEffects$ {
               this.service.putEvent(event)
               .pipe(
                 tap(() => nodes.setState(1, event.event.id, nodes.childs, 'move')),
+                map(() => changeTree()),
                 catchError(() => {
                   nodes.setState('error', event.event.id, nodes.childs)
                   return of(EventFailure({message: `Couldn\'t change ${event.start} - ${event.end}`}))
                 })
               )
             )
-        ), {dispatch: false}
-    );
-
-    deleteEvent$ = createEffect(() => 
-      this.actions$.pipe(
-        ofType(deleteEvent),
-        concatMap((eventInfo: any) => 
-          this.service.deleteEvent(eventInfo.event.ID)
-          .pipe(
-            tap(() => nodes.deleteEvent(eventInfo.event, eventInfo.parent, eventInfo.index)),
-            catchError(() => {
-              return of(EventFailure({message: `Couldn\'t remove ${eventInfo.event.start} - ${eventInfo.event.end}`}))
-            })
-          )
         )
-      ), {dispatch: false}
-    )
+    );
 
     getEvents$ = createEffect(() => 
       this.actions$.pipe(
         ofType(getEvents),
-        exhaustMap((date: any) => 
-          this.service.getEvents(date).pipe(
-            map(info => getEventsSuccess({data: info}))
+        concatMap((date: any) => 
+          this.service.getEvents(date)
+          .pipe(
+            switchMap(info => [
+              getEventSuccess({data: info}),
+              changeTree()
+            ]),
+            catchError(() => 
+              of(EventFailure({message: 'Couldn\'t access events'}))
+            )
           )
         )
       )

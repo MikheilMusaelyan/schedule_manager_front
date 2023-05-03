@@ -1,5 +1,5 @@
 import { createReducer, on } from "@ngrx/store";
-import { EventFailure, getEventsSuccess } from "../event.actions";
+import { EventFailure, getEventSuccess, changeTree } from "../event.actions";
 
 export interface EventState {
     changed: boolean,
@@ -27,11 +27,17 @@ export const EventReducer = createReducer(
           errors: 'There is an error'
         };
     }),
-    on(getEventsSuccess, (state: EventState, {data}) => {
-        console.log(data)
+    on(changeTree, (state: EventState, {}) =>  {
+        console.log('tree has changed')
         return {
             ...state,
-            events: data
+            changed: !state.changed
         }
-    })
+    }),
+    on(getEventSuccess, (state, {data}) => {
+        console.log('get events success')
+        return {...state,
+        events: data    }
+    }),
+    
 )
