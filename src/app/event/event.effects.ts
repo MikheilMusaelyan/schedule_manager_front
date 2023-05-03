@@ -7,7 +7,7 @@ import { addEvent, addEventSuccess, EventFailure, changeTree, moveEventSuccess, 
 import { Store } from "@ngrx/store";
 import { EventState } from "./reducers";
 import { EventBackend } from "./event-model";
-import * as nodes from 'src/app/shared/nodes'
+import { NodesService } from 'src/app/shared/nodes'
 
 @Injectable()
 
@@ -15,7 +15,8 @@ export class EventEffects$ {
     constructor(
         private actions$: Actions,
         private service: EventService,
-        private store: Store<EventState>
+        private store: Store<EventState>,
+        private nodes: NodesService
     ) {}
     
     addEvent$ = createEffect(() =>
@@ -24,10 +25,10 @@ export class EventEffects$ {
           mergeMap((event: any) =>
             this.service.addEvent(event)
             .pipe(
-              tap((data: number) => nodes.setState(data, event.event.id, nodes.childs)),
+              tap((data: number) => this.nodes.setState(data, event.event.id, this.nodes.childs)),
               map(() => changeTree()),
               catchError(() => {
-                nodes.setState('error', event.event.id, nodes.childs)
+                this.nodes.setState('error', event.event.id, this.nodes.childs)
                 return of(EventFailure({message: `Couldn\'t add ${event.start} - ${event.end}`}))
               })
             )
@@ -41,10 +42,10 @@ export class EventEffects$ {
             mergeMap((event: any) =>
               this.service.putEvent(event)
               .pipe(
-                tap(() => nodes.setState(1, event.event.id, nodes.childs, 'move')),
+                tap(() => this.nodes.setState(1, event.event.id, this.nodes.childs, 'move')),
                 map(() => changeTree()),
                 catchError(() => {
-                  nodes.setState('error', event.event.id, nodes.childs)
+                  this.nodes.setState('error', event.event.id, this.nodes.childs)
                   return of(EventFailure({message: `Couldn\'t change ${event.start} - ${event.end}`}))
                 })
               )
@@ -62,6 +63,10 @@ export class EventEffects$ {
               getEventSuccess({data: info}),
               changeTree()
             ]),
+            tap((data: any) => {
+              
+              // nodes.setNodes(new Date())
+            }),
             catchError(() => 
               of(EventFailure({message: 'Couldn\'t access events'}))
             )

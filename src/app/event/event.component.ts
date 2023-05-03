@@ -1,6 +1,6 @@
 import { Component, Input, ViewChild} from '@angular/core';
 import { Store } from '@ngrx/store';
-import * as nodes from "src/app/shared/nodes";
+import { NodesService, Node } from "src/app/shared/nodes";
 import { AppState } from 'src/app/reducers';
 import { EventFailure, changeTree, deleteEvent, changeEvent } from './event.actions';
 import { animate, state, style, transition, trigger } from '@angular/animations';
@@ -29,7 +29,7 @@ import { Subscription } from 'rxjs';
   ]
 })
 export class EventComponent {
-  @Input('parent') parent: nodes.Node[];
+  @Input('parent') parent: Node[];
   @Input('index') index: any;
   @Input('divList') divList: any;
   @Input('level') level: number;
@@ -63,7 +63,8 @@ export class EventComponent {
   
   constructor(
     private store: Store,
-    private service: EventService
+    private service: EventService,
+    private nodes: NodesService
   ){
    
   }
@@ -102,7 +103,7 @@ export class EventComponent {
     this.thisEvent.state = 'loading'
     this.service.deleteEvent(this.thisEvent.ID)
     .subscribe(data => {
-      nodes.deleteEvent(this.thisEvent, this.parent, this.index)
+      this.nodes.deleteEvent(this.thisEvent, this.parent, this.index)
       this.store.dispatch(changeTree())
     }, 
     error => {
@@ -116,7 +117,7 @@ export class EventComponent {
 
   moveEvent() {
     this.thisEvent.state = 'loading'
-    nodes.moveEvent(this.thisEvent, this.parent, this.index);
+    this.nodes.moveEvent(this.thisEvent, this.parent, this.index);
     
     const eventCopy = JSON.parse(JSON.stringify(this.thisEvent))
     this.store.dispatch(changeEvent({id: this.thisEvent.ID, event: eventCopy}))
@@ -124,7 +125,7 @@ export class EventComponent {
 
   resizeEvent(event: boolean) {
     this.thisEvent.state = 'loading'
-    nodes.resizeEvent(event, this.thisEvent, this.parent, this.index)
+    this.nodes.resizeEvent(event, this.thisEvent, this.parent, this.index)
 
     const eventCopy = JSON.parse(JSON.stringify(this.thisEvent))
     this.store.dispatch(changeEvent({id: this.thisEvent.id, event: eventCopy}))

@@ -1,9 +1,9 @@
 import { AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
-import * as nodes from '../shared/nodes'
+import { NodesService } from '../shared/nodes'
 import { Store, select } from '@ngrx/store';
 import { AppState } from '../reducers';
 import { Observable, Subscription } from 'rxjs';
-import { detectChange, selectEventState } from '../event/event.selectors';
+import { detectChange, detectGetEvents, selectEventState } from '../event/event.selectors';
 import { faArrowLeft, faArrowRight } from '@fortawesome/free-solid-svg-icons';
 import { selectToday } from '../calendar/calendar.selectors';
 import { months } from '../shared/shared';
@@ -24,7 +24,7 @@ export class SingleDayComponent implements OnInit, AfterViewInit{
   scrollRight = faArrowRight;
   scrollLeft = faArrowLeft;
 
-  nodes: any[];
+  nodez: any[];
   myDivList: any;
   rows: any[] = [];
   months: any[] = months;
@@ -41,7 +41,8 @@ export class SingleDayComponent implements OnInit, AfterViewInit{
   //designs
   constructor(
     private store: Store<AppState>,
-    private loadingStore: Store<EventState>
+    private loadingStore: Store<EventState>,
+    private nodes: NodesService
   ) {
     for (let i = 0; i < 24; i++) {
       const hour = String(i % 12 == 0 ? 12 : i % 12);
@@ -69,11 +70,10 @@ export class SingleDayComponent implements OnInit, AfterViewInit{
     this.today.setDate(selectedDay + newDay)
     if(todayMonthCopy != this.today.getMonth()){
       this.store.dispatch(getEvents({day: this.today}))
-      //and this does the things below
-      return
+    } else {
+      this.store.dispatch(selectDate({date: this.today}))
+      newDay == 1 ? this.slide(true) : this.slide(false)
     }
-    this.store.dispatch(selectDate({date: this.today}))
-    newDay == 1 ? this.slide(true) : this.slide(false)
   }  
 
   slide(bool: boolean) {
@@ -115,7 +115,7 @@ export class SingleDayComponent implements OnInit, AfterViewInit{
       ID: null,
       state: 'loading'
     }
-    nodes.newNode(nodes.childs, event);
+    this.nodes.newNode(this.nodes.childs, event);
 
     const eventCopy = JSON.parse(JSON.stringify(event))
     this.store.dispatch(addEvent({event: eventCopy}))
@@ -123,7 +123,7 @@ export class SingleDayComponent implements OnInit, AfterViewInit{
 
   ngOnInit() {
     setTimeout(() => {
-      this.nodes = nodes.childs;
+      this.nodez = this.nodes.childs;
     }, 0);
   }   
 

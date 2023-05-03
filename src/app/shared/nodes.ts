@@ -1,5 +1,6 @@
-  export let childs: Node[] = []
-  let nodesCount: number = 0
+import { Injectable } from "@angular/core";
+
+  
 
   export interface Node {
     start: number;
@@ -11,20 +12,25 @@
     date?: any;
     state: string;
   }
+@Injectable({providedIn: 'root'})
 
-  // export function setNodes(days: any[]){
-  //   this.childs = []
-  //   for(let day of days){
-  //     newNode(childs, node)
-  //   }
-  // }
+export class NodesService{
+  childs: Node[] = []
+  nodesCount: number = 0
 
-  export function newNode(children: Node[], node: Node): any {
+  setNodes(days: any[]){
+    this.childs = []
+    for(let day of days){
+      this.newNode(this.childs, day)
+    }
+  }
+
+  newNode(children: Node[], node: Node): any {
     let queue: Node[] = [];
     let spliced = false;
     
     if(!node?.id){
-      node.id = ++nodesCount
+      node.id = ++this.nodesCount
     }
     
     if(children.length == 0) {
@@ -52,7 +58,7 @@
               children[i].children.push(node)
               break
           }
-          newNode(children[i].children, node)
+          this.newNode(children[i].children, node)
           break
         } 
 
@@ -74,9 +80,9 @@
             }
             
             if(node.children[node.children.length - 1].children.length > 0) {
-                addToQueue(node.end, node.children[node.children.length - 1], queue)
+                this.addToQueue(node.end, node.children[node.children.length - 1], queue)
                 queue.forEach(element => {
-                  newNode(children, element);
+                  this.newNode(children, element);
                 });
                 // queue = [] 
                 break
@@ -96,7 +102,7 @@
 }
 
 
-export function addToQueue(node: number, child: Node, queue: Node[]) {
+addToQueue(node: number, child: Node, queue: Node[]) {
     let checkChildren: any[] = child.children
 
     for (let i = 0; i < checkChildren.length; i++) {
@@ -104,40 +110,40 @@ export function addToQueue(node: number, child: Node, queue: Node[]) {
         if(node >= checkChildren[i].end || checkChildren[i].children.length == 0){
           continue
         }
-        addToQueue(node, checkChildren[i], queue)
+        this.addToQueue(node, checkChildren[i], queue)
       }
       else {
         let toPush = checkChildren.splice(i)
-        putInQueue(toPush, queue)
+        this.putInQueue(toPush, queue)
         break
       }
     }
 }
 
-export function removeChildren(node: number, child: Node, queue: Node[]) {
+removeChildren(node: number, child: Node, queue: Node[]) {
   let checkChildren: any[] = child.children
 
   for (let i = 0; i < checkChildren.length; i++) {
     if(node <= checkChildren[i].start) {
       const childrenCopy = checkChildren.splice(i)
-      putInQueue(childrenCopy, queue)
+      this.putInQueue(childrenCopy, queue)
       return
     }
-    removeChildren(node, checkChildren[i], queue)
+    this.removeChildren(node, checkChildren[i], queue)
   }
 }
 
-export function putInQueue(toPush: Node[], queue: Node[]) {
+putInQueue(toPush: Node[], queue: Node[]) {
     for (let child of toPush) {
       let childChildren = child.children.splice(0)      
       queue.push(child);
       if(childChildren.length > 0){
-        putInQueue(childChildren, queue) 
+        this.putInQueue(childChildren, queue) 
       }
     }
 }
 
-export function deleteEvent(thisEvent: Node, parent: Node[], index: number) {
+deleteEvent(thisEvent: Node, parent: Node[], index: number) {
   if(!thisEvent.id){
     return
   }
@@ -146,9 +152,9 @@ export function deleteEvent(thisEvent: Node, parent: Node[], index: number) {
     let childrenCopy = thisEvent.children.slice()
     if(parent[index+1]){   
       parent.splice(index, 1)
-      putInQueue(childrenCopy, nodeQueue)
+      this.putInQueue(childrenCopy, nodeQueue)
       nodeQueue.forEach((e: Node) => {
-        newNode(parent, e)
+        this.newNode(parent, e)
       })
       return   
     }
@@ -158,34 +164,34 @@ export function deleteEvent(thisEvent: Node, parent: Node[], index: number) {
   parent.splice(index, 1)
 }
 
-export function moveEvent(thisEvent: Node, parent: Node[], index: number) {
+moveEvent(thisEvent: Node, parent: Node[], index: number) {
   if(!thisEvent.id){
     return
   }
-  deleteEvent(thisEvent, parent, index)
+  this.deleteEvent(thisEvent, parent, index)
   thisEvent.children.splice(0)
-  newNode(childs, thisEvent)
+  this.newNode(this.childs, thisEvent)
 }
 
-export function resizeEvent(e: any, thisEvent: Node, parent: Node[], index: number) {
+resizeEvent(e: any, thisEvent: Node, parent: Node[], index: number) {
   let queue = []
   if(!e) {
     for(let i = 0; i < thisEvent.children.length; i++) {
       if(thisEvent.end <= thisEvent.children[i].start) {
         const childrenCopy = thisEvent.children.splice(i)
         if(parent[index+1]){
-          putInQueue(childrenCopy, queue)
+          this.putInQueue(childrenCopy, queue)
           queue.forEach((e: Node) => {
-            newNode(parent, e)
+            this.newNode(parent, e)
           })
           return
         }
         parent.push(...childrenCopy)
         return
       } else if(thisEvent.end < thisEvent.children[i].end){
-        removeChildren(thisEvent.end, thisEvent.children[i], queue)
+        this.removeChildren(thisEvent.end, thisEvent.children[i], queue)
         queue.forEach((e: Node) => {
-          newNode(parent, e)
+          this.newNode(parent, e)
         })
       }
     }
@@ -195,9 +201,9 @@ export function resizeEvent(e: any, thisEvent: Node, parent: Node[], index: numb
   for(let i = index + 1; i < parent.length; i++){
     if(thisEvent.end > parent[i].start) {
       const newChildren = parent.splice(i, 1)
-      putInQueue(newChildren, queue);
+      this.putInQueue(newChildren, queue);
       queue.forEach((e: Node) => {
-        newNode(parent, e)
+        this.newNode(parent, e)
       })
       queue = []
       i--
@@ -207,7 +213,7 @@ export function resizeEvent(e: any, thisEvent: Node, parent: Node[], index: numb
   } 
 }
 
-export function setState(ID: number | string, id: number, Children: Node[], type?: string){
+setState(ID: number | string, id: number, Children: Node[], type?: string){
   for(let i = 0; i < Children.length; i++){
     if(Children[i].id == id){
       if(typeof(ID) == 'number'){
@@ -226,8 +232,9 @@ export function setState(ID: number | string, id: number, Children: Node[], type
       Children[i].state = 'error'
       return
     }
-    setState(ID, id, Children[i].children, type)
+    this.setState(ID, id, Children[i].children, type)
   }
+}
 }
 
 // newNode(childs, { start: 2, end: 20, children: [], id: null, color: {value: 'var(--eventColor)', pastel: false}, colorSet: false, isNew: false}) 
