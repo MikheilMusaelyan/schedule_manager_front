@@ -16,8 +16,10 @@ export class EventService{
     }
     
     putEvent(myEvent: any){
+      
       let event = this.getTransofrmedEvent(myEvent.event)
-      return this.http.put(`http://127.0.0.1:8000/api/event/${myEvent.event.ID}/`, event)
+      console.log(myEvent.name)
+      return this.http.put(`http://127.0.0.1:8000/api/event/${myEvent.event.serverId}/`, event)
     }
 
     getTransofrmedEvent(myEvent: any): EventBackend {

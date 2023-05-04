@@ -8,20 +8,34 @@ import { Injectable } from "@angular/core";
     children: Node[];
     id: null | number;
     color: any;
-    ID: null | number;
+    serverId: null | number;
     date?: any;
     state: string;
   }
 @Injectable({providedIn: 'root'})
 
-export class NodesService{
+export class NodesService {
   childs: Node[] = []
   nodesCount: number = 0
 
-  setNodes(days: any[]){
+  setDay(day: any[]){
+    this.nodesCount = 0;
     this.childs = []
-    for(let day of days){
-      this.newNode(this.childs, day)
+    for(let i = 0; i < day.length; i++){
+      const event = day[i]
+      
+      const newNode = {
+        start: event['start'],
+        end: event['end'],
+        children: [],
+        id: null,
+        color: event['color'],
+        serverId: event['id'],
+        date: event['date'],
+        state: 'string'
+      }
+      console.log(newNode)
+      this.newNode(this.childs, newNode)
     }
   }
 
@@ -220,7 +234,7 @@ setState(ID: number | string, id: number, Children: Node[], type?: string){
         if(type == 'move'){
           Children[i].state = 'success'
         } else {
-          Children[i].ID = ID
+          Children[i].serverId = ID
           Children[i].state = 'success'
         }
         let childReference: Node = Children[i]

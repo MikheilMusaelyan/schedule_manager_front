@@ -11,3 +11,4 @@ export const detectGetEvents = createSelector(
     selectEventState,
     (state: EventState) => state.events
 )
+

@@ -36,7 +36,7 @@ export const EventReducer = createReducer(
         }
     }),
     on(actuallySelectDate, (state, {date, data}) => {
-        if(data){
+        if(data != null){
             return {
                 ...state,
                 events: data    

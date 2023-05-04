@@ -24,12 +24,13 @@ export class SingleDayComponent implements OnInit, AfterViewInit{
   scrollRight = faArrowRight;
   scrollLeft = faArrowLeft;
 
-  nodez: any[];
+  nodez: any[] = this.nodes.childs;
   myDivList: any;
   rows: any[] = [];
   months: any[] = months;
   mainScrollWidth: number;
   changeSubscription: Subscription; //////////
+  slideTo: boolean | string = ''
 
   intervalTimeout: any;
   touchEvent: boolean;
@@ -37,6 +38,7 @@ export class SingleDayComponent implements OnInit, AfterViewInit{
   selectToday$: Observable<Date> = this.store.pipe(select(selectToday));
   today: Date;
   todaySubscription: Subscription;
+
   
   //designs
   constructor(
@@ -60,18 +62,24 @@ export class SingleDayComponent implements OnInit, AfterViewInit{
     }
     this.rows.push({});
     this.todaySubscription = this.selectToday$.subscribe((data: Date) => {
-      this.today = data
+      this.slide(this.slideTo)
+      this.today = new Date(JSON.parse(JSON.stringify(data)))
+      this.nodez = nodes.childs
     })
   }
 
   changeDay(newDay: number){
     const selectedDay = this.today.getDate();
-    this.today.setDate(selectedDay + newDay)
-    this.store.dispatch(selectDate({date: this.today}))
-    newDay == 1 ? this.slide(true) : this.slide(false)
+    const todayCopy = new Date(JSON.parse(JSON.stringify(this.today)))
+    todayCopy.setDate(selectedDay + newDay)
+    this.store.dispatch(selectDate({date: todayCopy}))
+    this.slideTo = newDay == 1 ? false : true
   }  
 
-  slide(bool: boolean) {
+  slide(bool: boolean | string) {
+    if(typeof bool == 'string'){
+      return
+    }
     const transformValue = bool ? 15 : -15;
 
     this.main.nativeElement.style.transition = 'opacity 130ms, transform 150ms';
@@ -99,6 +107,7 @@ export class SingleDayComponent implements OnInit, AfterViewInit{
     let event = { 
       start: Math.min(index, 96), 
       end: Math.min(96, index + 4), 
+      name: '(No title)',
       children: [], 
       id: null,
       color: {
@@ -107,7 +116,7 @@ export class SingleDayComponent implements OnInit, AfterViewInit{
       }, 
       isNew: true,
       date: this.today,
-      ID: null,
+      serverId: null,
       state: 'loading'
     }
     this.nodes.newNode(this.nodes.childs, event);

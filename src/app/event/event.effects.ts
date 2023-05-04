@@ -11,6 +11,7 @@ import { NodesService } from 'src/app/shared/nodes'
 import { CalendarState } from "../calendar/reducers/calendar.reducer";
 import { actuallySelectDate, selectDate } from "../calendar/calendar.actions";
 import { selectToday } from "../calendar/calendar.selectors";
+import { detectGetEvents } from "./event.selectors";
 
 @Injectable()
 
@@ -60,7 +61,8 @@ export class EventEffects$ {
       this.actions$.pipe(
         ofType(selectDate),
         withLatestFrom(this.store.select(selectToday)),
-        switchMap(([action, state]) => {
+        withLatestFrom(this.store.select(detectGetEvents)),
+        switchMap(([[action, state], storeEvents]) => {
           const newDate = new Date(action.date);
 
           if(!state){
@@ -75,6 +77,11 @@ export class EventEffects$ {
           if (newMonth !== currentMonth || newYear !== currentYear) {
             return of(getEvents({date: newDate}))
           } else {
+            if(storeEvents[`d${newDate.getDate()}`]){
+              this.nodes.setDay(storeEvents[`d${newDate.getDate()}`])
+            } else {
+              this.nodes.setDay([])
+            }
             return of(actuallySelectDate({ date: newDate, data: null }))
           }
         })
@@ -87,13 +94,23 @@ export class EventEffects$ {
         switchMap((action: any) => 
           this.service.getEvents(action.date)
           .pipe(
+            tap((info) => {
+              if(info[`d${new Date(action.date).getDate()}`]){
+                this.nodes.setDay(info[`d${new Date(action.date).getDate()}`])
+              } else {
+                this.nodes.setDay([])
+              }
+              
+            }),
             switchMap(info => [
               actuallySelectDate({ date: action.date, data: info }),
-              changeTree()
             ]),
-            catchError(() => 
-              of(EventFailure({message: 'Couldn\'t access events'}))
-            )
+            catchError(() => {
+              return of(
+                EventFailure({message: 'Couldn\'t access events'}),
+                actuallySelectDate({ date: action.date, data: null }),
+              )
+            })
           )
         )
       )
