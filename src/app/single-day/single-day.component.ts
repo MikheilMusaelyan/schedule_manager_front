@@ -114,6 +114,7 @@ export class SingleDayComponent implements OnInit, AfterViewInit{
         name: 'var(--eventColor)', 
         pastel: false
       }, 
+      
       isNew: true,
       date: this.today,
       serverId: null,
