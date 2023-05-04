@@ -37,7 +37,7 @@ export class EventService{
     }
 
     getEvents(data: any){
-      const date: Date = data.day
+      const date: Date = data
       const day = new Date(date).getDate();
       const month = new Date(date).getMonth() + 1;
       const year = new Date(date).getFullYear();

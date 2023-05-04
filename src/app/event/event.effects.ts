@@ -1,13 +1,16 @@
 import { Injectable } from "@angular/core";
 import { Actions, createEffect, ofType } from "@ngrx/effects";
-import { catchError, concatMap, exhaustMap, map, mergeMap, of, tap, switchMap} from "rxjs";
+import { catchError, concatMap, exhaustMap, map, mergeMap, of, tap, switchMap, withLatestFrom, from} from "rxjs";
 import { EventService } from "./event.service";
 import { HttpClient } from "@angular/common/http";
-import { addEvent, addEventSuccess, EventFailure, changeTree, moveEventSuccess, changeEvent, deleteEvent, getEvents, getEventSuccess } from "./event.actions";
+import { addEvent, addEventSuccess, EventFailure, changeTree, moveEventSuccess, changeEvent, deleteEvent, getEvents } from "./event.actions";
 import { Store } from "@ngrx/store";
 import { EventState } from "./reducers";
 import { EventBackend } from "./event-model";
 import { NodesService } from 'src/app/shared/nodes'
+import { CalendarState } from "../calendar/reducers/calendar.reducer";
+import { actuallySelectDate, selectDate } from "../calendar/calendar.actions";
+import { selectToday } from "../calendar/calendar.selectors";
 
 @Injectable()
 
@@ -15,7 +18,7 @@ export class EventEffects$ {
     constructor(
         private actions$: Actions,
         private service: EventService,
-        private store: Store<EventState>,
+        private store: Store<CalendarState>,
         private nodes: NodesService
     ) {}
     
@@ -53,20 +56,41 @@ export class EventEffects$ {
         )
     );
 
+    updateToday$ = createEffect(() =>
+      this.actions$.pipe(
+        ofType(selectDate),
+        withLatestFrom(this.store.select(selectToday)),
+        switchMap(([action, state]) => {
+          const newDate = new Date(action.date);
+
+          if(!state){
+            return of(getEvents({date: newDate}))
+          }
+
+          const currentYear = new Date(state).getFullYear();
+          const currentMonth = new Date(state).getMonth();
+          const newYear = newDate.getFullYear();
+          const newMonth = newDate.getMonth();
+
+          if (newMonth !== currentMonth || newYear !== currentYear) {
+            return of(getEvents({date: newDate}))
+          } else {
+            return of(actuallySelectDate({ date: newDate, data: null }))
+          }
+        })
+      )
+    ); 
+
     getEvents$ = createEffect(() => 
       this.actions$.pipe(
         ofType(getEvents),
-        concatMap((date: any) => 
-          this.service.getEvents(date)
+        switchMap((action: any) => 
+          this.service.getEvents(action.date)
           .pipe(
             switchMap(info => [
-              getEventSuccess({data: info}),
+              actuallySelectDate({ date: action.date, data: info }),
               changeTree()
             ]),
-            tap((data: any) => {
-              
-              // nodes.setNodes(new Date())
-            }),
             catchError(() => 
               of(EventFailure({message: 'Couldn\'t access events'}))
             )

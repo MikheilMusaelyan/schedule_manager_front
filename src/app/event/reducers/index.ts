@@ -1,5 +1,6 @@
 import { createReducer, on } from "@ngrx/store";
-import { EventFailure, getEventSuccess, changeTree } from "../event.actions";
+import { EventFailure, changeTree } from "../event.actions";
+import { actuallySelectDate } from "src/app/calendar/calendar.actions";
 
 export interface EventState {
     changed: boolean,
@@ -34,10 +35,16 @@ export const EventReducer = createReducer(
             changed: !state.changed
         }
     }),
-    on(getEventSuccess, (state, {data}) => {
-        console.log('get events success')
-        return {...state,
-        events: data    }
+    on(actuallySelectDate, (state, {date, data}) => {
+        if(data){
+            return {
+                ...state,
+                events: data    
+            }
+        }
+        return {
+            ...state
+        }
     }),
     
 )

@@ -41,10 +41,5 @@ export const EventFailure = createAction(
 
 export const getEvents = createAction(
     '[App Component] Get Events',
-    props<{day: Date}>()
-)
-
-export const getEventSuccess = createAction(
-    '[App] Get Events Success',
-    props<{data: any}>()
+    props<{date: Date}>()
 )

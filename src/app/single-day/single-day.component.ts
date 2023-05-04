@@ -7,9 +7,9 @@ import { detectChange, detectGetEvents, selectEventState } from '../event/event.
 import { faArrowLeft, faArrowRight } from '@fortawesome/free-solid-svg-icons';
 import { selectToday } from '../calendar/calendar.selectors';
 import { months } from '../shared/shared';
-import { selectDate } from '../calendar/calendar.actions';
 import { addEvent, changeTree, getEvents } from '../event/event.actions';
 import { EventState } from '../event/reducers';
+import { selectDate } from '../calendar/calendar.actions';
 
 @Component({
   selector: 'app-single-day',
@@ -65,15 +65,10 @@ export class SingleDayComponent implements OnInit, AfterViewInit{
   }
 
   changeDay(newDay: number){
-    const todayMonthCopy = this.today.getMonth()
     const selectedDay = this.today.getDate();
     this.today.setDate(selectedDay + newDay)
-    if(todayMonthCopy != this.today.getMonth()){
-      this.store.dispatch(getEvents({day: this.today}))
-    } else {
-      this.store.dispatch(selectDate({date: this.today}))
-      newDay == 1 ? this.slide(true) : this.slide(false)
-    }
+    this.store.dispatch(selectDate({date: this.today}))
+    newDay == 1 ? this.slide(true) : this.slide(false)
   }  
 
   slide(bool: boolean) {

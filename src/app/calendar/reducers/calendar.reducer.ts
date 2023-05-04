@@ -1,6 +1,5 @@
 import { createReducer, on } from "@ngrx/store";
-import { selectDate } from "../calendar.actions";
-
+import { actuallySelectDate } from "../calendar.actions";
 
 export interface CalendarState {
     dateObject: {
@@ -18,11 +17,13 @@ export const initialCalendarState = {
 
 export const calendarReducer = createReducer(
     initialCalendarState,
-    on(selectDate, (state: any, { date }) => ({
-        ...state, 
-        dateObject: {
-            ...state.dateObject,
-            today: date
+    on(actuallySelectDate, (state, {date, data}) => {
+        return {
+            ...state,
+            dateObject: {
+                ...state.dateObject,
+                today: date
+            }  
         }
-    }))
+    }),
 )

@@ -80,9 +80,6 @@ export class YearComponent {
 
   pickDate(newDate: Date) {
     newDate = new Date(newDate)
-    if(new Date(newDate).toString() != new Date(this.today).toString()){
-      this.store.dispatch(getEvents({day: newDate}))
-    }
     this.store.dispatch(openComponent({component: ''}))
     this.store.dispatch(selectDate({date: newDate}))
   }

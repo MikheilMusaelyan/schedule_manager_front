@@ -29,8 +29,9 @@ export class CalendarComponent {
 
   goToSingleDay(day: number) {
     let newDate: Date = new Date(this.selectedDate.setDate(day))
+    console.log('didi')
     this.store.dispatch(selectDate({date: newDate}))
-    this.router.navigate(['singleday', newDate.getMonth() + 1, newDate.getDate(), newDate.getFullYear()])
+    // this.router.navigate(['singleday', newDate.getMonth() + 1, newDate.getDate(), newDate.getFullYear()])
   };
 
   renderCalendar(today: any) {

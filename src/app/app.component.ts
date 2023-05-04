@@ -35,7 +35,7 @@ export class AppComponent {
     private store: Store<any>
   ){
     const date: Date = new Date();
-    this.store.dispatch(getEvents({day: date}))
+    this.store.dispatch(getEvents({date: date}))
   }
   
   closeComponent() {
