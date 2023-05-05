@@ -1,5 +1,5 @@
 import { createReducer, on } from "@ngrx/store";
-import { EventFailure, changeTree } from "../event.actions";
+import { EventFailure, addEvent, changeTree, pushEvent } from "../event.actions";
 import { actuallySelectDate } from "src/app/calendar/calendar.actions";
 
 export interface EventState {
@@ -46,5 +46,21 @@ export const EventReducer = createReducer(
             ...state
         }
     }),
-    
+    on(pushEvent, (state: EventState, action) => {
+        const day: number = new Date(action.event['date']).getDate();
+        let updatedDay: any = []
+        if(state.events[`d${day}`]){
+            updatedDay = [...state.events[`d${day}`], action.event];
+        } else {
+            updatedDay = [action.event]
+        }
+        
+        return {
+            ...state,
+            events: {
+                ...state.events,
+                [`d${day}`]: updatedDay
+            }
+        }
+    })
 )

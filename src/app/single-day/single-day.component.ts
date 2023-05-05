@@ -64,12 +64,16 @@ export class SingleDayComponent implements OnInit, AfterViewInit{
     this.rows.push({});
     this.todaySubscription = this.selectToday$.subscribe((data: Date) => {
       clearTimeout(this.slideTimeout)
-      if(this.nodez?.length == 0) {
-        this.nodez = this.nodes.childs
+      if(this.nodez?.length == 0 && typeof(this.slideTo) !== 'string') {
+        this.slideTimeout = setTimeout(() => {
+          this.nodez = []
+          this.nodez = this.nodes.childs
+        }, 170);
       } else {
         this.slideTimeout = setTimeout(() => {
+          this.nodez = []
           this.nodez = this.nodes.childs
-        }, 150);
+        }, 170);
       }
       this.slide(this.slideTo)
       this.today = new Date(JSON.parse(JSON.stringify(data)))
@@ -146,7 +150,8 @@ export class SingleDayComponent implements OnInit, AfterViewInit{
 
       this.changeSubscription = this.store.pipe(select(detectChange)).subscribe((bool: boolean) => {
         setTimeout(() => {
-         this.changeWidthValue();
+          console.log('change width value')
+          this.changeWidthValue();
         }, 300);
       })
     }, 0);

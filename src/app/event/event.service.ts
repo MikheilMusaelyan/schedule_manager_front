@@ -20,10 +20,12 @@ export class EventService{
     }
 
     getTransofrmedEvent(myEvent: any): EventBackend {
+      const currentDay: Date = new Date(myEvent.date)
+      currentDay.setDate(currentDay.getDate() - 1)
       return {
         start: myEvent.start,
         end: myEvent.end,
-        date: new Date(myEvent.date).toISOString().split('T')[0],
+        date: currentDay.toISOString().split('T')[0],
         name: myEvent.name,
         color: myEvent.color,
       }
@@ -34,7 +36,6 @@ export class EventService{
     }
 
     getEvents(data: any){
-      console.log('get events')
       const date: Date = data
       const day = new Date(date).getDate();
       const month = new Date(date).getMonth() + 1;
