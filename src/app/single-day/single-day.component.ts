@@ -38,12 +38,13 @@ export class SingleDayComponent implements OnInit, AfterViewInit{
   selectToday$: Observable<Date> = this.store.pipe(select(selectToday));
   today: Date;
   todaySubscription: Subscription;
+  slideTimeout: any
+  changeTimeout: any
 
   
   //designs
   constructor(
     private store: Store<AppState>,
-    private loadingStore: Store<EventState>,
     private nodes: NodesService
   ) {
     for (let i = 0; i < 24; i++) {
@@ -62,36 +63,45 @@ export class SingleDayComponent implements OnInit, AfterViewInit{
     }
     this.rows.push({});
     this.todaySubscription = this.selectToday$.subscribe((data: Date) => {
+      clearTimeout(this.slideTimeout)
+      if(this.nodez?.length == 0) {
+        this.nodez = this.nodes.childs
+      } else {
+        this.slideTimeout = setTimeout(() => {
+          this.nodez = this.nodes.childs
+        }, 150);
+      }
       this.slide(this.slideTo)
       this.today = new Date(JSON.parse(JSON.stringify(data)))
-      this.nodez = nodes.childs
     })
   }
 
   changeDay(newDay: number){
+    this.slideTo = newDay == 1 ? true : false
     const selectedDay = this.today.getDate();
     const todayCopy = new Date(JSON.parse(JSON.stringify(this.today)))
     todayCopy.setDate(selectedDay + newDay)
     this.store.dispatch(selectDate({date: todayCopy}))
-    this.slideTo = newDay == 1 ? false : true
   }  
 
   slide(bool: boolean | string) {
     if(typeof bool == 'string'){
       return
     }
-    const transformValue = bool ? 15 : -15;
 
-    this.main.nativeElement.style.transition = 'opacity 130ms, transform 150ms';
+    const transformValue = bool ? 5 : -8;
+
+    this.main.nativeElement.style.transition = 'opacity 150ms, transform 200ms';
     this.main.nativeElement.style.opacity = '0';
-    this.main.nativeElement.style.transform = `translateX(${-transformValue * 1.5}%)`;
+    this.main.nativeElement.style.transform = `translateX(${-transformValue}%)`;
 
     setTimeout(() => {
       this.main.nativeElement.style.transition = '';
-      this.main.nativeElement.style.transform = `translateX(${transformValue * 3}%)`;
-    }, 200);
+      this.main.nativeElement.style.transform = `translateX(${transformValue}%)`;
+    }, 250);
 
-    setTimeout(() => {
+    clearTimeout(this.changeTimeout)
+    this.changeTimeout = setTimeout(() => {
       this.main.nativeElement.scrollLeft = 0
       this.main.nativeElement.style.transition = 'all 300ms cubic-bezier(0.4, 0, 0.2, 1), opacity 200ms cubic-bezier(0.4, 0, 0.2, 1';
       this.main.nativeElement.style.opacity = '1';
@@ -114,8 +124,6 @@ export class SingleDayComponent implements OnInit, AfterViewInit{
         name: 'var(--eventColor)', 
         pastel: false
       }, 
-      
-      isNew: true,
       date: this.today,
       serverId: null,
       state: 'loading'
@@ -127,9 +135,6 @@ export class SingleDayComponent implements OnInit, AfterViewInit{
   }
 
   ngOnInit() {
-    setTimeout(() => {
-      this.nodez = this.nodes.childs;
-    }, 0);
   }   
 
   // change designs 

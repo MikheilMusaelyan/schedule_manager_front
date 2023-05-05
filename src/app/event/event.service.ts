@@ -4,7 +4,6 @@ import { EventBackend } from "./event-model";
 
 @Injectable({providedIn: 'root'})
 export class EventService{
-
     constructor(
       private http: HttpClient
     ) {
@@ -16,19 +15,15 @@ export class EventService{
     }
     
     putEvent(myEvent: any){
-      
       let event = this.getTransofrmedEvent(myEvent.event)
-      console.log(myEvent.name)
       return this.http.put(`http://127.0.0.1:8000/api/event/${myEvent.event.serverId}/`, event)
     }
 
     getTransofrmedEvent(myEvent: any): EventBackend {
-      const currentDay = new Date(myEvent.date).getDate()
-      const newDay = new Date(myEvent.date).setDate(currentDay - 1)
       return {
         start: myEvent.start,
         end: myEvent.end,
-        date: new Date(newDay).toISOString().split('T')[0],
+        date: new Date(myEvent.date).toISOString().split('T')[0],
         name: myEvent.name,
         color: myEvent.color,
       }
@@ -39,6 +34,7 @@ export class EventService{
     }
 
     getEvents(data: any){
+      console.log('get events')
       const date: Date = data
       const day = new Date(date).getDate();
       const month = new Date(date).getMonth() + 1;

@@ -1,4 +1,4 @@
-import { Injectable } from "@angular/core";
+import { ChangeDetectorRef, Injectable } from "@angular/core";
 
   
 
@@ -11,6 +11,7 @@ import { Injectable } from "@angular/core";
     serverId: null | number;
     date?: any;
     state: string;
+    name: string
   }
 @Injectable({providedIn: 'root'})
 
@@ -22,6 +23,9 @@ export class NodesService {
     this.nodesCount = 0;
     this.childs = []
     for(let i = 0; i < day.length; i++){
+      if(i > 50){
+        return
+      }
       const event = day[i]
       
       const newNode = {
@@ -32,9 +36,9 @@ export class NodesService {
         color: event['color'],
         serverId: event['id'],
         date: event['date'],
-        state: 'string'
+        state: 'string',
+        name: event['name']
       }
-      console.log(newNode)
       this.newNode(this.childs, newNode)
     }
   }

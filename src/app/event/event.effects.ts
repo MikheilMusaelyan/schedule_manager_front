@@ -65,6 +65,7 @@ export class EventEffects$ {
         switchMap(([[action, state], storeEvents]) => {
           const newDate = new Date(action.date);
 
+          // if events in the store are null, get events with the date from action
           if(!state){
             return of(getEvents({date: newDate}))
           }
@@ -74,6 +75,7 @@ export class EventEffects$ {
           const newYear = newDate.getFullYear();
           const newMonth = newDate.getMonth();
 
+          
           if (newMonth !== currentMonth || newYear !== currentYear) {
             return of(getEvents({date: newDate}))
           } else {
@@ -100,11 +102,10 @@ export class EventEffects$ {
               } else {
                 this.nodes.setDay([])
               }
-              
             }),
-            switchMap(info => [
+            map(info => 
               actuallySelectDate({ date: action.date, data: info }),
-            ]),
+            ),
             catchError(() => {
               return of(
                 EventFailure({message: 'Couldn\'t access events'}),
