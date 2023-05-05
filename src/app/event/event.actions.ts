@@ -36,7 +36,15 @@ export const getEvents = createAction(
     props<{date: Date}>()
 )
 
-export const pushEvent = createAction(
-    '[Event Effect] push event',
+export const CREATEvent = createAction(
+    '[Effect] CREATE event',
+    props<{event: any}>()
+)
+export const REMOVEvent = createAction(
+    '[Effect] REMOVE event',
+    props<{eventId: any}>()
+)
+export const UPDATEvent = createAction(
+    '[Effect] UPDATE event',
     props<{event: any}>()
 )

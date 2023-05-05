@@ -3,7 +3,7 @@ import { Actions, createEffect, ofType } from "@ngrx/effects";
 import { catchError, concatMap, exhaustMap, map, mergeMap, of, tap, switchMap, withLatestFrom, from, takeUntil} from "rxjs";
 import { EventService } from "./event.service";
 import { HttpClient } from "@angular/common/http";
-import { addEvent, EventFailure, changeTree, moveEventSuccess, changeEvent, deleteEvent, getEvents, pushEvent } from "./event.actions";
+import { addEvent, EventFailure, changeTree, moveEventSuccess, changeEvent, deleteEvent, getEvents, REMOVEvent, CREATEvent, UPDATEvent } from "./event.actions";
 import { Store } from "@ngrx/store";
 import { EventState } from "./reducers";
 import { EventBackend } from "./event-model";
@@ -35,7 +35,7 @@ export class EventEffects$ {
               }),
               switchMap((data) => [
                 changeTree(),
-                pushEvent({event: {...event.event, serverId: data}})
+                CREATEvent({event: {...event.event, serverId: data, id: null}})
               ]),
               catchError(() => {
                 this.nodes.setState('error', event.event.id, this.nodes.childs)
@@ -53,7 +53,10 @@ export class EventEffects$ {
           this.service.putEvent(event)
           .pipe(
             tap(() => this.nodes.setState(1, event.event.id, this.nodes.childs, 'move')),
-            map(() => changeTree()),
+            switchMap((data) => [
+              changeTree(),
+              UPDATEvent({ event: {...event.event, id: null }})
+            ]),
             catchError(() => {
               this.nodes.setState('error', event.event.id, this.nodes.childs)
               return of(EventFailure({message: `Couldn\'t change ${event.start} - ${event.end}`}))
