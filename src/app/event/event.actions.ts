@@ -42,7 +42,7 @@ export const CREATEvent = createAction(
 )
 export const REMOVEvent = createAction(
     '[Effect] REMOVE event',
-    props<{eventId: any}>()
+    props<{eventId: any, eventDay: number}>()
 )
 export const UPDATEvent = createAction(
     '[Effect] UPDATE event',

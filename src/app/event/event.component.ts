@@ -2,7 +2,7 @@ import { Component, Input, ViewChild} from '@angular/core';
 import { Store } from '@ngrx/store';
 import { NodesService, Node } from "src/app/shared/nodes";
 import { AppState } from 'src/app/reducers';
-import { EventFailure, changeTree, deleteEvent, changeEvent } from './event.actions';
+import { EventFailure, changeTree, deleteEvent, changeEvent, REMOVEvent } from './event.actions';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { faCheck, faTrash, faX, faXmark } from '@fortawesome/free-solid-svg-icons';
 import { EventService } from './event.service';
@@ -103,7 +103,8 @@ export class EventComponent {
     this.thisEvent.state = 'loading'
     this.service.deleteEvent(this.thisEvent.ID)
     .subscribe(data => {
-      this.nodes.deleteEvent(this.thisEvent, this.parent, this.index)
+      console.log(this.thisEvent.ID)
+      this.nodes.deleteEvent(this.thisEvent, this.parent, this.index);
       this.store.dispatch(changeTree())
     }, 
     error => {

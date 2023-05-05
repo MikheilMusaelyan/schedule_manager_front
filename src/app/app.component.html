@@ -4,6 +4,10 @@
     (click)="closeComponent()"
 ></div>
 
+<div class="messages" [@messages]="messageState">
+    <span [ngClass]="{'red': error}">{{message}}</span>
+</div>
+
 <main>
     
     <app-navbar></app-navbar>

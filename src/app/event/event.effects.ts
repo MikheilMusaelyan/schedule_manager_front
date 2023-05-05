@@ -27,7 +27,7 @@ export class EventEffects$ {
         this.actions$.pipe(
           ofType(addEvent),
           withLatestFrom(this.store.select(selectToday)),
-          mergeMap(([event, today]) =>
+          concatMap(([event, today]) =>
             this.service.addEvent(event)
             .pipe(
               tap((data: number) => {
@@ -49,13 +49,13 @@ export class EventEffects$ {
     moveEvent$ = createEffect(() =>
       this.actions$.pipe(
         ofType(changeEvent),
-        mergeMap((event: any) =>
+        concatMap((event: any) =>
           this.service.putEvent(event)
           .pipe(
             tap(() => this.nodes.setState(1, event.event.id, this.nodes.childs, 'move')),
             switchMap((data) => [
               changeTree(),
-              UPDATEvent({ event: {...event.event, id: null }})
+              UPDATEvent({ event: { ...event.event, id: null, state: '' }})
             ]),
             catchError(() => {
               this.nodes.setState('error', event.event.id, this.nodes.childs)
