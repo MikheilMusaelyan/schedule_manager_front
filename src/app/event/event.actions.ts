@@ -19,7 +19,7 @@ export const deleteEvent = createAction(
 //move
 export const changeEvent = createAction(
     '[Event] Move Event',
-    props<{id: number, event: any}>() 
+    props<{event: any}>() 
 )
 export const moveEventSuccess = createAction(
     '[Event] Move Event Success',
@@ -47,4 +47,8 @@ export const REMOVEvent = createAction(
 export const UPDATEvent = createAction(
     '[Effect] UPDATE event',
     props<{event: any}>()
+)
+export const setMessage = createAction(
+    '[Effect] Set Message',
+    props<{message: string}>()
 )

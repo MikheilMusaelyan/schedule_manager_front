@@ -2,7 +2,7 @@ import { Component, Input, ViewChild} from '@angular/core';
 import { Store } from '@ngrx/store';
 import { NodesService, Node } from "src/app/shared/nodes";
 import { AppState } from 'src/app/reducers';
-import { EventFailure, changeTree, deleteEvent, changeEvent, REMOVEvent } from './event.actions';
+import { EventFailure, changeTree, deleteEvent, changeEvent, REMOVEvent, setMessage } from './event.actions';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { faCheck, faTrash, faX, faXmark } from '@fortawesome/free-solid-svg-icons';
 import { EventService } from './event.service';
@@ -79,7 +79,7 @@ export class EventComponent {
     this.wrapper = 'void';
     this.pickedColor = !this.pickedColor;
     const eventCopy = JSON.parse(JSON.stringify(this.thisEvent))
-    this.store.dispatch(changeEvent({id: this.thisEvent.ID, event: eventCopy}))
+    this.store.dispatch(changeEvent({ event: eventCopy }))
     this.detailsOpen = false;
   }
 
@@ -101,11 +101,11 @@ export class EventComponent {
 
   deleteNode(){
     this.thisEvent.state = 'loading'
-    this.service.deleteEvent(this.thisEvent.ID)
+    this.service.deleteEvent(this.thisEvent.serverId)
     .subscribe(data => {
-      console.log(this.thisEvent.ID)
       this.nodes.deleteEvent(this.thisEvent, this.parent, this.index);
-      this.store.dispatch(changeTree())
+      this.store.dispatch(changeTree());
+      this.store.dispatch(setMessage({message: 'Event Removed Successfully!'}));
     }, 
     error => {
       this.thisEvent.state = 'error'
@@ -121,7 +121,7 @@ export class EventComponent {
     this.nodes.moveEvent(this.thisEvent, this.parent, this.index);
     
     const eventCopy = JSON.parse(JSON.stringify(this.thisEvent))
-    this.store.dispatch(changeEvent({id: this.thisEvent.ID, event: eventCopy}))
+    this.store.dispatch(changeEvent({ event: eventCopy }))
   }
 
   resizeEvent(event: boolean) {
@@ -129,7 +129,7 @@ export class EventComponent {
     this.nodes.resizeEvent(event, this.thisEvent, this.parent, this.index)
 
     const eventCopy = JSON.parse(JSON.stringify(this.thisEvent))
-    this.store.dispatch(changeEvent({id: this.thisEvent.id, event: eventCopy}))
+    this.store.dispatch(changeEvent({ event: eventCopy }))
   }
 
   getEventTime() {

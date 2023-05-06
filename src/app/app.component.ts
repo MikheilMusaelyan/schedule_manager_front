@@ -25,14 +25,12 @@ import { errorSelector, messageSelector } from './event/event.selectors';
     ]),
     trigger('messages', [
       state('closed', style({
-        'opacity': '0.4',
-        'transform': 'translateX(-100%)'
+        'transform':  'translateX(150%)'
       })),
       state('open', style({
-        'opacity': '1',
         'transform': 'translateX(0)'
       })),
-      transition('closed <=> open', animate(200))
+      transition('closed <=> open', animate('350ms cubic-bezier(0.4, 0, 0.2, 1)'))
     ])
   ]
 })
@@ -43,8 +41,9 @@ export class AppComponent {
     map(data => data == '' ? 'void': 'normal')
   )
   // animtion
-  messageState: string = 'open';
+  messageState: string = 'closed';
   animationTimeout: any;
+  animationCloseTimeout: any;
   message: string;
   error: boolean;
 
@@ -56,32 +55,33 @@ export class AppComponent {
 
     this.store.pipe(select(messageSelector))
     .subscribe((data) => {
-      this.handleMessages(data, false)
+      this.handleMessages(data.message, false)
     })
 
     this.store.pipe(select(errorSelector))
     .subscribe((data) => {
-      this.handleMessages(data, true)
+      if(typeof data == 'number'){
+        this.handleMessages('An error occured', true)
+      }
     })
   }
 
   handleMessages(data: any, err: boolean){
-    if(data.length <= 1){
+    if(!data?.message || data?.message.length <= 1){
       return
     }
     this.messageState = 'closed';
-      clearTimeout(this.animationTimeout);
+    clearTimeout(this.animationTimeout);
+    clearTimeout(this.animationCloseTimeout)
       
-      this.animationTimeout = setTimeout(() => {
-        this.error = err;
-        this.message = data;
-        this.messageState = 'open';
-
-        setTimeout(() => {
-          this.messageState = 'closed'
-        }, 800);
-
-      }, 200);
+    this.animationTimeout = setTimeout(() => {
+      this.error = err;
+      this.message = data.message;
+      this.messageState = 'open';
+      this.animationCloseTimeout = setTimeout(() => {
+        this.messageState = 'closed'
+      }, 1200);
+    }, 350);
   }
   
   closeComponent() {

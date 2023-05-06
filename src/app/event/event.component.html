@@ -60,7 +60,9 @@
         </div>
         <div class="success" *ngIf="thisEvent?.state == 'success'">
             <fa-icon 
-            [ngStyle]="{'color' : (!thisEvent?.color.pastel || thisEvent?.color.name == '#fc5454') ? 'rgb(52, 255, 52)' : 'rgb(12, 159, 12)'}"
+                [ngStyle]="{'color' : (!thisEvent?.color.pastel 
+                    || thisEvent?.color.name == '#fc5454' || 
+                    thisEvent?.color.name == 'var(--eventColor)') ? 'rgb(0 255 5)' : 'rgb(12, 159, 12)'}"
             
             class="successIcon" [icon]="checkIcon"></fa-icon>
         </div>

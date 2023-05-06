@@ -107,7 +107,7 @@ export class SingleDayComponent implements OnInit, AfterViewInit{
     clearTimeout(this.changeTimeout)
     this.changeTimeout = setTimeout(() => {
       this.main.nativeElement.scrollLeft = 0
-      this.main.nativeElement.style.transition = 'all 300ms cubic-bezier(0.4, 0, 0.2, 1), opacity 200ms cubic-bezier(0.4, 0, 0.2, 1';
+      this.main.nativeElement.style.transition = 'all 300ms cubic-bezier(0.4, 0, 0.2, 1), opacity 200ms cubic-bezier(0.4, 0, 0.2, 1)';
       this.main.nativeElement.style.opacity = '1';
       this.main.nativeElement.style.transform = `translateX(0)`;
     }, 300);

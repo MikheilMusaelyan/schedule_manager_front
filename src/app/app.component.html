@@ -5,7 +5,10 @@
 ></div>
 
 <div class="messages" [@messages]="messageState">
-    <span [ngClass]="{'red': error}">{{message}}</span>
+    <div class="tag" [ngClass]="{'red': error}"></div>
+    <span class="message-text-wrap">
+        <div class="message-text">{{message}}</div>
+    </span>
 </div>
 
 <main>

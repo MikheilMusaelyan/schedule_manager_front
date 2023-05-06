@@ -1,33 +1,30 @@
 import { createReducer, on } from "@ngrx/store";
-import { EventFailure, addEvent, changeTree, CREATEvent, UPDATEvent, deleteEvent, REMOVEvent } from "../event.actions";
+import { EventFailure, addEvent, changeTree, CREATEvent, UPDATEvent, deleteEvent, REMOVEvent, setMessage } from "../event.actions";
 import { actuallySelectDate } from "src/app/calendar/calendar.actions";
 
 export interface EventState {
     changed: boolean,
-    errors: string,
-    messages: string
+    errors: number,
+    messages: any
     events: any,
 }
 
 export const initialEventState = {
     changed: false,
-    errors: '',
-    messages: '',
+    errors: null,
+    messages: {
+        message: '',
+        bool: false
+    },
     events: {}
 }
 
 export const EventReducer = createReducer(
     initialEventState, 
     on(EventFailure, (state: EventState) => {
-        setTimeout(() => {
-            return {
-              ...state,
-              errors: null
-            };
-        }, 2000);
         return {
           ...state,
-          errors: 'There is an error'
+          errors: new Date().getTime()
         };
     }),
     on(changeTree, (state: EventState, {}) =>  {
@@ -35,7 +32,7 @@ export const EventReducer = createReducer(
         return {
             ...state,
             changed: !state.changed
-        }
+        };
     }),
     on(actuallySelectDate, (state, {date, data}) => {
         if(data != null){
@@ -63,8 +60,7 @@ export const EventReducer = createReducer(
             events: {
                 ...state.events,
                 [`d${day}`]: updatedDay
-            },
-            messages: 'Event Created!'
+            }
         }
     }),
     on(UPDATEvent, (state: EventState, action) => {
@@ -78,12 +74,11 @@ export const EventReducer = createReducer(
         }); 
           
         return {
-          ...state,
-          events: {
-            ...state.events,
-            [`d${day}`]: updatedEvents,
-          },
-          messages: 'Event Updated!'
+            ...state,
+            events: {
+                ...state.events,
+                [`d${day}`]: updatedEvents,
+            }
         };
     }),
     on(REMOVEvent, (state: EventState, action) => {
@@ -96,9 +91,17 @@ export const EventReducer = createReducer(
             events: {
                 ...state.events,
                 [`d${action.eventDay}`]: updatedEvents
-            },
-            messages: 'Event Removed!'
+            }
         };
+    }),
+    on(setMessage, (state: EventState, message: any) => {
+        return {
+            ...state,
+            messages: {
+                message: message,
+                bool: !state.messages.bool
+            }
+        }
     })
     
 )

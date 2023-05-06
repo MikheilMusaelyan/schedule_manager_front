@@ -3,7 +3,7 @@ import { Actions, createEffect, ofType } from "@ngrx/effects";
 import { catchError, concatMap, exhaustMap, map, mergeMap, of, tap, switchMap, withLatestFrom, from, takeUntil} from "rxjs";
 import { EventService } from "./event.service";
 import { HttpClient } from "@angular/common/http";
-import { addEvent, EventFailure, changeTree, moveEventSuccess, changeEvent, deleteEvent, getEvents, REMOVEvent, CREATEvent, UPDATEvent } from "./event.actions";
+import { addEvent, EventFailure, changeTree, moveEventSuccess, changeEvent, deleteEvent, getEvents, REMOVEvent, CREATEvent, UPDATEvent, setMessage } from "./event.actions";
 import { Store } from "@ngrx/store";
 import { EventState } from "./reducers";
 import { EventBackend } from "./event-model";
@@ -34,6 +34,7 @@ export class EventEffects$ {
                 this.nodes.setState(data, event.event.id, this.nodes.childs)
               }),
               switchMap((data) => [
+                setMessage({message: 'Event Added Successfully!'}),
                 changeTree(),
                 CREATEvent({event: {...event.event, serverId: data, id: null}})
               ]),
@@ -41,7 +42,7 @@ export class EventEffects$ {
                 this.nodes.setState('error', event.event.id, this.nodes.childs)
                 return of(EventFailure({message: `Couldn\'t add ${event.event.start} - ${event.event.end}`}))
               })
-            )
+            )  
           ),
         )
     );
@@ -54,6 +55,7 @@ export class EventEffects$ {
           .pipe(
             tap(() => this.nodes.setState(1, event.event.id, this.nodes.childs, 'move')),
             switchMap((data) => [
+              setMessage({message: 'Event Updated Successfully!'}),
               changeTree(),
               UPDATEvent({ event: { ...event.event, id: null, state: '' }})
             ]),
