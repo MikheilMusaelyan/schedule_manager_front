@@ -1,5 +1,7 @@
 import { Action, createReducer, on } from '@ngrx/store';
 import { openAbsolute, openComponent } from './UI.actions';
+import { getEvents } from '../event/event.actions';
+import { actuallySelectDate } from '../calendar/calendar.actions';
 
 export interface UIState {
   componentOpen: string,
@@ -15,6 +17,5 @@ export const UIReducer = createReducer(
     ...state,
     componentOpen: component
   })),
-  
 );
 

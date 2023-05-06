@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 import { AppState } from './reducers';
-import { Observable, Subscription, map} from 'rxjs';
+import { Observable, Subscription, interval, map, tap} from 'rxjs';
 import { selectOpenComponent } from './UI-store/UI.selectors';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { openComponent } from './UI-store/UI.actions';
@@ -40,7 +40,7 @@ export class AppComponent {
   fixedState$: Observable<string> = this.isComponentOpen$.pipe(
     map(data => data == '' ? 'void': 'normal')
   )
-  // animtion
+ 
   messageState: string = 'closed';
   animationTimeout: any;
   animationCloseTimeout: any;
@@ -61,7 +61,7 @@ export class AppComponent {
     this.store.pipe(select(errorSelector))
     .subscribe((data) => {
       if(typeof data == 'number'){
-        this.handleMessages('An error occured', true)
+        this.handleMessages({message: 'An error occured'}, true)
       }
     })
   }
@@ -87,5 +87,6 @@ export class AppComponent {
   closeComponent() {
     this.store.dispatch(openComponent({component: ''}))
   }
-  
+
+
 }

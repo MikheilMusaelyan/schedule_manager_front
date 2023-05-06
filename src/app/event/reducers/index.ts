@@ -1,12 +1,14 @@
 import { createReducer, on } from "@ngrx/store";
-import { EventFailure, addEvent, changeTree, CREATEvent, UPDATEvent, deleteEvent, REMOVEvent, setMessage } from "../event.actions";
+import { EventFailure, addEvent, changeTree, CREATEvent, UPDATEvent, deleteEvent, REMOVEvent, setMessage, getEvents } from "../event.actions";
 import { actuallySelectDate } from "src/app/calendar/calendar.actions";
+import { state } from "@angular/animations";
 
 export interface EventState {
     changed: boolean,
     errors: number,
     messages: any
     events: any,
+    loading: boolean
 }
 
 export const initialEventState = {
@@ -16,7 +18,8 @@ export const initialEventState = {
         message: '',
         bool: false
     },
-    events: {}
+    events: {},
+    loading: false
 }
 
 export const EventReducer = createReducer(
@@ -28,7 +31,6 @@ export const EventReducer = createReducer(
         };
     }),
     on(changeTree, (state: EventState, {}) =>  {
-        console.log('tree has changed')
         return {
             ...state,
             changed: !state.changed
@@ -38,11 +40,11 @@ export const EventReducer = createReducer(
         if(data != null){
             return {
                 ...state,
-                events: data,   
+                events: data,
             }
         }
         return {
-            ...state
+            ...state,
         }
     }),
     on(CREATEvent, (state: EventState, action) => {
@@ -65,10 +67,9 @@ export const EventReducer = createReducer(
     }),
     on(UPDATEvent, (state: EventState, action) => {
         const day: number = new Date(action.event['date']).getDate();
-        
         const updatedEvents = state.events[`d${day}`].map((event: any) => {
-            if (event.serverId === action.event.serverId) {
-              return { ...event, ...action.event };
+            if (event.id === action.event.id) {
+                return { ...event, ...action.event };
             }
             return event;
         }); 
@@ -83,7 +84,7 @@ export const EventReducer = createReducer(
     }),
     on(REMOVEvent, (state: EventState, action) => {
         const updatedEvents = state.events[`d${action.eventDay}`].filter((event: any) => {
-            return event.serverId !== action.eventId;
+            return event.id !== action.eventId;
         });
     
         return {
@@ -103,5 +104,4 @@ export const EventReducer = createReducer(
             }
         }
     })
-    
 )

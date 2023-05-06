@@ -36,7 +36,7 @@ export class NodesService {
         color: event['color'],
         serverId: event['id'],
         date: event['date'],
-        state: 'string',
+        state: '',
         name: event['name']
       }
       this.newNode(this.childs, newNode)

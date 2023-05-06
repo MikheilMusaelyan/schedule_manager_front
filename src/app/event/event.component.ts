@@ -66,7 +66,7 @@ export class EventComponent {
     private service: EventService,
     private nodes: NodesService
   ){
-   
+    
   }
 
   ngOnInit() {
@@ -103,16 +103,20 @@ export class EventComponent {
     this.thisEvent.state = 'loading'
     this.service.deleteEvent(this.thisEvent.serverId)
     .subscribe(data => {
+      this.store.dispatch(REMOVEvent({
+        eventId: this.thisEvent.serverId, 
+        eventDay: new Date(this.thisEvent.date).getDate()
+      }))
       this.nodes.deleteEvent(this.thisEvent, this.parent, this.index);
       this.store.dispatch(changeTree());
       this.store.dispatch(setMessage({message: 'Event Removed Successfully!'}));
-    }, 
+    },
     error => {
       this.thisEvent.state = 'error'
       setTimeout(() => {
         this.thisEvent.state = ''
       }, 2000);
-      this.store.dispatch(EventFailure({message: `Couldn\'t remove ${this.thisEvent.start} - ${this.thisEvent.end}`}))
+      this.store.dispatch(EventFailure())
     })
   }
 

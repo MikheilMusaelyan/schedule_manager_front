@@ -20,12 +20,10 @@ export class EventService{
     }
 
     getTransofrmedEvent(myEvent: any): EventBackend {
-      const currentDay: Date = new Date(myEvent.date)
-      currentDay.setDate(currentDay.getDate() - 1)
       return {
         start: myEvent.start,
         end: myEvent.end,
-        date: currentDay.toISOString().split('T')[0],
+        date: new Date(myEvent.date).toISOString().split('T')[0],
         name: myEvent.name,
         color: myEvent.color,
       }

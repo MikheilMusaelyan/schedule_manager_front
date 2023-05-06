@@ -10,34 +10,6 @@
     </div>
   </button>
 
-  
-    <div class="container zIndexMax" *ngIf="(openComponent$ | async) == 'monthsCard'" [@container]>
-      <table>
-        <tbody>
-          <tr *ngFor="let row of months; let i = index">
-            <td *ngFor="let column of row; let j = index" class="cell">
-                <span class="cell-span"
-                [ngClass]="{ 'activeMonth' : currentMonth == column }"
-                (click)="pickMonth(i, j)"
-                >{{column}}</span>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-    
-    <div class="container zIndexMax" *ngIf="(openComponent$ | async) == 'yearsCard'" [@container]>
-      <table>
-        <tbody>
-            <td *ngFor="let year of years; let i = index" class="year-cell">
-                <span class="cell-span"
-                [ngClass]="{ 'activeMonth' : currentYear == year }"
-                (click)="pickYear(year)"
-                >{{year}}</span>
-            </td>
-        </tbody>
-      </table>
-    </div>
 
   </main>
   

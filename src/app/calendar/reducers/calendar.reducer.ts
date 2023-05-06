@@ -1,5 +1,6 @@
 import { createReducer, on } from "@ngrx/store";
 import { actuallySelectDate } from "../calendar.actions";
+import { getEvents } from "src/app/event/event.actions";
 
 export interface CalendarState {
     dateObject: {

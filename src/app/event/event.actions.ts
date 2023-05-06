@@ -27,8 +27,7 @@ export const moveEventSuccess = createAction(
 
 //failure
 export const EventFailure = createAction(
-    '[Effect] Add Event Failure',
-    props<{message: string}>()
+    '[Effect] Add Event Failure'
 )
 
 export const getEvents = createAction(

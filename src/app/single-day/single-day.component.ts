@@ -81,12 +81,12 @@ export class SingleDayComponent implements OnInit, AfterViewInit{
   }
 
   changeDay(newDay: number){
-    this.slideTo = newDay == 1 ? true : false
+    this.slideTo = newDay == 1 ? true : false;
     const selectedDay = this.today.getDate();
     const todayCopy = new Date(JSON.parse(JSON.stringify(this.today)))
     todayCopy.setDate(selectedDay + newDay)
     this.store.dispatch(selectDate({date: todayCopy}))
-  }  
+  }
 
   slide(bool: boolean | string) {
     if(typeof bool == 'string'){
@@ -150,7 +150,6 @@ export class SingleDayComponent implements OnInit, AfterViewInit{
 
       this.changeSubscription = this.store.pipe(select(detectChange)).subscribe((bool: boolean) => {
         setTimeout(() => {
-          console.log('change width value')
           this.changeWidthValue();
         }, 300);
       })

@@ -16,11 +16,9 @@ export const detectGetEvents = createSelector(
 
 // messages & errors
 export const messageSelector = createSelector(
-    selectEventState,
-    (state: EventState) => state.messages
+    selectEventState, (state: EventState) => state.messages
 )
 
 export const errorSelector = createSelector(
-    selectEventState,
-    (state: EventState) => state.errors
+    selectEventState, (state: EventState) => state.errors
 )

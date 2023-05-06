@@ -10,25 +10,45 @@ import { selectToday } from '../calendar/calendar.selectors';
 import { months } from '../shared/shared';
 import { getEvents } from '../event/event.actions';
 
-@Component({
-  selector: 'app-year',
-  templateUrl: './year.component.html',
-  styleUrls: ['./year.component.css']
-})
 
-export class YearComponent {
+@Component({
+  selector: 'app-popups',
+  templateUrl: './popups.component.html',
+  styleUrls: ['./popups.component.css'],
+  animations: [
+    trigger('container', [
+      state('void', style({
+        'opacity': '0',        
+      })),
+      state('*', style({
+        'opacity': '1',        
+      })),
+      transition('void <=> *', animate(200))
+    ])
+  ]
+})
+export class PopupsComponent {
   today: Date;
   currentMonth: string;
   currentYear: number;
-  months: any[] = months;
 
+  // representation of date
+  months: any[] = months;
+  years: number[] = [];
+
+  // calendar store
   today$: Observable<any> = this.store.pipe(select(selectToday))
   todaySubscription: Subscription;
+  
+  // UI store
+  openComponent$: Observable<string> = this.store.pipe(select(selectOpenComponent))
 
   constructor(
     private store: Store<AppState>,
   ) {
-    
+    for(let i = -1; i < 11; i++) {
+      this.years.push(new Date().getFullYear() + i)
+    }
   }
   
   ngOnInit() {
@@ -37,6 +57,30 @@ export class YearComponent {
       this.currentYear = today.getFullYear();
       this.currentMonth = this.months[Math.floor((today.getMonth() / 3))][today.getMonth() % 3];
     });
+  }
+
+  // calendar store
+
+  pickMonth(i: number, j: number) {
+    const monthIndex = (i * 3) + j; // get monthindex locally
+
+    let newDate: Date = new Date(this.today)
+    newDate.setMonth(monthIndex)
+    
+    this.pickDate(newDate)
+  }
+
+  pickYear(year: number) {
+    let newDate: Date = new Date(this.today)
+    newDate.setFullYear(year)
+
+    this.pickDate(newDate)
+  }
+
+  pickDate(newDate: Date) {
+    newDate = new Date(newDate)
+    this.store.dispatch(openComponent({component: ''}))
+    this.store.dispatch(selectDate({date: newDate}))
   }
 
   // UI store
@@ -48,7 +92,8 @@ export class YearComponent {
     this.store.dispatch(openComponent({component: 'yearsCard'}))
   }
 
-  ngOnDestroy(){
-    this.todaySubscription.unsubscribe()
+  ngOnDestroy(): void {
+    this.todaySubscription.unsubscribe();
   }
+  
 }

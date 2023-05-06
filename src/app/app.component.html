@@ -1,8 +1,15 @@
+<div class="popup-wrap">
+    <app-popups>
+    
+    </app-popups>
+</div>
+
 <div class="fixed" 
     *ngIf="(isComponentOpen$ | async) !== ''" 
     [@fixed]="fixedState$ | async"
     (click)="closeComponent()"
-></div>
+>
+</div>
 
 <div class="messages" [@messages]="messageState">
     <div class="tag" [ngClass]="{'red': error}"></div>
@@ -15,11 +22,14 @@
     
     <app-navbar></app-navbar>
 
-    <section class="search-router-wrap">
+    <section class="search-router-wrap" [ngClass]="{
+        'shrinked':
+        (isComponentOpen$ | async) == 'monthsCard' || 
+        (isComponentOpen$ | async) == 'yearsCard'       
+    }">
         <section>
             <app-searchbar></app-searchbar>
         </section>
-
         <section class="outlet">
             <router-outlet></router-outlet>
         </section>

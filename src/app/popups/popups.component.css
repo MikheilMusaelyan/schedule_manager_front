@@ -1,0 +1,75 @@
+.line{
+    top: 50%;
+    height: 40%;
+    background-color:var(--orange);
+    width: 2px;
+    margin: 0 5px;
+    position: absolute;
+    transform: translateY(-50%);
+}
+
+
+.container{
+    transition: 300ms;
+    min-width: 400px;
+    top: 45%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    position: fixed;
+    background: white;
+    padding: 20px;
+    border-radius: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+table{
+    border-collapse: collapse;
+    width: 100%;
+}
+tbody {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+tr{
+    width: 100%;
+    display: flex;
+}
+
+
+
+.cell {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 30px 5px;
+    box-sizing: border-box;
+    font-size: var(--fsS);
+    font-weight: bold;
+}
+.year-cell{
+    padding: 20px
+}
+.cell-span{  
+    color: #666;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    transition: 300ms;
+    cursor: pointer;
+}
+.cell-span:hover{
+    background: var(--lGrey);
+}
+.activeMonth{
+    color: white;
+    background: var(--rootColor);
+    cursor: initial;
+}
+ .activeMonth:hover{
+    background: var(--hoverrootColor) !important;
+ } 

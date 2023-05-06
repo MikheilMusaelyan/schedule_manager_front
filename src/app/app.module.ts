@@ -36,6 +36,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { AuthInterceptor } from './shared/interceptors/token.interceptor';
 import { LoadingComponent } from './shared/loading/loading.component';
+import { PopupsComponent } from './popups/popups.component';
 
 
 @NgModule({
@@ -53,7 +54,8 @@ import { LoadingComponent } from './shared/loading/loading.component';
     UpcomingeventsComponent,
     LoginComponent,
     WordPipe,
-    LoadingComponent
+    LoadingComponent,
+    PopupsComponent
   ],
   imports: [
     BrowserModule,
