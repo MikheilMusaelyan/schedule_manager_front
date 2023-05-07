@@ -12,3 +12,8 @@ export const welcomeUser = createSelector(
   selectAuthState,
   (authState: AuthState) => authState.welcome
 );
+
+export const loginOpenSelector = createSelector(
+  selectAuthState,
+  (authState: AuthState) => authState.loginOpen
+);

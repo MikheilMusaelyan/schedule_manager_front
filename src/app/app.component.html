@@ -23,7 +23,7 @@
     <app-navbar></app-navbar>
 
     <section class="search-router-wrap">
-        <section *ngIf="!(isLoggedIn$ | async)">
+        <section *ngIf="!(isLoginOpen$ | async)">
             <app-searchbar></app-searchbar>
         </section>
         <section class="outlet" [ngClass]="{

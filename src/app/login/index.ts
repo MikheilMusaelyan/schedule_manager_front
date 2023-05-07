@@ -3,12 +3,14 @@ import * as AuthActions from './login.actions';
 
 export interface AuthState {
   isLoggedIn: boolean;
-  welcome: boolean
+  welcome: boolean,
+  loginOpen: boolean
 }
 
 const initialState: AuthState = {
   isLoggedIn: false,
-  welcome: false
+  welcome: false,
+  loginOpen: false
 };
 
 export const authReducer = createReducer(
@@ -28,5 +30,9 @@ export const authReducer = createReducer(
   on(AuthActions.welcome, (state) => ({
     ...state,
     welcome: true,
+  })),
+  on(AuthActions.LoginOpen, (state, {open}) => ({
+    ...state,
+    loginOpen: open
   }))
 );

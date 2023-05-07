@@ -7,7 +7,7 @@ import { Subscription } from 'rxjs'
 import { Store, select } from '@ngrx/store';
 import { AuthState } from '.';
 import { welcomeUser } from './login.selectors';
-import { welcome } from './login.actions';
+import { LoginOpen, welcome } from './login.actions';
 
 @Component({
   selector: 'app-login',
@@ -21,6 +21,7 @@ export class LoginComponent {
     private authService: AuthService,
     private store: Store<AuthState>
   ) { 
+    this.store.dispatch(LoginOpen({open: true}))
     this.route.url.subscribe(url => {
       const path = url;
       console.log(path)
@@ -97,6 +98,7 @@ export class LoginComponent {
   }
 
   ngOnDestroy() {
+    this.store.dispatch(LoginOpen({open: false}))
     if(this.loginSubscription){
       this.loginSubscription.unsubscribe();
     }

@@ -13,6 +13,10 @@ export const welcome = createAction(
     '[Auth] Welcome User'
 );
 
+export const LoginOpen = createAction(
+    '[Auth] Login Page Open',
+    props<{open: boolean}>()
+);
 
 
 export const logout = createAction('[Auth] Logout');

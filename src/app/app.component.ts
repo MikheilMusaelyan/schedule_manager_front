@@ -8,7 +8,7 @@ import { openComponent } from './UI-store/UI.actions';
 import { selectToday } from './calendar/calendar.selectors';
 import { getEvents } from './event/event.actions';
 import { errorSelector, messageSelector } from './event/event.selectors';
-import { selectIsLoggedIn } from './login/login.selectors';
+import { loginOpenSelector, selectIsLoggedIn } from './login/login.selectors';
 
 @Component({
   selector: 'app-root',
@@ -37,8 +37,8 @@ import { selectIsLoggedIn } from './login/login.selectors';
 })
 
 export class AppComponent {
+  isLoginOpen$: Observable<boolean> = this.store.pipe(select(loginOpenSelector))
   isComponentOpen$: Observable<string> = this.store.pipe(select(selectOpenComponent))
-  isLoggedIn$: Observable<boolean> = this.store.pipe(select(selectIsLoggedIn))
   fixedState$: Observable<string> = this.isComponentOpen$.pipe(
     map(data => data == '' ? 'void': 'normal')
   )
@@ -68,6 +68,7 @@ export class AppComponent {
     })
   }
 
+  //messages
   handleMessages(data: any, err: boolean){
     if(!data?.message || data?.message.length <= 1){
       return
@@ -86,6 +87,7 @@ export class AppComponent {
     }, 350);
   }
   
+  //popups
   closeComponent() {
     this.store.dispatch(openComponent({component: ''}))
   }
