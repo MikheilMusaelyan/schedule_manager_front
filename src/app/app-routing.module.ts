@@ -7,14 +7,8 @@ import { LoginComponent } from './login/login.component';
 const routes: Routes = [
   {
     path: '', component: MainComponent,
-    // children: [
-    //   { path: 'calendar', component: CalendarComponent },
-    //   // { path: ''}
-    // ],
   },
   { path: 'singleday/:month/:day/:year', component: SingleDayComponent },
-  { path: 'login', component: LoginComponent },
-  { path: 'register', component: LoginComponent },
 ];
 
 @NgModule({

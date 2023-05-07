@@ -3,12 +3,12 @@ import { AuthState } from './index'
 
 export const selectAuthState = createFeatureSelector<AuthState>('auth');
 
-export const selectAccessToken = createSelector(
-  selectAuthState,
-  (authState: AuthState) => authState.accessToken
-);
-
 export const selectIsLoggedIn = createSelector(
   selectAuthState,
   (authState: AuthState) => authState.isLoggedIn
+);
+
+export const welcomeUser = createSelector(
+  selectAuthState,
+  (authState: AuthState) => authState.welcome
 );

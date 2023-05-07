@@ -8,6 +8,7 @@ import { openComponent } from './UI-store/UI.actions';
 import { selectToday } from './calendar/calendar.selectors';
 import { getEvents } from './event/event.actions';
 import { errorSelector, messageSelector } from './event/event.selectors';
+import { selectIsLoggedIn } from './login/login.selectors';
 
 @Component({
   selector: 'app-root',
@@ -37,6 +38,7 @@ import { errorSelector, messageSelector } from './event/event.selectors';
 
 export class AppComponent {
   isComponentOpen$: Observable<string> = this.store.pipe(select(selectOpenComponent))
+  isLoggedIn$: Observable<boolean> = this.store.pipe(select(selectIsLoggedIn))
   fixedState$: Observable<string> = this.isComponentOpen$.pipe(
     map(data => data == '' ? 'void': 'normal')
   )

@@ -1,11 +1,14 @@
 <main>
   <form [formGroup]="form" (ngSubmit)="onSubmit()" class="main">
 
-    <h2>{{registering ? 'Sign up' : 'Login'}}</h2>
+    <h2>
+      {{registering ? 'Sign up' : animatedText}}
+      <span style="display: inline-block; user-select: none; opacity: 0; width: 0;"></span>
+    </h2>
   
     <div class="form-input-wrap">
       <!-- input -->
-      <input type="email" id="email" formControlName="email" placeholder="Email" name="email">
+      <input type="text" formControlName="email" placeholder="Email" name="email" autocomplete="username email">
       <!-- vaidation -->
       <div class="error-wrap" 
           *ngIf="form.controls.email.invalid && 
@@ -38,11 +41,10 @@
     
     <div class="form-input-wrap" *ngIf="registering">
       <!-- input -->
-      <input #confirm
-      type="password" placeholder="Confirm password" autocomplete="current-password">
+      <input type="password" formControlName="confirm" placeholder="Confirm password" autocomplete="current-password">
       <!-- validation -->
       <div class="error-wrap" 
-        *ngIf="form.controls.password.value != confirmValue && clicked == true">
+        *ngIf="form.controls.password.value != form.controls.confirm.value && clicked == true">
         <div>Passwords don't match</div>
       </div>
     </div>

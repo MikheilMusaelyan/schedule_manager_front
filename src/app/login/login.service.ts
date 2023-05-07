@@ -21,10 +21,31 @@ export class AuthService {
       })
       .pipe(
         tap((response) => {
-          console.log(response)
-          return
-          const { access, refresh } = response;
-          this.store.dispatch(AuthActions.loginSuccess({ access, refresh }));
+          const loginObject = {
+            access: response.access,
+            refresh: response.refresh
+          };
+          localStorage.setItem("schedule_login", JSON.stringify(loginObject));
+          this.store.dispatch(AuthActions.loginSuccess());
+        }, error => {
+          this.store.dispatch(AuthActions.loginFailure({ error: error }));
+        })
+      );
+    }
+
+    register(email: string, password: string): Observable<any> {
+      return this.http.post('http://127.0.0.1:8000/api/login/', { 
+        email: email,
+        password: password
+      })
+      .pipe(
+        tap((response) => {
+          const loginObject = {
+            access: response.access,
+            refresh: response.refresh
+          };
+          localStorage.setItem("schedule_login", JSON.stringify(loginObject));
+          this.store.dispatch(AuthActions.loginSuccess());
         }, error => {
           this.store.dispatch(AuthActions.loginFailure({ error: error }));
         })
