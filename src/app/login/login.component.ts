@@ -1,7 +1,8 @@
 import { Location } from '@angular/common';
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, Input } from '@angular/core';
 import { FormGroup, FormControl,Validators} from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { AuthService } from './login.service';
 
 @Component({
   selector: 'app-login',
@@ -12,7 +13,8 @@ export class LoginComponent {
   constructor(
     private router: Router,
     private location: Location,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private authService: AuthService
   ) { 
     this.route.url.subscribe(url => {
       if (url[0].path === 'login') {
@@ -24,7 +26,7 @@ export class LoginComponent {
     
   }
 
-  @ViewChild("confirm", {static: false}) confirm: any
+  @ViewChild('confirm', {static: false}) confirmValue: any;
   registering: boolean;
   clicked: boolean = false;
   form: FormGroup = new FormGroup({
@@ -33,7 +35,19 @@ export class LoginComponent {
   });
 
   onSubmit(){
-    this.clicked = true
+    this.clicked = true;
+    if(this.registering){
+      if(this.form.invalid){
+        this.form.reset()
+        return
+      }
+    } 
+    else {
+      this.authService.login(this.form.value.email, this.form.value.password)
+      .subscribe((response: any) => {
+        console.log(response)
+      })
+    }
   }
 
   toggleType() {

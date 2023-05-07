@@ -27,9 +27,8 @@ import { SearchbarComponent } from './searchbar/searchbar.component';
 import { CurrentTimeComponent } from './current-time/current-time.component';
 import { UpcomingeventsComponent } from './upcomingevents/upcomingevents.component';
 import { EventEffects$ } from './event/event.effects';
-import { EventService } from './event/event.service';
 import { LoginComponent } from './login/login.component';
-import { ReactiveFormsModule } from "@angular/forms"
+import { FormsModule, ReactiveFormsModule } from "@angular/forms"
 
 import { WordPipe } from './pipes/wordPipe';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
@@ -68,6 +67,7 @@ import { PopupsComponent } from './popups/popups.component';
     RouterModule,
     FontAwesomeModule,
     ReactiveFormsModule,
+    FormsModule,
     HttpClientModule
   ],
   providers: [

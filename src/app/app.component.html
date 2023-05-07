@@ -22,15 +22,15 @@
     
     <app-navbar></app-navbar>
 
-    <section class="search-router-wrap" [ngClass]="{
-        'shrinked':
-        (isComponentOpen$ | async) == 'monthsCard' || 
-        (isComponentOpen$ | async) == 'yearsCard'       
-    }">
+    <section class="search-router-wrap">
         <section>
             <app-searchbar></app-searchbar>
         </section>
-        <section class="outlet">
+        <section class="outlet" [ngClass]="{
+            'shrinked':
+            (isComponentOpen$ | async) == 'monthsCard' || 
+            (isComponentOpen$ | async) == 'yearsCard'       
+        }">
             <router-outlet></router-outlet>
         </section>
     </section>

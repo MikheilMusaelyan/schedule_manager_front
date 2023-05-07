@@ -4,7 +4,9 @@
     <h2>{{registering ? 'Sign up' : 'Login'}}</h2>
   
     <div class="form-input-wrap">
-      <input type="email" id="email" formControlName="email" placeholder="Email" name="username">
+      <!-- input -->
+      <input type="email" id="email" formControlName="email" placeholder="Email" name="email">
+      <!-- vaidation -->
       <div class="error-wrap" 
           *ngIf="form.controls.email.invalid && 
           (form.controls.email.dirty || form.controls.email.touched) && 
@@ -15,10 +17,13 @@
         <div *ngIf="form.controls.email.errors.minlength">Email must be at least 8 characters long</div>
         <div *ngIf="form.controls.email.errors.maxlength">Email must less than 50 characters long</div>
       </div>
+
     </div>
   
     <div class="form-input-wrap">
-      <input type="password" id="password" formControlName="password" placeholder="Password" autocomplete="current-password">
+      <!-- input -->
+      <input type="password" formControlName="password" placeholder="Password" autocomplete="current-password">
+      <!-- validation -->
       <div class="error-wrap" 
           *ngIf="form.controls.password.invalid && 
           (form.controls.password.dirty || form.controls.password.touched) && 
@@ -28,12 +33,16 @@
         <div *ngIf="form.controls.password.errors.minlength">Password must be at least 8 characters long</div>
         <div *ngIf="form.controls.password.errors.maxlength">Password must be less than 15 characters long</div>
       </div>
-    </div>
 
+    </div>
+    
     <div class="form-input-wrap" *ngIf="registering">
-      <input #confirm type="password" placeholder="Confirm password" autocomplete="current-password">
+      <!-- input -->
+      <input #confirm
+      type="password" placeholder="Confirm password" autocomplete="current-password">
+      <!-- validation -->
       <div class="error-wrap" 
-          *ngIf="form.controls.password.value != confirm.value && clicked == true">
+        *ngIf="form.controls.password.value != confirmValue && clicked == true">
         <div>Passwords don't match</div>
       </div>
     </div>
