@@ -19,7 +19,7 @@ export const authReducer = createReducer(
     ...state,
     isLoggedIn: true,
   })),
-  on(AuthActions.loginFailure, (state, { error }) => ({
+  on(AuthActions.loginFailure, (state) => ({
     ...state,
     isLoggedIn: false,
   })),

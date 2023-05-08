@@ -6,9 +6,12 @@ import { selectOpenComponent } from './UI-store/UI.selectors';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { openComponent } from './UI-store/UI.actions';
 import { selectToday } from './calendar/calendar.selectors';
-import { getEvents } from './event/event.actions';
+import { getEvents, setMessage } from './event/event.actions';
 import { errorSelector, messageSelector } from './event/event.selectors';
 import { loginOpenSelector, selectIsLoggedIn } from './login/login.selectors';
+import { Router } from '@angular/router';
+import { AuthService } from './login/login.service';
+import { loginFailure, loginSuccess } from './login/login.actions';
 
 @Component({
   selector: 'app-root',
@@ -50,10 +53,12 @@ export class AppComponent {
   error: boolean;
 
   constructor(
-    private store: Store<any>
+    private router: Router,
+    private store: Store<any>,
+    private loginService: AuthService
   ){
     const date: Date = new Date();
-    this.store.dispatch(getEvents({date: date}))
+    // this.store.dispatch(getEvents({date: date}))
 
     this.store.pipe(select(messageSelector))
     .subscribe((data) => {
@@ -66,7 +71,26 @@ export class AppComponent {
         this.handleMessages({message: 'An error occured'}, true)
       }
     })
+
+    // const local = JSON.parse(localStorage.getItem('schedule_login'))
+    // local.access = ''
+    // localStorage.setItem('schedule_login',JSON.stringify(local))
+
+    this.loginService.checkTokenValidityInit();
+    setInterval(() => {
+      const loginInfo = JSON.parse(localStorage.getItem('schedule_login'));
+
+      if(loginInfo?.refresh?.length > 1 && loginInfo?.refresh_expire > new Date().getTime()){
+        this.loginService.refreshToken(loginInfo?.refresh, false);
+      } else {
+        this.router.navigate(['login']);
+        this.store.dispatch(setMessage({message: 'Your session has expired'}))
+      }
+    }, 14 * 60 * 1000);
   }
+
+  
+  
 
   //messages
   handleMessages(data: any, err: boolean){

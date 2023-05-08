@@ -23,8 +23,6 @@ export class LoginComponent {
   ) { 
     this.store.dispatch(LoginOpen({open: true}))
     this.route.url.subscribe(url => {
-      const path = url;
-      console.log(path)
       if (url[0].path === 'login') {
         this.registering = false
       } else if (url[0].path === 'register') {
@@ -32,6 +30,13 @@ export class LoginComponent {
       }
     }) 
     
+    this.store.pipe(select(welcomeUser)).subscribe((data => {
+      if(data == false){
+        this.animateText('Welcome!', 100);
+      } else {
+        this.animatedText = this.registering ? 'Sign Up' : 'Login'
+      }
+    }))
   }
 
   registering: boolean;
@@ -43,6 +48,8 @@ export class LoginComponent {
   });
   loginSubscription: Subscription;
   animatedText: string = '';
+  interval: any;
+  timeout: any
 
   onSubmit(){
     this.clicked = true;
@@ -50,41 +57,38 @@ export class LoginComponent {
       if(this.form.invalid || this.form.controls.password.value != this.form.controls.confirm.value){
         return
       }
-      this.loginSubscription = this.authService.register(this.form.value.email, this.form.value.password)
+      this.loginSubscription = this.authService.login(this.form.value.email, this.form.value.password, false)
       .subscribe((response: any) => {
-        
+        console.log(response)
       })
     } else {
-      this.loginSubscription = this.authService.login(this.form.value.email, this.form.value.password)
+      this.loginSubscription = this.authService.login(this.form.value.email, this.form.value.password, true)
       .subscribe((response: any) => {
-        
+        console.log(response)
       })
     }
   }
 
   ngOnInit(): void {
-    this.store.pipe(select(welcomeUser)).subscribe((data => {
-      if(data == false){
-        this.store.dispatch(welcome())
-      } else {
-        this.animateText('Welcome!', 100);
-      }
-    }))
+    
   }
 
   animateText(text: string, delay: number): void {
     let index = 0;
-    const intervalId = setInterval(() => {
+    this.interval = setInterval(() => {
       this.animatedText += text[index];
       index++;
       if (index === text.length) {
-        setTimeout(() => {
+
+        this.timeout = setTimeout(() => {
           if(text == 'Welcome!'){
+            this.store.dispatch(welcome())
             this.animatedText = '';
-            this.animateText('Login', 100);
+            this.registering ? this.animateText('Sign Up', 100) : this.animateText('Login', 100);
           }
         }, 300);
-        clearInterval(intervalId);
+
+        clearInterval(this.interval);
       }
     }, delay);
   }
@@ -94,13 +98,16 @@ export class LoginComponent {
    this.clicked = false;
    this.form.reset();
 
+   if(this.timeout){ clearTimeout(this.timeout) } 
+   if(this.interval){ clearInterval(this.interval) }
+   this.animatedText = this.registering ? 'Sign Up' : 'Login';
    this.registering ? this.location.go('/register') : this.location.go('/login');
   }
 
   ngOnDestroy() {
     this.store.dispatch(LoginOpen({open: false}))
-    if(this.loginSubscription){
-      this.loginSubscription.unsubscribe();
-    }
+    if(this.loginSubscription){ this.loginSubscription.unsubscribe() }
+    if(this.timeout){ clearTimeout(this.timeout) } 
+    if(this.interval){ clearInterval(this.interval) }
   }
 }
