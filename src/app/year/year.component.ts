@@ -23,7 +23,7 @@ export class YearComponent {
   months: any[] = months;
 
   today$: Observable<any> = this.store.pipe(select(selectToday))
-  todaySubscription: Subscription;
+  todaySubscription: Subscription = new Subscription();
 
   constructor(
     private store: Store<AppState>,

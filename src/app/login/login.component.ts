@@ -46,7 +46,7 @@ export class LoginComponent {
     password: new FormControl('', [Validators.required, Validators.minLength(8), Validators.maxLength(15)]),
     confirm: new FormControl('')
   });
-  loginSubscription: Subscription;
+  loginSubscription: Subscription = new Subscription();
   animatedText: string = '';
   interval: any;
   timeout: any

@@ -16,13 +16,6 @@ export class AuthInterceptor implements HttpInterceptor {
       });
     }
   
-    if (true) {
-      request = request.clone({
-        setHeaders: {
-          Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjgzNTAwMTQyLCJpYXQiOjE2ODM0OTkyNDIsImp0aSI6ImRiNTJhZjI2ZjM3ZjQzZmI5OGRkODQ5YjBlYzcxMDIwIiwidXNlcl9pZCI6MjJ9.Rq0nnR9LWBX4Er5Wa4DW1V8hZVELETl4rZ5ZRPy-7Kg'
-        }
-      });
-    }
     return next.handle(request);
   }
 

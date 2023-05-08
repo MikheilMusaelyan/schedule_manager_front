@@ -57,9 +57,6 @@ export class AppComponent {
     private store: Store<any>,
     private loginService: AuthService
   ){
-    const date: Date = new Date();
-    // this.store.dispatch(getEvents({date: date}))
-
     this.store.pipe(select(messageSelector))
     .subscribe((data) => {
       this.handleMessages(data.message, false)
@@ -71,10 +68,6 @@ export class AppComponent {
         this.handleMessages({message: 'An error occured'}, true)
       }
     })
-
-    // const local = JSON.parse(localStorage.getItem('schedule_login'))
-    // local.access = ''
-    // localStorage.setItem('schedule_login',JSON.stringify(local))
 
     this.loginService.checkTokenValidityInit();
     setInterval(() => {

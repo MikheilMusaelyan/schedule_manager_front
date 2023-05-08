@@ -38,7 +38,7 @@ export class PopupsComponent {
 
   // calendar store
   today$: Observable<any> = this.store.pipe(select(selectToday))
-  todaySubscription: Subscription;
+  todaySubscription: Subscription = new Subscription();
   
   // UI store
   openComponent$: Observable<string> = this.store.pipe(select(selectOpenComponent))

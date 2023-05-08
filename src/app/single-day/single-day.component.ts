@@ -29,7 +29,7 @@ export class SingleDayComponent implements OnInit, AfterViewInit{
   rows: any[] = [];
   months: any[] = months;
   mainScrollWidth: number;
-  changeSubscription: Subscription; //////////
+  changeSubscription: Subscription = new Subscription(); //////////
   slideTo: boolean | string = ''
 
   intervalTimeout: any;
@@ -37,7 +37,7 @@ export class SingleDayComponent implements OnInit, AfterViewInit{
 
   selectToday$: Observable<Date> = this.store.pipe(select(selectToday));
   today: Date;
-  todaySubscription: Subscription;
+  todaySubscription: Subscription = new Subscription();
   slideTimeout: any
   changeTimeout: any
 

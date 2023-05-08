@@ -15,7 +15,7 @@ import { selectDate } from '../calendar.actions';
 export class CalendarComponent {
   selectedDate: Date;
   rows: any[] = [];
-  todaySubscription: Subscription;
+  todaySubscription: Subscription = new Subscription();
  
   constructor(
     private store: Store<AppState>,

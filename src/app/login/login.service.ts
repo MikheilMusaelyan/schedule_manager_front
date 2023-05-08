@@ -6,6 +6,7 @@ import * as AuthActions from './login.actions';
 import { AppState } from '../reducers';
 import { Router } from '@angular/router';
 import { setMessage } from '../event/event.actions';
+import { actuallySelectDate } from '../calendar/calendar.actions';
 
 @Injectable({providedIn: 'root'})
 export class AuthService {
@@ -14,8 +15,6 @@ export class AuthService {
         private store: Store<AppState>,
         private router: Router
     ) {}
-
-    private refreshTokenInterval: any;
 
     login(email: string, password: string, login: boolean): Observable<any> {
       return this.http.post(`http://127.0.0.1:8000/api/${login ? 'login': 'register'}/`, { 
@@ -32,6 +31,7 @@ export class AuthService {
           };
           localStorage.setItem("schedule_login", JSON.stringify(loginObject));
           this.store.dispatch(AuthActions.loginSuccess());
+          this.store.dispatch(actuallySelectDate({date: new Date(), data: response['events']}))
         }, error => {
           this.store.dispatch(AuthActions.loginFailure());
         })
@@ -47,26 +47,23 @@ export class AuthService {
       const currentTime = new Date().getTime();
     
       if (loginInfo?.refresh?.length > 1 && loginInfo?.refresh_expire > currentTime) {
-        this.refreshToken(loginInfo.refresh, true)
-        
         if (loginInfo?.access?.length > 1 && loginInfo.access_expire > currentTime) {
           // login immediately
-          console.log('login immediately')
           this.store.dispatch(AuthActions.loginSuccess());
           this.store.dispatch(setMessage({message: 'Logged in Successfuly!'}))
         } else {
-          console.log('get access token and login')
           // get access token and login
           this.store.dispatch(setMessage({message: 'Logging in...'}))
         }
+        this.refreshToken(loginInfo.refresh, true)
       } else {
-        console.log('no refresh or access tokens')
         this.router.navigate(['login']);
       }
     }
 
     refreshToken(refresh: string, initial: boolean){
-      this.http.post('http://127.0.0.1:8000/api/refresh/', {refresh: refresh}).subscribe((response: any) => {
+      this.http.post('http://127.0.0.1:8000/api/refresh/', {refresh: refresh})
+      .subscribe((response: any) => {
         const loginObject = JSON.parse(localStorage.getItem('schedule_login'));
         if (loginObject) {
           loginObject.access = response.access;
@@ -81,6 +78,7 @@ export class AuthService {
 
         this.store.dispatch(AuthActions.loginSuccess());
         if(initial){
+          this.router.navigate(['home'])
           this.store.dispatch(setMessage({message: 'Logged in Successfuly!'}))
         }
       }, (error: any) => {
