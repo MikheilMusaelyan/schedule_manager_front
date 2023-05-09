@@ -1,5 +1,5 @@
 main{
-    display: flex;
+    display: block;
     justify-content: center;
     position: relative;
     padding-bottom: 30px;
@@ -40,10 +40,29 @@ main{
     transform: translateY(100%);
   }
 
-
 .search-terms-wrap{
+  position: absolute;
   display: flex;
   width: 100%;
+  background-color: white;
+  margin: 10px 0 0 0;
+  padding: 15px;
+  z-index: 5;
+  border-radius: 20px;
+  box-shadow: var(--bxs);
+}
+.li-wrap{
+  display: flex;
+  overflow: hidden;
+}
+.close-open{
+  padding: 3px !important;
+  margin: 0 5px;
+  color: var(--orange);
+}
+.icons-wrap{
+  display: flex;
+  align-items: center;
 }
 .search-term{
   display: flex;
@@ -51,7 +70,7 @@ main{
   justify-content: space-around;
   border-radius: 10px;
   background-color: var(--rootColor);
-  margin-right: 10px;
+  margin-left: 10px;
   font-size: 14px;
   user-select: none;
   color: white;

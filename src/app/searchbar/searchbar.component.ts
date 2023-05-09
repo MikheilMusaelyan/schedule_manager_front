@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { ChangeDetectorRef, Component, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { faSearch, faX, faXmark } from '@fortawesome/free-solid-svg-icons';
-import { Subject, debounceTime, distinctUntilChanged, of, switchMap, tap } from 'rxjs';
+import { Subject, debounceTime, distinctUntilChanged, of, switchMap, tap, timestamp } from 'rxjs';
 
 @Component({
   selector: 'app-searchbar',
@@ -18,6 +18,8 @@ export class SearchbarComponent {
   loading: boolean = false;
   @ViewChild('dateInput') dateInput: any;
   @ViewChild('input') input: any;
+
+  searching: boolean = false
 
   form: FormGroup = new FormGroup({
     start: new FormControl(-1),
@@ -48,9 +50,7 @@ export class SearchbarComponent {
   onSearchInput(input: any) {
     const value = input.target.value
     if(this.selectedTerm[1] == 'name'){
-      if(value.length > 100){
-        this.input.nativeElement.value = value.substring(0, 100)
-      }       
+      this.input.nativeElement.value = value.substring(0, 100)      
     } else if(this.selectedTerm[1] == 'start') {
       this.form.value.start = this.convertTime(value, true);
       return
@@ -66,25 +66,26 @@ export class SearchbarComponent {
     event.stopPropagation()
     this.form.value[term] = '';
     this.selectedTerm = ['text', '']
-    this.input.nativeElement.value = ''
+    this.input.nativeElement.value = null
   }
 
   onEnterKeyPressed(event: any){
+    // validate
     if (
       (this.form.value.name == '' || this.form.value.name == null) && 
       (this.form.value.start == -1 || this.form.value.start == null) && 
       (this.form.value.date == '' || this.form.value.date == null)){
       return
     }
+    this.openTerms(false)
+    // constuct an object
     const newObject = {
       start: Number(this.form.value.start) || -1,
       date: !isNaN(Date.parse(this.form.value.date)) ? this.form.value.date : '-',
       name: this.form.value.name?.length > 0 ? this.form.value.name : '-'
     }
-    this.input.nativeElement.value = null
-    this.form.reset()
     this.loading = true
-    console.log(newObject)
+    // get
     this.http.get(`http://127.0.0.1:8000/api/search/` + (newObject?.date?.trim()) + '/' + (newObject?.start) + '/' + (newObject?.name?.trim()) + '/')
     .subscribe((results: any) => {
       this.loading = false
@@ -92,7 +93,6 @@ export class SearchbarComponent {
     }, err => {
       this.loading = false
     });
-  
   }
 
   convertTime(time_string: string | number, bool: boolean) {
@@ -108,5 +108,13 @@ export class SearchbarComponent {
     const minutes = (time_string % 4) * 15;
     const formattedTime = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`
     return formattedTime
+  }
+
+  openTerms(bool: boolean){
+    this.searching = bool;
+    if(!bool){
+      this.input.nativeElement.value = null
+      this.selectedTerm = ['text', '']
+    }
   }
 }

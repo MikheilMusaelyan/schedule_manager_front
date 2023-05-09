@@ -2,34 +2,42 @@
     <div class="search-form">
         <input #input 
             (input)="onSearchInput($event)"
+            (focus)="openTerms(true)"
             (keydown.enter)="onEnterKeyPressed($event)" 
             [type]="getType()" 
             class="search-input" placeholder="Search Events...">
         <fa-icon [icon]="search" class="search-icon"></fa-icon>
+
+        <ul class="search-terms-wrap" *ngIf="searching">
+            <div class="icons-wrap">
+                <fa-icon class="xIcon close-open" [icon]="search" (click)="onEnterKeyPressed($event)"></fa-icon>
+                <fa-icon class="xIcon close-open" [icon]="remove" (click)="openTerms(false)"></fa-icon>
+            </div>
+            <div class="li-wrap">
+                <li #name class="search-term" (click)="selectForm(['text', 'name'])" 
+                        [ngStyle]="{'background-color': selectedTerm[1]=='name' ? 'var(--orange)' : ''}">
+                    <span class="search-term-span">
+                        Name: {{form.value.name}}
+                    </span>
+                    <fa-icon class="xIcon" [icon]="remove" (click)="clearTerm($event, 'name')"></fa-icon>
+                </li>
+                <li #date class="search-term" (click)="selectForm(['date', 'date'])"
+                    [ngStyle]="{'background-color': selectedTerm[1]=='date' ? 'var(--orange)' : ''}">
+                    <span class="search-term-span">
+                        Date: {{form.value.date}}
+                    </span>
+                    <fa-icon class="xIcon" [icon]="remove" (click)="clearTerm($event, 'date')"></fa-icon>
+                </li>
+                <li #start class="search-term" (click)="selectForm(['time', 'start'])"
+                    [ngStyle]="{'background-color': selectedTerm[1]=='start' ? 'var(--orange)' : ''}">
+                    <span class="search-term-span"> 
+                        Start time: {{form.value.start == -1 ? '' : convertTime(form.value.start, false)}}
+                    </span>
+                    <fa-icon class="xIcon" [icon]="remove" (click)="clearTerm($event, 'start')"></fa-icon>
+                </li>
+            </div>
+        </ul>
     </div>
 
-    <ul class="search-terms-wrap">
-        <li #name class="search-term" (click)="selectForm(['text', 'name'])" 
-        [ngStyle]="{'background-color': selectedTerm[1]=='name' ? 'var(--orange)' : ''}">
-            <span class="search-term-span">
-                Name
-            </span>
-            <fa-icon class="xIcon" [icon]="remove" (click)="clearTerm($event, 'name')"></fa-icon>
-        </li>
-        <li #date class="search-term" (click)="selectForm(['date', 'date'])"
-            [ngStyle]="{'background-color': selectedTerm[1]=='date' ? 'var(--orange)' : ''}">
-            <span class="search-term-span">
-                Date
-            </span>
-            <fa-icon class="xIcon" [icon]="remove" (click)="clearTerm($event, 'date')"></fa-icon>
-        </li>
-        
-        <li #start class="search-term" (click)="selectForm(['time', 'start'])"
-            [ngStyle]="{'background-color': selectedTerm[1]=='start' ? 'var(--orange)' : ''}">
-            <span class="search-term-span">
-                Start time
-            </span>
-            <fa-icon class="xIcon" [icon]="remove" (click)="clearTerm($event, 'start')"></fa-icon>
-        </li>
-    </ul>
+    
 </main>
