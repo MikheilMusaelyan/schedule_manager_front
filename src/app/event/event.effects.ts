@@ -77,6 +77,7 @@ export class EventEffects$ {
           
           // if events in the store are null, get events with the date from action
           if(!state){
+            console.log('get fucking events')
             return of(getEvents({date: newDate}))
           }
 

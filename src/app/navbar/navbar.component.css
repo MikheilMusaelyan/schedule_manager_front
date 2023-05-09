@@ -51,6 +51,7 @@
 .active{
     background-color: var(--lGrey);
 }
+
 /* .active:before {
   content: '';
   position: absolute;
@@ -63,9 +64,17 @@
 } */
 
 .active .icon{
-    color: var(--rootColor);
     border-radius: 17px;
     font-weight: bold;
+}
+.activeSun .icon{
+    color: var(--orange) !important;
+}
+.activeLogin .icon{
+    color: rgb(220 0 255) !important;
+}
+.activeHome .icon{
+    color: var(--rootColor) !important;
 }
 
 

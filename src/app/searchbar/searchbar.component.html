@@ -1,6 +1,34 @@
 <main>
-    <form class="search-form">
-        <input type="text" class="search-input" placeholder="Search Events...">
+    <div class="search-form">
+        <input #input 
+            (input)="onSearchInput($event)"
+            (keydown.enter)="onEnterKeyPressed($event)" 
+            type="text" class="search-input" placeholder="Search Events...">
         <fa-icon [icon]="search" class="search-icon"></fa-icon>
-    </form>
+    </div>
+
+    <ul class="search-terms-wrap">
+        <li #name class="search-term" (click)="selectForm('name')" 
+        [ngStyle]="{'background-color': selectedTerm=='name' ? 'var(--orange)' : ''}">
+            <span class="search-term-span">
+                Name
+            </span>
+            <fa-icon class="xIcon" [icon]="remove" (click)="clearTerm('name')"></fa-icon>
+        </li>
+        <li #date class="search-term" (click)="selectForm('date')"
+        [ngStyle]="{'background-color': selectedTerm=='date' ? 'var(--orange)' : ''}">
+            <span class="search-term-span">
+                Date
+            </span>
+            <input type="date" class="absolute-input">
+            <fa-icon class="xIcon" [icon]="remove" (click)="clearTerm('date')"></fa-icon>
+        </li>
+        <li #start class="search-term" (click)="selectForm('start')"
+        [ngStyle]="{'background-color': selectedTerm=='start' ? 'var(--orange)' : ''}">
+            <span class="search-term-span">
+                Start time
+            </span>
+            <fa-icon class="xIcon" [icon]="remove" (click)="clearTerm('start')"></fa-icon>
+        </li>
+    </ul>
 </main>

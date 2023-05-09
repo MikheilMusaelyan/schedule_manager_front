@@ -39,3 +39,36 @@ main{
     top: 0;
     transform: translateY(100%);
   }
+
+
+.search-terms-wrap{
+  display: flex;
+  width: 100%;
+}
+.search-term{
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  border-radius: 10px;
+  background-color: var(--rootColor);
+  margin-right: 10px;
+  font-size: 14px;
+  user-select: none;
+  color: white;
+}
+.search-term-span{
+  white-space: nowrap;
+  font-weight: bold;
+  display: block;
+  padding: 3px 7px;
+}
+
+.xIcon{
+  cursor: pointer;
+  font-size: 17px;
+  padding: 3px 7px;
+}
+
+.asbsolute-input{
+  
+}

@@ -17,7 +17,7 @@ export class AuthService {
     ) {}
 
     login(email: string, password: string, login: boolean): Observable<any> {
-      return this.http.post(`http://127.0.0.1:8000/api/${login ? 'login': 'register'}/`, { 
+      return this.http.post(`http://127.0.0.1:8000/api/${login ? 'login': 'signup'}/`, { 
         email: email,
         password: password
       })
@@ -30,6 +30,7 @@ export class AuthService {
             refresh_expire: new Date().getTime() + (29 * 24 * 3600 * 1000),
           };
           localStorage.setItem("schedule_login", JSON.stringify(loginObject));
+          this.router.navigate(['home'])
           this.store.dispatch(AuthActions.loginSuccess());
           this.store.dispatch(actuallySelectDate({date: new Date(), data: response['events']}))
         }, error => {
@@ -39,6 +40,7 @@ export class AuthService {
     }
 
     logout(): void {
+      localStorage.setItem('schedule_login', JSON.stringify({}))
       this.store.dispatch(AuthActions.logout());
     }
 

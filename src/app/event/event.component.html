@@ -52,7 +52,7 @@
             (event name)
         </span>
         <div class="loader" *ngIf="thisEvent?.state == 'loading'">
-            <app-loading ></app-loading>
+            <app-loading [size]="15"></app-loading>
         </div>
         <div class="error" *ngIf="thisEvent?.state == 'error'"> 
             <fa-icon [ngStyle]="{'color' : (thisEvent?.color.name == 'red' || thisEvent?.color.name == '#fc5454') ? '#d8ff00' : 'red'}" 
