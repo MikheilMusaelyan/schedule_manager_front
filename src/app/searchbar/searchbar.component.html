@@ -23,8 +23,9 @@
             </span>
             <fa-icon class="xIcon" [icon]="remove" (click)="clearTerm($event, 'date')"></fa-icon>
         </li>
-        <li #start class="search-term" (click)="selectForm(['number', 'start'])"
-        [ngStyle]="{'background-color': selectedTerm[1]=='start' ? 'var(--orange)' : ''}">
+        
+        <li #start class="search-term" (click)="selectForm(['time', 'start'])"
+            [ngStyle]="{'background-color': selectedTerm[1]=='start' ? 'var(--orange)' : ''}">
             <span class="search-term-span">
                 Start time
             </span>

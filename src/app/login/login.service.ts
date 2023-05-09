@@ -53,9 +53,6 @@ export class AuthService {
           // login immediately
           this.store.dispatch(AuthActions.loginSuccess());
           this.store.dispatch(setMessage({message: 'Logged in Successfuly!'}))
-        } else {
-          // get access token and login
-          this.store.dispatch(setMessage({message: 'Logging in...'}))
         }
         this.refreshToken(loginInfo.refresh, true)
       } else {

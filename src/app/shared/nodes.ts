@@ -23,9 +23,7 @@ export class NodesService {
     this.nodesCount = 0;
     this.childs = []
     for(let i = 0; i < day.length; i++){
-      if(i > 50){
-        return
-      }
+     
       const event = day[i]
       
       const newNode = {
