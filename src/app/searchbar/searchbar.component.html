@@ -3,32 +3,32 @@
         <input #input 
             (input)="onSearchInput($event)"
             (keydown.enter)="onEnterKeyPressed($event)" 
-            type="text" class="search-input" placeholder="Search Events...">
+            [type]="getType()" 
+            class="search-input" placeholder="Search Events...">
         <fa-icon [icon]="search" class="search-icon"></fa-icon>
     </div>
 
     <ul class="search-terms-wrap">
-        <li #name class="search-term" (click)="selectForm('name')" 
-        [ngStyle]="{'background-color': selectedTerm=='name' ? 'var(--orange)' : ''}">
+        <li #name class="search-term" (click)="selectForm(['text', 'name'])" 
+        [ngStyle]="{'background-color': selectedTerm[1]=='name' ? 'var(--orange)' : ''}">
             <span class="search-term-span">
                 Name
             </span>
-            <fa-icon class="xIcon" [icon]="remove" (click)="clearTerm('name')"></fa-icon>
+            <fa-icon class="xIcon" [icon]="remove" (click)="clearTerm($event, 'name')"></fa-icon>
         </li>
-        <li #date class="search-term" (click)="selectForm('date')"
-        [ngStyle]="{'background-color': selectedTerm=='date' ? 'var(--orange)' : ''}">
+        <li #date class="search-term" (click)="selectForm(['date', 'date'])"
+            [ngStyle]="{'background-color': selectedTerm[1]=='date' ? 'var(--orange)' : ''}">
             <span class="search-term-span">
                 Date
             </span>
-            <input type="date" class="absolute-input">
-            <fa-icon class="xIcon" [icon]="remove" (click)="clearTerm('date')"></fa-icon>
+            <fa-icon class="xIcon" [icon]="remove" (click)="clearTerm($event, 'date')"></fa-icon>
         </li>
-        <li #start class="search-term" (click)="selectForm('start')"
-        [ngStyle]="{'background-color': selectedTerm=='start' ? 'var(--orange)' : ''}">
+        <li #start class="search-term" (click)="selectForm(['number', 'start'])"
+        [ngStyle]="{'background-color': selectedTerm[1]=='start' ? 'var(--orange)' : ''}">
             <span class="search-term-span">
                 Start time
             </span>
-            <fa-icon class="xIcon" [icon]="remove" (click)="clearTerm('start')"></fa-icon>
+            <fa-icon class="xIcon" [icon]="remove" (click)="clearTerm($event, 'start')"></fa-icon>
         </li>
     </ul>
 </main>
