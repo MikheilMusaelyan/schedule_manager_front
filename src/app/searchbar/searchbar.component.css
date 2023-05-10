@@ -1,5 +1,5 @@
 main{
-    display: block;
+    display: flex;
     justify-content: center;
     position: relative;
     padding-bottom: 30px;
@@ -90,4 +90,20 @@ main{
 
 .asbsolute-input{
   position: absolute;
+}
+
+/* results */
+.search-result{
+    display: flex;
+    width: 100px;
+    height: 35px;
+    font-size: var(--fsS);
+    font-weight: bold;
+    border-radius: 4px;
+    box-shadow: 0 0 10px rgba(97, 96, 96, 0.126);
+    background-color: var(--eventColor);
+    color: white;
+    cursor: pointer;
+    margin-bottom: 10px;
+    padding: 7px;
 }

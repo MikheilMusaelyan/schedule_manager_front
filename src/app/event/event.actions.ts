@@ -21,9 +21,6 @@ export const changeEvent = createAction(
     '[Event] Move Event',
     props<{event: any}>() 
 )
-export const moveEventSuccess = createAction(
-    '[Event] Move Event Success',
-)
 
 //failure
 export const EventFailure = createAction(
@@ -51,3 +48,8 @@ export const setMessage = createAction(
     '[Effect] Set Message',
     props<{message: string}>()
 )
+
+export const eventsLoading = createAction(
+    '[Singleday] Events Loading',
+    props<{bool: boolean}>()
+);

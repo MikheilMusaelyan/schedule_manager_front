@@ -1,13 +1,13 @@
 import { Component } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 import { AppState } from './reducers';
-import { Observable, Subscription, interval, map, tap} from 'rxjs';
+import { Observable, Subscription, combineLatest, interval, map, tap} from 'rxjs';
 import { selectOpenComponent } from './UI-store/UI.selectors';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { openComponent } from './UI-store/UI.actions';
 import { selectToday } from './calendar/calendar.selectors';
 import { getEvents, setMessage } from './event/event.actions';
-import { errorSelector, messageSelector } from './event/event.selectors';
+import { errorSelector, eventsLoading, messageSelector } from './event/event.selectors';
 import { loginOpenSelector, selectIsLoggedIn } from './login/login.selectors';
 import { Router } from '@angular/router';
 import { AuthService } from './login/login.service';
@@ -42,9 +42,8 @@ import { loginFailure, loginSuccess } from './login/login.actions';
 export class AppComponent {
   isLoginOpen$: Observable<boolean> = this.store.pipe(select(loginOpenSelector))
   isComponentOpen$: Observable<string> = this.store.pipe(select(selectOpenComponent))
-  fixedState$: Observable<string> = this.isComponentOpen$.pipe(
-    map(data => data == '' ? 'void': 'normal')
-  )
+  fixedState: string = 'void';
+  eventsLoading$: Observable<boolean> = this.store.pipe(select(eventsLoading))
  
   messageState: string = 'closed';
   animationTimeout: any;
@@ -57,6 +56,15 @@ export class AppComponent {
     private store: Store<any>,
     private loginService: AuthService
   ){
+
+    combineLatest([this.isComponentOpen$, this.eventsLoading$]).subscribe((data) => {
+      if(data[0] == '' && data[1] == false){
+        this.fixedState = 'void'
+      } else {
+        this.fixedState = 'normal'
+      }
+    })
+
     this.store.pipe(select(messageSelector))
     .subscribe((data) => {
       this.handleMessages(data.message, false)

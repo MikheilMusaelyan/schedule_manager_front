@@ -64,7 +64,7 @@ export class SearchbarComponent {
 
   clearTerm(event: any, term: string) {
     event.stopPropagation()
-    this.form.value[term] = '';
+    this.form.value[term] = null;
     this.selectedTerm = ['text', '']
     this.input.nativeElement.value = null
   }

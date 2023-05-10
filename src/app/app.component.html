@@ -5,10 +5,12 @@
 </div>
 
 <div class="fixed" 
-    *ngIf="(isComponentOpen$ | async) !== ''" 
-    [@fixed]="fixedState$ | async"
+    *ngIf="(isComponentOpen$ | async) !== '' || (eventsLoading$ | async) == true" 
+    [@fixed]="fixedState"
     (click)="closeComponent()"
 >
+<div *ngIf="fixedState"></div>
+    <app-loading [size]="40"></app-loading>
 </div>
 
 <div class="messages" [@messages]="messageState">
@@ -21,7 +23,6 @@
 <main>
     
     <app-navbar></app-navbar>
-
     <section class="search-router-wrap">
         <section *ngIf="!(isLoginOpen$ | async)">
             <app-searchbar></app-searchbar>

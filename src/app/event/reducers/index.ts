@@ -1,5 +1,5 @@
 import { createReducer, on } from "@ngrx/store";
-import { EventFailure, addEvent, changeTree, CREATEvent, UPDATEvent, deleteEvent, REMOVEvent, setMessage, getEvents } from "../event.actions";
+import { EventFailure, addEvent, changeTree, CREATEvent, UPDATEvent, deleteEvent, REMOVEvent, setMessage, getEvents, eventsLoading } from "../event.actions";
 import { actuallySelectDate } from "src/app/calendar/calendar.actions";
 import { state } from "@angular/animations";
 
@@ -103,5 +103,9 @@ export const EventReducer = createReducer(
                 bool: !state.messages.bool
             }
         }
-    })
+    }),
+    on(eventsLoading, (state, {bool}) => ({
+        ...state,
+        loading: bool
+    }))
 )

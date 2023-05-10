@@ -4,13 +4,13 @@ import * as AuthActions from './login.actions';
 export interface AuthState {
   isLoggedIn: boolean;
   welcome: boolean,
-  loginOpen: boolean
+  loginOpen: boolean,
 }
 
 const initialState: AuthState = {
   isLoggedIn: false,
   welcome: false,
-  loginOpen: false
+  loginOpen: false,
 };
 
 export const authReducer = createReducer(
@@ -35,4 +35,5 @@ export const authReducer = createReducer(
     ...state,
     loginOpen: open
   }))
+  
 );

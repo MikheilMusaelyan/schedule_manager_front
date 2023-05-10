@@ -1,19 +1,21 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, catchError, map, mapTo, tap } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { Observable, tap } from 'rxjs';
 import { Store } from '@ngrx/store';
 import * as AuthActions from './login.actions';
 import { AppState } from '../reducers';
 import { Router } from '@angular/router';
-import { setMessage } from '../event/event.actions';
+import { eventsLoading, getEvents, setMessage } from '../event/event.actions';
 import { actuallySelectDate } from '../calendar/calendar.actions';
+import { NodesService } from '../shared/nodes';
 
 @Injectable({providedIn: 'root'})
 export class AuthService {
     constructor(
         private http: HttpClient, 
         private store: Store<AppState>,
-        private router: Router
+        private router: Router,
+        private nodes: NodesService
     ) {}
 
     login(email: string, password: string, login: boolean): Observable<any> {
@@ -32,6 +34,9 @@ export class AuthService {
           localStorage.setItem("schedule_login", JSON.stringify(loginObject));
           this.router.navigate(['home'])
           this.store.dispatch(AuthActions.loginSuccess());
+          if(response['events'][`d${new Date().getDate()}`]){
+            this.nodes.setDay(response['events'][`d${new Date().getDate()}`])
+          }
           this.store.dispatch(actuallySelectDate({date: new Date(), data: response['events']}))
         }, error => {
           this.store.dispatch(AuthActions.loginFailure());
@@ -47,12 +52,13 @@ export class AuthService {
     checkTokenValidityInit() {
       const loginInfo = JSON.parse(localStorage.getItem('schedule_login'));
       const currentTime = new Date().getTime();
-    
+      
       if (loginInfo?.refresh?.length > 1 && loginInfo?.refresh_expire > currentTime) {
         if (loginInfo?.access?.length > 1 && loginInfo.access_expire > currentTime) {
-          // login immediately
+          this.store.dispatch(getEvents({date: new Date()}))
           this.store.dispatch(AuthActions.loginSuccess());
           this.store.dispatch(setMessage({message: 'Logged in Successfuly!'}))
+          return
         }
         this.refreshToken(loginInfo.refresh, true)
       } else {

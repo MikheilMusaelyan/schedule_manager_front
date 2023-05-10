@@ -1,6 +1,5 @@
 import { createFeatureSelector, createSelector } from "@ngrx/store";
 import { EventState } from "./reducers";
-import { combineLatest } from "rxjs";
 
 export const selectEventState = createFeatureSelector<EventState>('events')
 
@@ -22,3 +21,7 @@ export const messageSelector = createSelector(
 export const errorSelector = createSelector(
     selectEventState, (state: EventState) => state.errors
 )
+export const eventsLoading = createSelector(
+    selectEventState,
+    (authState: EventState) => authState.loading
+);

@@ -2,7 +2,7 @@ import { Injectable } from "@angular/core";
 import { Actions, createEffect, ofType } from "@ngrx/effects";
 import { catchError, concatMap, exhaustMap, of, tap, switchMap, withLatestFrom } from "rxjs";
 import { EventService } from "./event.service";
-import { addEvent, EventFailure, changeTree, changeEvent, getEvents, CREATEvent, UPDATEvent, setMessage } from "./event.actions";
+import { addEvent, EventFailure, changeTree, changeEvent, getEvents, CREATEvent, UPDATEvent, setMessage, eventsLoading } from "./event.actions";
 import { Store } from "@ngrx/store";
 import { NodesService } from 'src/app/shared/nodes'
 import { CalendarState } from "../calendar/reducers/calendar.reducer";
@@ -77,7 +77,6 @@ export class EventEffects$ {
           
           // if events in the store are null, get events with the date from action
           if(!state){
-            console.log('get fucking events')
             return of(getEvents({date: newDate}))
           }
 
@@ -87,7 +86,10 @@ export class EventEffects$ {
           const newMonth = newDate.getMonth();
 
           if (newMonth !== currentMonth || newYear !== currentYear) {
-            return of(getEvents({date: newDate}))
+            return of(
+              eventsLoading({ bool: true }),
+              getEvents({date: newDate})
+            )
           } else {
             if(storeEvents[`d${newDate.getDate()}`]){
               this.nodes.setDay(storeEvents[`d${newDate.getDate()}`])
@@ -110,6 +112,7 @@ export class EventEffects$ {
           this.service.getEvents(action.date)
           .pipe(
             tap((info) => {
+              this.store.dispatch(eventsLoading({ bool: false }))
               if(info[`d${new Date(action.date).getDate()}`]){
                 this.nodes.setDay(info[`d${new Date(action.date).getDate()}`])
               } else {
@@ -122,6 +125,7 @@ export class EventEffects$ {
             ]),
             catchError((err) => {
               return of(
+                eventsLoading({ bool: false }),
                 EventFailure(),
                 actuallySelectDate({ date: action.date, data: null }),
               )
