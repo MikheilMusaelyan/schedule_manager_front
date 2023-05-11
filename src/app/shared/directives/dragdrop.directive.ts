@@ -45,9 +45,9 @@ export class DragdropDirective{
   ngAfterViewInit() {
     this.scrollThreshhold =  window.innerHeight / 4; //for autoscroll
     this.resizeDiv.addEventListener('mousedown', this.handleResizeTouchStart)
-    this.resizeDiv.addEventListener('touchstart', this.handleResizeTouchStart)
+    this.resizeDiv.addEventListener('touchstart', this.handleResizeTouchStart, {passive: true})
     this.absoluteDiv.addEventListener('mousedown', this.handleTouchStart)
-    this.absoluteDiv.addEventListener('touchstart', this.handleTouchStart)
+    this.absoluteDiv.addEventListener('touchstart', this.handleTouchStart, {passive: true})
   }
 
   ngOnInit(): void {

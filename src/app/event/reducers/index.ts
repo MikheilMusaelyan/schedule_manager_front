@@ -2,6 +2,7 @@ import { createReducer, on } from "@ngrx/store";
 import { EventFailure, addEvent, changeTree, CREATEvent, UPDATEvent, deleteEvent, REMOVEvent, setMessage, getEvents, eventsLoading } from "../event.actions";
 import { actuallySelectDate } from "src/app/calendar/calendar.actions";
 import { state } from "@angular/animations";
+import { logout } from "src/app/login/login.actions";
 
 export interface EventState {
     changed: boolean,
@@ -116,5 +117,19 @@ export const EventReducer = createReducer(
     on(eventsLoading, (state, {bool}) => ({
         ...state,
         loading: bool
-    }))
+    })),
+    on(logout, (state: EventState) => {
+        return {
+            ...state,
+            changed: false,
+            errors: null,
+            messages: {
+                message: '',
+                bool: false
+            },
+            events: {},
+            upcomingEvents: [],
+            loading: false
+        };
+    }),
 )
