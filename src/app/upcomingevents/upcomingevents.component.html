@@ -1,11 +1,11 @@
 <main>
     <h2 class="upcoming-header" >Upcoming Events</h2>
-    <div class="event" *ngFor="let event of events" 
-        [ngStyle]="{'border-left': '3.5px solid green'}"
-        >
-        <h2 class="event-desc">{{'sda' | wordCut}}</h2>
+    <div class="event" *ngFor="let event of (upcoming$ | async)" 
+        [ngStyle]="{'border-left': '3.5px solid ' + event.color}"
+        (click)="goToSingleDay(event.date)">
+        <h2 class="event-desc">{{event.name | wordCut}}</h2>
         <div class="event-time">
-            12 AM - 5 PM
+            {{getDate(event.date)}}, {{getConverted(event.start, false)}}
         </div>
     </div>
 </main>

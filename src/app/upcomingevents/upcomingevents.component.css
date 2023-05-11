@@ -37,7 +37,5 @@ main{
     color:var(--orange);
     font-weight: bold;
     font-size: var(--fsS);
-    min-width: 105px;
-    width: 105px;
     text-align: end;
 }

@@ -97,7 +97,7 @@ export class EventEffects$ {
               this.nodes.setDay([])
             }
             return of(
-              actuallySelectDate({ date: newDate, data: null }),
+              actuallySelectDate({ date: newDate, data: null, upcoming: null }),
               changeTree()
             )
           }
@@ -111,23 +111,23 @@ export class EventEffects$ {
         exhaustMap((action: any) => 
           this.service.getEvents(action.date)
           .pipe(
-            tap((info) => {
+            tap((info: any) => {
               this.store.dispatch(eventsLoading({ bool: false }))
-              if(info[`d${new Date(action.date).getDate()}`]){
-                this.nodes.setDay(info[`d${new Date(action.date).getDate()}`])
+              if(info['info'][`d${new Date(action.date).getDate()}`]){
+                this.nodes.setDay(info['info'][`d${new Date(action.date).getDate()}`])
               } else {
                 this.nodes.setDay([])
               }
             }),
             switchMap(info => [
-              actuallySelectDate({ date: action.date, data: info }),
+              actuallySelectDate({ date: action.date, data: info['info'], upcoming: info['upcoming'] }),
               changeTree()
             ]),
             catchError((err) => {
               return of(
                 eventsLoading({ bool: false }),
                 EventFailure(),
-                actuallySelectDate({ date: action.date, data: null }),
+                actuallySelectDate({ date: action.date, data: null, upcoming: null }),
               )
             })
           )

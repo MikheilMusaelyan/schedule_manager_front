@@ -8,6 +8,7 @@ export interface EventState {
     errors: number,
     messages: any
     events: any,
+    upcomingEvents: any[],
     loading: boolean
 }
 
@@ -19,6 +20,7 @@ export const initialEventState = {
         bool: false
     },
     events: {},
+    upcomingEvents: [],
     loading: false
 }
 
@@ -36,8 +38,15 @@ export const EventReducer = createReducer(
             changed: !state.changed
         };
     }),
-    on(actuallySelectDate, (state, {date, data}) => {
+    on(actuallySelectDate, (state, {date, data, upcoming}) => {
         if(data != null){
+            if(upcoming != null){
+                return {
+                    ...state,
+                    events: data,
+                    upcomingEvents: upcoming
+                }  
+            }
             return {
                 ...state,
                 events: data,

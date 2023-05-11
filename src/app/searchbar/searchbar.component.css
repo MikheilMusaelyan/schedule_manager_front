@@ -93,17 +93,67 @@ main{
 }
 
 /* results */
+.search-results{
+  position: absolute;
+  transform: translateY(10px);
+  width: 100%;
+  background-color: white;
+  margin: 0;
+  padding: 40px 10px 0 10px;
+  border-radius: 10px;
+  box-shadow: var(--bxs);
+  z-index: 10001;
+  max-height: 300px;
+  overflow-y: auto;
+}
 .search-result{
-    display: flex;
-    width: 100px;
-    height: 35px;
+    min-height: 40px;
     font-size: var(--fsS);
     font-weight: bold;
     border-radius: 4px;
-    box-shadow: 0 0 10px rgba(97, 96, 96, 0.126);
     background-color: var(--eventColor);
     color: white;
     cursor: pointer;
     margin-bottom: 10px;
     padding: 7px;
+}
+
+
+.scrollable-element {
+  scrollbar-width: thin;
+  scrollbar-color: blue rgba(0, 0, 0, 0.1);
+}
+.close-icon-wrap{
+  width: calc(100% - 20px);
+  display: flex;
+  position: absolute;
+  margin: 10px 0 0 10px;
+  z-index: 10002;
+  background-color: white;
+}
+.close-icon{
+  padding: 7px 0 5px 0;
+  display: block;
+  font-size: 22px;
+  color: var(--orange);
+  cursor: pointer;
+}
+
+.result-text{
+  margin-bottom: 7px;
+  color: white;
+  font-weight: bold;
+  display: inline-block;
+}
+
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+  background-color: rgba(0, 0, 0, 0.1); /* Thin transparent black background */
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: blue;
+  border-radius: 4px;
 }

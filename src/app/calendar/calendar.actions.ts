@@ -7,5 +7,5 @@ export const selectDate = createAction(
 
 export const actuallySelectDate = createAction(
     '[Effect] Select Day',
-    props<{ date: Date, data: any }>()
+    props<{ date: Date, data: any, upcoming: any }>()
 );

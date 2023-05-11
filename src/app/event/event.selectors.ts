@@ -23,5 +23,9 @@ export const errorSelector = createSelector(
 )
 export const eventsLoading = createSelector(
     selectEventState,
-    (authState: EventState) => authState.loading
+    (state: EventState) => state.loading
+);
+export const upcomingSelector = createSelector(
+    selectEventState,
+    (state: EventState) => state.upcomingEvents
 );

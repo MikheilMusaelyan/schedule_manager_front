@@ -18,13 +18,12 @@ export class AuthService {
         private nodes: NodesService
     ) {}
 
-    login(email: string, password: string, login: boolean): Observable<any> {
-      return this.http.post(`http://127.0.0.1:8000/api/${login ? 'login': 'signup'}/`, { 
+    login(email: string, password: string, login: boolean){
+      this.http.post(`http://127.0.0.1:8000/api/${login ? 'login': 'signup'}/`, { 
         email: email,
         password: password
       })
-      .pipe(
-        tap((response) => {
+      .subscribe((response: any) => {
           const loginObject = {
             access: response.access,
             access_expire: new Date().getTime() + (14 * 60 * 1000),
@@ -37,11 +36,10 @@ export class AuthService {
           if(response['events'][`d${new Date().getDate()}`]){
             this.nodes.setDay(response['events'][`d${new Date().getDate()}`])
           }
-          this.store.dispatch(actuallySelectDate({date: new Date(), data: response['events']}))
+          this.store.dispatch(actuallySelectDate({date: new Date(), data: response['events'], upcoming: response['upcoming']}))
         }, error => {
           this.store.dispatch(AuthActions.loginFailure());
         })
-      );
     }
 
     logout(): void {

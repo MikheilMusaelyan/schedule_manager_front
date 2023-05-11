@@ -8,6 +8,19 @@
             class="search-input" placeholder="Search Events...">
         <fa-icon [icon]="search" class="search-icon"></fa-icon>
 
+        <div class="close-icon-wrap" *ngIf="searchResults.length > 0">
+            <fa-icon [icon]="closeIcon" class="close-icon" (click)="closeResults()"></fa-icon>
+        </div>
+        <ul class="search-results" *ngIf="searchResults.length > 0">
+            <div *ngFor="let result of searchResults">
+                <li class="search-result" [ngStyle]="{'background': result.color}" (click)="goToSingleDay(result.date)">
+                    <span class="result-text" style="display: block">{{result.name}}</span>
+                    <span class="result-text">{{getDate(result.date)}}, </span>
+                    <span class="result-text" style="margin-left: 2px">{{getConverted(result.start, false)}} - {{getConverted(result.end, false)}}</span>
+                </li>
+            </div>
+        </ul>
+
         <ul class="search-terms-wrap" *ngIf="searching">
             <div class="icons-wrap">
                 <fa-icon class="xIcon close-open" [icon]="search" (click)="onEnterKeyPressed($event)"></fa-icon>
@@ -31,16 +44,12 @@
                 <li #start class="search-term" (click)="selectForm(['time', 'start'])"
                     [ngStyle]="{'background-color': selectedTerm[1]=='start' ? 'var(--orange)' : ''}">
                     <span class="search-term-span"> 
-                        Start time: {{form.value.start == -1 ? '' : convertTime(form.value.start, false)}}
+                        Start time: {{form.value.start == -1 ? '' : getConverted(form.value.start, false)}}
                     </span>
                     <fa-icon class="xIcon" [icon]="remove" (click)="clearTerm($event, 'start')"></fa-icon>
                 </li>
             </div>
         </ul>
     </div>
-
-    <!-- <div class="search-results">
-        <li class="search-result">(No title)</li>
-    </div> -->
     
 </main>

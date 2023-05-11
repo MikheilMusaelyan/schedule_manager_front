@@ -46,7 +46,6 @@ export class LoginComponent {
     password: new FormControl('', [Validators.required, Validators.minLength(8), Validators.maxLength(15)]),
     confirm: new FormControl('')
   });
-  loginSubscription: Subscription = new Subscription();
   animatedText: string = '';
   interval: any;
   timeout: any
@@ -57,15 +56,9 @@ export class LoginComponent {
       if(this.form.invalid || this.form.controls.password.value != this.form.controls.confirm.value){
         return
       }
-      this.loginSubscription = this.authService.login(this.form.value.email, this.form.value.password, false)
-      .subscribe((response: any) => {
-        console.log(response)
-      })
+      this.authService.login(this.form.value.email, this.form.value.password, false)
     } else {
-      this.loginSubscription = this.authService.login(this.form.value.email, this.form.value.password, true)
-      .subscribe((response: any) => {
-        console.log(response)
-      })
+      this.authService.login(this.form.value.email, this.form.value.password, true)
     }
   }
 
@@ -106,7 +99,6 @@ export class LoginComponent {
 
   ngOnDestroy() {
     this.store.dispatch(LoginOpen({open: false}))
-    if(this.loginSubscription){ this.loginSubscription.unsubscribe() }
     if(this.timeout){ clearTimeout(this.timeout) } 
     if(this.interval){ clearInterval(this.interval) }
   }

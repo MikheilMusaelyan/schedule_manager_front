@@ -2,9 +2,10 @@ import { Component } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 import { AppState } from 'src/app/reducers';
 import { selectToday } from '../calendar.selectors';
-import { Subscription } from 'rxjs';
+import { Observable, Subscription, map, tap } from 'rxjs';
 import { Router } from '@angular/router';
 import { selectDate } from '../calendar.actions';
+import { detectGetEvents } from 'src/app/event/event.selectors';
 
 @Component({
   selector: 'app-calendar',
@@ -16,10 +17,18 @@ export class CalendarComponent {
   selectedDate: Date;
   rows: any[] = [];
   todaySubscription: Subscription = new Subscription();
+  eventSelector$: Observable<any> = this.store.pipe(select(detectGetEvents)).pipe(
+    map(data => {
+      if(data[`d${new Date().getDate()}`]){
+        return data[`d${new Date().getDate()}`]['length']
+      }
+      return  0
+    })
+  )
  
   constructor(
     private store: Store<AppState>,
-    private router: Router
+    private router: Router,
   ) {
     this.todaySubscription = this.store.pipe(select(selectToday)).subscribe((today: Date) => {
       this.renderCalendar(this.setNewDate(today));

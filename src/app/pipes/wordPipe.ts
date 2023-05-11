@@ -5,7 +5,7 @@ import { Pipe, PipeTransform, ElementRef } from '@angular/core';
 })
 export class WordPipe implements PipeTransform {
   transform(elRef: string) {
-    let wordLimit = 20
+    let wordLimit = 10
     if (elRef.length > wordLimit) {
       elRef = elRef.substring(0, wordLimit) + '...';
     }
