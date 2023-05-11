@@ -178,8 +178,20 @@ main{
     .box-shadow{
       width: calc(100% - 80px);
     }
+    .arrow-icon, 
     .toggle-day{
       width: 100%;
+    }
+    .toggle-day{
+      padding: 0;
+      justify-content: space-evenly;
+    }
+    .arrow-icon{
+      display: flex;
+      justify-content: center;
+    }
+    .arrow-icon fa-icon{
+      font-size: 18px;
     }
     main{
       padding: 0 40px 15px 40px;

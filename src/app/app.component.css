@@ -18,12 +18,12 @@ section{
     border-radius : 10px;    
 }
 .popup-wrap{
-    z-index: 100000;
+    z-index: 1000001;
     position: absolute;
 }
 .fixed{
     position: fixed;
-    z-index: 10000;
+    z-index: 1000000;
     background: rgba(0, 0, 0, 0.481);
     width: 100vw;
     height: 100vh;
@@ -43,7 +43,7 @@ section{
     background-color: white;
     box-shadow: 0 1.5px 8px rgba(0, 0, 0, 0.25);
     border-radius: 4px;
-    z-index: 10001;
+    z-index: 100000;
     overflow: hidden;
     display: flex;
 }
@@ -82,4 +82,8 @@ section{
         max-width: 100% !important;
         padding-bottom: 57px;
     }
- }
+    .messages{
+        top: 15px;
+        bottom: initial;
+    }
+}

@@ -9,8 +9,7 @@
     [@fixed]="fixedState"
     (click)="closeComponent()"
 >
-<div *ngIf="fixedState"></div>
-    <app-loading [size]="40"></app-loading>
+    <app-loading *ngIf="(eventsLoading$ | async) == true" [size]="40"></app-loading>
 </div>
 
 <div class="messages" [@messages]="messageState">
