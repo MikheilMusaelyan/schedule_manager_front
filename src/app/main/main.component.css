@@ -75,3 +75,13 @@ main{
         padding-bottom: 20px !important;
     }
 }
+
+@media screen and (max-width: 600px) {
+    .mainDiv{
+        padding: 30px 15px;
+        background-color: white;
+    }
+    main{
+        background-color: white;
+    }
+}

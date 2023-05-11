@@ -83,8 +83,7 @@ td {
 .c-day, .busy-day{
     background: var(--mainBackground) !important;
 }
-.c-day > .day-span,
-.busy-day > .day-span{
+.c-day > .day-span{
     color: white !important;
     margin: 0 !important;
     top: -1.2px !important;
@@ -94,9 +93,6 @@ td {
 .c-day > .day-span{
     height: 24px !important;
     background-color: var(--rootColor) !important;
-}
-.busy-day > .day-span{
-    background-color: var(--orange) !important;
 }
 
 .c-day-events{
@@ -161,11 +157,12 @@ td {
     .toggle-wrapper{
         padding: 5px;
     }
-    th, td {
-        height: 30px !important;
-    }
     .day-span{
-        font-size: var(--fsXXS);
+        font-size: 10px;
+    }
+    .container{
+        box-shadow: 0 1px 8px rgba(0, 0, 0, 0.1);
+        padding: 10px;
     }
 }
 @media screen and (max-width: 700px){
@@ -173,5 +170,27 @@ td {
         top: 2px;
         left: 0;
         margin: 0;
+    }
+}
+
+@media screen and (max-width: 900px) {
+    .c-day-events-c{
+        font-size: 21px;
+        padding-right: 0;
+        color: white;
+        margin-top: 5px;
+    }
+    .c-day-events-s{
+       display: none !important;
+    }
+    .c-day{
+        background-color: var(--rootColor) !important;
+    }
+    .c-day > .day-span{
+        background-color: initial !important;
+        height: 28px !important;
+        margin: 0 0 0 0 !important;
+        top: -2.5px !important;
+        left: -1px !important;
     }
 }

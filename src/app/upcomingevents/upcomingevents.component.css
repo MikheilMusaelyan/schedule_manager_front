@@ -3,6 +3,7 @@ main{
     border-radius: 20px;
     background-color: white;
     padding: 20px;
+    box-shadow: 0 1px 8px rgba(0, 0, 0, 0.15);
 }
 .event{
     padding: 15px;
