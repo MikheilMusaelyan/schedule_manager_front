@@ -24,9 +24,6 @@
     
     <app-navbar></app-navbar>
     <section class="search-router-wrap">
-        <section *ngIf="!(isLoginOpen$ | async)">
-            <app-searchbar></app-searchbar>
-        </section>
         <section class="outlet" [ngClass]="{
             'shrinked':
             (isComponentOpen$ | async) == 'monthsCard' || 

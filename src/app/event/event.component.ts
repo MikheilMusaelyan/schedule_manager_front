@@ -85,13 +85,13 @@ export class EventComponent {
 
   ngAfterViewInit(){
     setTimeout(() => {
-      this.WINDOW = window.innerWidth - 287
+      this.WINDOW = window.innerWidth - 187
     }, 50);
     window.addEventListener('resize', this.checkWindow)
   }
 
   checkWindow = () => {
-    this.WINDOW = window.innerWidth - 287
+    this.WINDOW = window.innerWidth - 187
   }
 
   openDetails(bool: boolean) {

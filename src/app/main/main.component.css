@@ -5,7 +5,9 @@ main{
     justify-content: space-between;
     position: relative;
 }
-
+.mainDiv{
+    padding: 30px 50px;
+}
 .c-y-t{
     display: flex;
     width: 100%;
@@ -26,4 +28,50 @@ main{
 }
 .r-side section{
     padding-bottom: 30px;
+}
+
+@media screen and (max-width: 1250px) {
+    .mainDiv{
+       padding: 25px;
+    }   
+   }
+
+   
+@media screen and (max-width: 1100px){
+    .r-side section{
+        padding: 0;
+    }
+    .mainDiv{
+        padding: 30px;
+    }
+    .calendar-wrap{
+        width: 100%;
+    }
+    .c-y-t{
+        flex-direction: column;
+    }
+    .r-side{
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        padding: 0;
+    }
+    .r-side section{
+        width: calc(50% - 10px);
+    }
+    .calendar-wrap{
+        padding-bottom: 20px;
+    }
+}
+
+@media screen and (max-width: 700px) {
+    .r-side{
+        flex-direction: column;
+    }
+    .r-side section{
+        width: 100%;
+    }
+    .time-wrap{
+        padding-bottom: 20px !important;
+    }
 }

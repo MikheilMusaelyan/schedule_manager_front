@@ -1,20 +1,22 @@
 <div class="main-wrapper">
-    <div class="toggle-day">
-        <div class="arrow-icon" (click)="changeDay(-1)">
-            <fa-icon [icon]="scrollLeft" class="left-icon"></fa-icon>
+    <div class="toggle-day-wrap">
+        <div class="toggle-day">
+            <div class="arrow-icon" (click)="changeDay(-1)">
+                <fa-icon [icon]="scrollLeft" class="left-icon"></fa-icon>
+            </div>
+    
+            <div class="date-header">
+                <h2 class="day-header">{{today.getDate()}}</h2>
+                <h2 class="day-header">{{getMonthName(today.getMonth())}}</h2>
+                <h2 class="day-header">{{today.getFullYear()}}</h2>
+            </div>
+    
+            <div class="arrow-icon" (click)="changeDay(1)">
+                <fa-icon [icon]="scrollRight" class="right-icon"></fa-icon>
+            </div>
         </div>
-
-        <div class="date-header">
-            <h2 class="day-header">{{today.getDate()}}</h2>
-            <h2 class="day-header">{{getMonthName(today.getMonth())}}</h2>
-            <h2 class="day-header">{{today.getFullYear()}}</h2>
-        </div>
-
-        <div class="arrow-icon" (click)="changeDay(1)">
-            <fa-icon [icon]="scrollRight" class="right-icon"></fa-icon>
-        </div>
+    
     </div>
-
     <main>
         <div class="scroller" *ngIf="mainScrollWidth - main.clientWidth > 20 && !touchEvent">
             <fa-icon [icon]="scrollLeft" 

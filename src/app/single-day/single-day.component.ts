@@ -78,6 +78,8 @@ export class SingleDayComponent implements OnInit, AfterViewInit{
       this.slide(this.slideTo)
       this.today = new Date(JSON.parse(JSON.stringify(data)))
     })
+
+    this.touchEvent = 'ontouchstart' in window
   }
 
   changeDay(newDay: number){

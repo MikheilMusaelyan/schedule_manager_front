@@ -141,9 +141,7 @@ td {
     cursor: pointer;
 }
 
-@media screen and (max-width: 1250px) {
-    
-}
+
 
 @media screen and (max-width: 800px) {
     table {
@@ -159,7 +157,7 @@ td {
     }
 }
 
-@media screen and (max-width: 500px) {
+@media screen and (max-width: 600px) {
     .toggle-wrapper{
         padding: 5px;
     }
@@ -168,7 +166,12 @@ td {
     }
     .day-span{
         font-size: var(--fsXXS);
-        top: 3px;
-        left: 3px;
+    }
+}
+@media screen and (max-width: 700px){
+    .day-span{
+        top: 2px;
+        left: 0;
+        margin: 0;
     }
 }

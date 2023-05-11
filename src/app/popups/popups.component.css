@@ -13,7 +13,7 @@
     transition: 300ms;
     min-width: 400px;
     top: 45%;
-    left: 50%;
+    left: calc(50% + 45px);
     transform: translate(-50%, -50%);
     position: fixed;
     background: white;
@@ -73,3 +73,9 @@ tr{
  .activeMonth:hover{
     background: var(--hoverrootColor) !important;
  } 
+
+ @media screen and (max-width: 600px){
+    .container{
+        left: 50%;
+    }
+ }

@@ -1,20 +1,23 @@
-<main>
-
-    <div class="c-y-t">
-        <section class="calendar-wrap">
-            <app-calendar></app-calendar>
-        </section>
-
-        <div class="r-side">
-            <section class="time-wrap">
-                <app-current-time></app-current-time>
+<div class="mainDiv">
+    <app-searchbar></app-searchbar>
+    <main>
+    
+        <div class="c-y-t">
+            <section class="calendar-wrap">
+                <app-calendar></app-calendar>
             </section>
-
-            <section class="upcoming-wrap">
-                <app-upcomingevents></app-upcomingevents>
-            </section>
+        
+            <div class="r-side">
+                <section class="time-wrap">
+                    <app-current-time></app-current-time>
+                </section>
+            
+                <section class="upcoming-wrap">
+                    <app-upcomingevents></app-upcomingevents>
+                </section>
+                
+            </div>
             
         </div>
-        
-    </div>
-</main> 
+    </main> 
+</div>

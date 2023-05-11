@@ -7,9 +7,7 @@ section{
     width: 100%;
 }
 .search-router-wrap{
-    padding: 30px 50px;
     max-width: calc(100% - 90px) !important;
-    
 }
 .outlet{
     transition: transform 350ms cubic-bezier(0.4, 0, 0.2, 1);
@@ -73,3 +71,11 @@ section{
 .red{
     background: red;
 }
+
+
+@media screen and (max-width: 600px){
+    main{
+        flex-direction: column-reverse;
+        align-items: center;
+    }
+ }
