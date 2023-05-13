@@ -4,9 +4,10 @@ import { NodesService, Node } from "src/app/shared/nodes";
 import { AppState } from 'src/app/reducers';
 import { EventFailure, changeTree, deleteEvent, changeEvent, REMOVEvent, setMessage } from './event.actions';
 import { animate, state, style, transition, trigger } from '@angular/animations';
-import { faCheck, faTrash, faX, faXmark } from '@fortawesome/free-solid-svg-icons';
+import { faCheck, faEdit, faTrash, faX, faXmark } from '@fortawesome/free-solid-svg-icons';
 import { EventService } from './event.service';
 import { Subscription } from 'rxjs';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-event',
@@ -25,6 +26,19 @@ import { Subscription } from 'rxjs';
         'height': '107px',
       })),  
       transition('normal <=> void', animate('450ms cubic-bezier(0.68, -0.55, 0.265, 1.2)'))
+    ]),
+    trigger('edit', [
+      state('void', style({
+        'opacity': '0',
+        'width' : '0',
+        'height': '0',
+      })),
+      state('normal', style({
+        'opacity': '1',
+        'width': '200px',
+        'height': '35px',
+      })),  
+      transition('normal <=> void', animate('450ms cubic-bezier(0.68, -0.55, 0.265, 1.2)'))
     ])
   ]
 })
@@ -40,10 +54,13 @@ export class EventComponent {
   WINDOW: number;
   detailsOpen: boolean;
   wrapper: string = 'false';
+  editState: string = 'void'
   deleteIcon = faTrash;
   errorIcon = faXmark;
   checkIcon = faCheck;
+  editIcon = faEdit;
   pickedColor: boolean = false;
+  editingName: boolean = false;
   colors: any[] = [
     { name: 'red', pastel: false },
     { name: 'orange', pastel: false },
@@ -61,6 +78,10 @@ export class EventComponent {
 
   serviceSubscription: Subscription
   
+  form: FormGroup = new FormGroup({
+    name: new FormControl(null, [Validators.maxLength(50)]),
+  });
+  
   constructor(
     private store: Store,
     private service: EventService,
@@ -69,14 +90,33 @@ export class EventComponent {
     
   }
 
+  openEdit(){
+    if(this.editingName){
+      this.editingName = false
+      return
+    }
+    this.editingName = true
+    this.editState = 'normal'
+  }
+
+  editName(event?: any){
+    this.editingName = false;
+    setTimeout(() => {
+      this.detailsOpen = false
+    }, 150);
+    this.thisEvent.name = this.form.controls.name.value
+    this.moveEvent()
+  }
+ 
+
   ngOnInit() {
     this.level += 1;
     this.thisEvent = this.parent[this.index]; 
+    this.form.value.name = this.thisEvent.name
   }
 
   selectColor(color: string){
     this.thisEvent.color = color;
-    this.wrapper = 'void';
     this.pickedColor = !this.pickedColor;
     const eventCopy = JSON.parse(JSON.stringify(this.thisEvent))
     this.store.dispatch(changeEvent({ event: eventCopy }))
@@ -99,8 +139,14 @@ export class EventComponent {
   }
 
   openDetails(bool: boolean) {
-    this.wrapper = bool ? 'normal' : 'void';
-    this.detailsOpen = bool;
+    if(!bool){
+      this.editingName = false;
+      this.detailsOpen = false;
+    } else{
+      this.detailsOpen = true;
+      this.wrapper = 'normal';
+    }
+    
   }
 
   deleteNode(){

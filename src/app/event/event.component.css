@@ -82,7 +82,11 @@
     overflow: hidden;
     transition: 300ms;
   }
-
+  .button-wrap{
+    display: flex;
+    justify-content: space-between;
+    width: 150px;
+  }
   .color{
     position: relative;
     border-radius: 50%;
@@ -109,7 +113,7 @@
   }
 
   .delete-wrap{
-    width: 150px;
+    width: 72px;
     padding: 5px;
     margin-top: 4px;
     border: none !important;
@@ -138,3 +142,56 @@
     width: 20px;
     height: 20px;
   }
+
+
+  form{
+    position: absolute;
+    border-radius: 20px;
+    width: 200px;
+    height: 35px;
+    background-color: white;
+    border-radius: 5px;
+    overflow: hidden;
+    transform: translateX(100px);
+    z-index: 10002;
+    box-shadow: 0 4px 15px rgba(125, 125, 125, 0.433);
+  }
+  .form-input-wrap{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .form-input{
+    padding: 9px;
+    outline: none !important;
+    border: none;
+    box-sizing: border-box;
+    margin: 0;
+    display: block;
+    width: 100%;
+    height: 35px;
+  }
+  .error-wrap{
+    padding-top: 5px;
+    color: red;
+    font-size: 14px;
+  }
+.form-submit-wrap{
+  position: absolute;
+  right: 10px;
+}
+.checkButton{
+  border-radius: 50%;
+  height: 23.1px;
+  width: 23px;
+  border: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgb(3, 228, 3);
+  cursor: pointer;
+}
+.checkButton fa-icon{
+  padding-top: 1px;
+  color: white;
+}

@@ -144,6 +144,7 @@ main{
     display: flex;
     padding-left: 70px;
     background-color: white;
+    overflow-x: auto;
   }
 
   .date-header{
@@ -183,8 +184,8 @@ main{
       width: 100%;
     }
     .toggle-day{
-      padding: 0;
-      justify-content: space-evenly;
+      padding: 0 20% 0 20%;
+      justify-content: center;
     }
     .arrow-icon{
       display: flex;
@@ -195,5 +196,11 @@ main{
     }
     main{
       padding: 0 40px 15px 40px;
+    }
+  }
+
+  @media screen and (max-width: 500px){
+    .toggle-day{
+      padding: 0 5% 0 5%;
     }
   }

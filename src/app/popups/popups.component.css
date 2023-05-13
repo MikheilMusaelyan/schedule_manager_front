@@ -76,6 +76,17 @@ tr{
 
  @media screen and (max-width: 600px){
     .container{
-        left: 50%;
+        left: 50%
     }
  }
+
+@media screen and (max-width: 450px){
+   .container{
+        min-width: 340px !important;
+   }
+}
+@media screen and (max-width: 370px){
+    .container{
+        min-width: 270px !important;
+   }
+}

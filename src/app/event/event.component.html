@@ -11,11 +11,30 @@
     </div>   
 
 
-    <button class="delete-wrap" (click)="deleteNode()">
-        <span class="delete-span">Delete</span>
-        <fa-icon class="delete-icon" [icon]="deleteIcon"></fa-icon>
-    </button>
+    <div class="button-wrap">
+        <button class="delete-wrap" (click)="deleteNode()">
+            <fa-icon class="delete-icon" [icon]="deleteIcon"></fa-icon>
+        </button>
+        <button class="delete-wrap" (click)="openEdit()">
+            <fa-icon class="delete-icon" [icon]="editIcon"></fa-icon>
+        </button>
+    </div>
 </div>
+<form [@edit]="editState" [formGroup]="form" *ngIf="editingName"
+    [ngStyle]="{
+        'top': +thisEvent.start > 92 ? ((+divList.offsetTop) + (+thisEvent.start * 40)) - 10 + 'px' : ((+divList.offsetTop) + (+thisEvent.start * 40)) + 150 + 'px',
+        'left': (level * 150) + 50 + 'px',
+    }">
+    <div class="form-input-wrap">
+        <!-- input -->
+        <input (keydown.enter)="editName($event)" class="form-input" type="text" formControlName="name" placeholder="Name" autocomplete="username email">
+        <div class="form-submit-wrap" *ngIf="form.controls.name.value !== null && form.controls.name.value?.length > 0">
+            <button type="button" (click)="editName()" class="checkButton">
+                <fa-icon [icon]="checkIcon"></fa-icon>
+            </button>
+        </div>
+    </div>
+</form>
 
 <div  
     class="absolute"
@@ -49,7 +68,7 @@
             <div>{{getEventTime().end.hours}}:{{getEventTime().end.minutes == 0 ? '00' : getEventTime().end.minutes }}{{getEventTime().end.meridiem}}</div>
         </span>
         <span class="event-name">
-            (event name)
+            {{(thisEvent.name?.length == 0 || thisEvent.name == null) ? '(No title)' : thisEvent.name}}
         </span>
         <div class="loader" *ngIf="thisEvent?.state == 'loading'">
             <app-loading [size]="15"></app-loading>
