@@ -119,9 +119,9 @@ export class DragdropDirective{
     }, timeout);
 
     //color pallete popout
-    if(!isTouchEvent){
+    // if(!isTouchEvent){
       //if we held down for more than 400ms, it doesn't work
-      document.addEventListener('mouseup', () => {
+      document.addEventListener(mouseEndName, () => {
         endTime = new Date().getTime();
         if (endTime - startTime < 400 && this.counter % 2 == 0 && this.initialObject.end == this.event.end && this.initialObject.start == this.event.start) {
           this.openDetailsWindow.emit(true);
@@ -131,20 +131,20 @@ export class DragdropDirective{
         }
       }, {once: true});
 
-    } else {
-      document.addEventListener('touchend', () => clearTimeout(this.poputTimeOut), {once: true});
+    // } else {
+    //   document.addEventListener('touchend', () => clearTimeout(this.poputTimeOut), {once: true});
 
-      this.poputTimeOut = setTimeout(() => {
-        document.removeEventListener('touchend', () => clearTimeout(this.poputTimeOut));
-        if(this.initialObject.end == this.event.end && this.initialObject.start == this.event.start){
-          this.removeListeners()
-          this.removeResizeListeners()
-          clearTimeout(this.poputTimeOut)
-          // this.store.dispatch(openAbsolute({bool: true}))
-          this.openDetailsWindow.emit(true)
-        }
-      }, 600);
-    };
+    //   this.poputTimeOut = setTimeout(() => {
+    //     document.removeEventListener('touchend', () => clearTimeout(this.poputTimeOut));
+    //     if(this.initialObject.end == this.event.end && this.initialObject.start == this.event.start){
+    //       this.removeListeners()
+    //       this.removeResizeListeners()
+    //       clearTimeout(this.poputTimeOut)
+    //       // this.store.dispatch(openAbsolute({bool: true}))
+    //       this.openDetailsWindow.emit(true)
+    //     }
+    //   }, 600);
+    // };
   }
 
   popOut(bool: boolean) {

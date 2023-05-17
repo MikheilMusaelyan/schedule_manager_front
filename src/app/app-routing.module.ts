@@ -7,9 +7,8 @@ import { activateAuth, activateChildAuth } from './shared/guards/auth.guard';
 
 const routes: Routes = [
   // home
-  { path: '', redirectTo: '/home', pathMatch: 'full' },
   { 
-    path: 'home', component: MainComponent,
+    path: '', component: MainComponent,
     canActivate: [activateAuth],
     canActivateChild: [activateChildAuth],
   },
@@ -21,7 +20,7 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'register',  component: LoginComponent },
   // error
-  { path: '**', redirectTo: '/home' },
+  { path: '**', redirectTo: '' },
 ];
 
 @NgModule({

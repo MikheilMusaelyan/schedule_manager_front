@@ -32,7 +32,7 @@ export class AuthService {
             refresh_expire: new Date().getTime() + (29 * 24 * 3600 * 1000),
           };
           localStorage.setItem("schedule_login", JSON.stringify(loginObject));
-          this.router.navigate(['home'])
+          this.router.navigate([''])
           this.store.dispatch(AuthActions.loginSuccess());
           if(response['events'][`d${new Date().getDate()}`]){
             this.nodes.setDay(response['events'][`d${new Date().getDate()}`])
@@ -85,7 +85,7 @@ export class AuthService {
 
         this.store.dispatch(AuthActions.loginSuccess());
         if(initial){
-          this.router.navigate(['home'])
+          this.router.navigate([''])
           this.store.dispatch(setMessage({message: 'Logged in Successfuly!'}))
         }
       }, (error: any) => {
