@@ -11,12 +11,12 @@ export class EventService{
 
     addEvent(myEvent: any) {
       let event = this.getTransofrmedEvent(myEvent.event)
-      return this.http.post('http://127.0.0.1:8000/api/event/', event)
+      return this.http.post('https://schedule-manager-drf.onrender.com/api/event/', event)
     }
     
     putEvent(myEvent: any){
       let event = this.getTransofrmedEvent(myEvent.event)
-      return this.http.put(`http://127.0.0.1:8000/api/event/${myEvent.event.serverId}/`, event)
+      return this.http.put(`https://schedule-manager-drf.onrender.com/api/event/${myEvent.event.serverId}/`, event)
     }
 
     getTransofrmedEvent(myEvent: any): EventBackend {
@@ -30,7 +30,7 @@ export class EventService{
     }
 
     deleteEvent(id: number){
-      return this.http.delete(`http://127.0.0.1:8000/api/event/${id}/`) 
+      return this.http.delete(`https://schedule-manager-drf.onrender.com/api/event/${id}/`) 
     }
 
     getEvents(data: any){
@@ -38,7 +38,7 @@ export class EventService{
       const day = new Date(date).getDate();
       const month = new Date(date).getMonth() + 1;
       const year = new Date(date).getFullYear();
-      return this.http.get(`http://127.0.0.1:8000/api/event/${day}/${month}/${year}/`)
+      return this.http.get(`https://schedule-manager-drf.onrender.com/api/event/${day}/${month}/${year}/`)
     }
 
 

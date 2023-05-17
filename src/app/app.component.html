@@ -25,8 +25,7 @@
     <section class="search-router-wrap">
         <section class="outlet" [ngClass]="{
             'shrinked':
-            (isComponentOpen$ | async) == 'monthsCard' || 
-            (isComponentOpen$ | async) == 'yearsCard'       
+            (isComponentOpen$ | async) !== '' || (eventsLoading$ | async) == true       
         }">
             <router-outlet></router-outlet>
         </section>

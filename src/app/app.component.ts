@@ -80,14 +80,13 @@ export class AppComponent {
     this.loginService.checkTokenValidityInit();
     setInterval(() => {
       const loginInfo = JSON.parse(localStorage.getItem('schedule_login'));
-
       if(loginInfo?.refresh?.length > 1 && loginInfo?.refresh_expire > new Date().getTime()){
         this.loginService.refreshToken(loginInfo?.refresh, false);
       } else {
         this.router.navigate(['login']);
         this.store.dispatch(setMessage({message: 'Your session has expired'}))
       }
-    }, 14 * 60 * 1000);
+    }, 55 * 60 * 1000);
   }
 
   

@@ -23,7 +23,7 @@ export const calendarReducer = createReducer(
             ...state,
             dateObject: {
                 ...state.dateObject,
-                today: date
+                today: new Date(date)
             }  
         }
     }),

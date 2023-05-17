@@ -5,7 +5,7 @@ import { Store } from '@ngrx/store';
 import * as AuthActions from './login.actions';
 import { AppState } from '../reducers';
 import { Router } from '@angular/router';
-import { eventsLoading, getEvents, setMessage } from '../event/event.actions';
+import { EventFailure, eventsLoading, getEvents, setMessage } from '../event/event.actions';
 import { actuallySelectDate } from '../calendar/calendar.actions';
 import { NodesService } from '../shared/nodes';
 
@@ -19,14 +19,15 @@ export class AuthService {
     ) {}
 
     login(email: string, password: string, login: boolean){
-      this.http.post(`http://127.0.0.1:8000/api/${login ? 'login': 'signup'}/`, { 
+      this.http.post(`https://schedule-manager-drf.onrender.com/api/${login ? 'login': 'signup'}/`, { 
         email: email,
         password: password
       })
       .subscribe((response: any) => {
+          this.store.dispatch(eventsLoading({bool: false}))
           const loginObject = {
             access: response.access,
-            access_expire: new Date().getTime() + (14 * 60 * 1000),
+            access_expire: new Date().getTime() + (60 * 60 * 1000),
             refresh: response.refresh,
             refresh_expire: new Date().getTime() + (29 * 24 * 3600 * 1000),
           };
@@ -38,6 +39,8 @@ export class AuthService {
           }
           this.store.dispatch(actuallySelectDate({date: new Date(), data: response['events'], upcoming: response['upcoming']}))
         }, error => {
+          this.store.dispatch(eventsLoading({bool: false}))
+          this.store.dispatch(EventFailure());
           this.store.dispatch(AuthActions.loginFailure());
         })
     }
@@ -60,22 +63,23 @@ export class AuthService {
         }
         this.refreshToken(loginInfo.refresh, true)
       } else {
+        this.store.dispatch(AuthActions.loginFailure())
         this.router.navigate(['login']);
       }
     }
 
     refreshToken(refresh: string, initial: boolean){
-      this.http.post('http://127.0.0.1:8000/api/refresh/', {refresh: refresh})
+      this.http.post('https://schedule-manager-drf.onrender.com/api/refresh/', {refresh: refresh})
       .subscribe((response: any) => {
         const loginObject = JSON.parse(localStorage.getItem('schedule_login'));
         if (loginObject) {
           loginObject.access = response.access;
-          loginObject.access_expire = new Date().getTime() + (14 * 60 * 1000);
+          loginObject.access_expire = new Date().getTime() + (60 * 60 * 1000);
           localStorage.setItem('schedule_login', JSON.stringify(loginObject));
         } else {
           localStorage.setItem('schedule_login', JSON.stringify({
             access: response.access,
-            access_expire: new Date().getTime() + (14 * 60 * 1000)
+            access_expire: new Date().getTime() + (60 * 60 * 1000)
           }))
         }
 

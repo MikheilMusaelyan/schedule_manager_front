@@ -102,7 +102,7 @@ export class SearchbarComponent {
     }
     this.loading = true
     // get
-    this.http.get(`http://127.0.0.1:8000/api/search/` + (newObject?.date?.trim()) + '/' + (newObject?.start) + '/' + (newObject?.name?.trim()) + '/')
+    this.http.get(`https://schedule-manager-drf.onrender.com/api/search/` + (newObject?.date?.trim()) + '/' + (newObject?.start) + '/' + (newObject?.name?.trim()) + '/')
     .subscribe((results: any) => {
       this.loading = false;
       this.searchResults = results;

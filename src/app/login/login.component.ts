@@ -8,6 +8,7 @@ import { Store, select } from '@ngrx/store';
 import { AuthState } from '.';
 import { welcomeUser } from './login.selectors';
 import { LoginOpen, welcome } from './login.actions';
+import { eventsLoading } from '../event/event.actions';
 
 @Component({
   selector: 'app-login',
@@ -56,8 +57,10 @@ export class LoginComponent {
       if(this.form.invalid || this.form.controls.password.value != this.form.controls.confirm.value){
         return
       }
+      this.store.dispatch(eventsLoading({bool: true}))
       this.authService.login(this.form.value.email, this.form.value.password, false)
     } else {
+      this.store.dispatch(eventsLoading({bool: true}))
       this.authService.login(this.form.value.email, this.form.value.password, true)
     }
   }

@@ -27,7 +27,7 @@
     }">
     <div class="form-input-wrap">
         <!-- input -->
-        <input (keydown.enter)="editName($event)" class="form-input" type="text" formControlName="name" placeholder="Name" autocomplete="username email">
+        <input class="form-input" type="text" formControlName="name" placeholder="Name" autocomplete="username email">
         <div class="form-submit-wrap" *ngIf="form.controls.name.value !== null && form.controls.name.value?.length > 0">
             <button type="button" (click)="editName()" class="checkButton">
                 <fa-icon [icon]="checkIcon"></fa-icon>

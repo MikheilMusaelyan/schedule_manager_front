@@ -112,10 +112,13 @@ export class EventComponent {
   ngOnInit() {
     this.level += 1;
     this.thisEvent = this.parent[this.index]; 
-    this.form.value.name = this.thisEvent.name
+    this.form.get('name').setValue(this.thisEvent.name == '(No title)' ? null : this.thisEvent.name);
   }
 
   selectColor(color: string){
+    if(this.editingName){
+      return
+    }
     this.thisEvent.color = color;
     this.pickedColor = !this.pickedColor;
     const eventCopy = JSON.parse(JSON.stringify(this.thisEvent))
