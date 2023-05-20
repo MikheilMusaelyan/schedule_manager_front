@@ -24,7 +24,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
         'width': '170px',
         'height': '107px',
       })),  
-      transition('normal <=> void', animate('450ms cubic-bezier(0.68, -0.55, 0.265, 1.2)'))
+      transition('normal <=> void', animate('450ms cubic-bezier(0.68, -0.55, 0.265, 1.27)'))
     ]),
     trigger('edit', [
       state('void', style({
