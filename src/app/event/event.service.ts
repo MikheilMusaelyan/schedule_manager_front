@@ -20,6 +20,9 @@ export class EventService{
     }
 
     getTransofrmedEvent(myEvent: any): EventBackend {
+      // const currentDay = new Date(myEvent.date).getDate()
+      // const newDate = new Date(myEvent.date)
+      // newDate.setDate(currentDay - 1)
       return {
         start: myEvent.start,
         end: myEvent.end,

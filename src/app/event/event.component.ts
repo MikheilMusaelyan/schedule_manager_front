@@ -1,7 +1,6 @@
 import { Component, Input, ViewChild} from '@angular/core';
 import { Store } from '@ngrx/store';
 import { NodesService, Node } from "src/app/shared/nodes";
-import { AppState } from 'src/app/reducers';
 import { EventFailure, changeTree, deleteEvent, changeEvent, REMOVEvent, setMessage } from './event.actions';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { faCheck, faEdit, faTrash, faX, faXmark } from '@fortawesome/free-solid-svg-icons';
@@ -154,6 +153,8 @@ export class EventComponent {
 
   deleteNode(){
     this.thisEvent.state = 'loading'
+    this.editingName = false;
+    this.detailsOpen = false;
     this.service.deleteEvent(this.thisEvent.serverId)
     .subscribe(data => {
       this.store.dispatch(REMOVEvent({

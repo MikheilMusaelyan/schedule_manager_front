@@ -130,13 +130,15 @@ export class SingleDayComponent implements OnInit, AfterViewInit{
         name: 'var(--eventColor)', 
         pastel: false
       }, 
-      date: this.today,
+      date: new Date(this.today),
       serverId: null,
       state: 'loading'
     }
     this.nodes.newNode(this.nodes.childs, event);
-
+    
     const eventCopy = JSON.parse(JSON.stringify(event))
+    eventCopy.date = new Date(eventCopy.date)
+    eventCopy.date.setHours(0, 0, 0, 0)
     this.store.dispatch(addEvent({event: eventCopy}))
   }
 
