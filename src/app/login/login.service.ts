@@ -38,6 +38,7 @@ export class AuthService {
             this.nodes.setDay(response['events'][`d${new Date().getDate()}`])
           }
           this.store.dispatch(actuallySelectDate({date: new Date(), data: response['events'], upcoming: response['upcoming']}))
+          this.store.dispatch(setMessage({message: 'Logged in Successfuly!'}))
         }, error => {
           this.store.dispatch(eventsLoading({bool: false}))
           this.store.dispatch(EventFailure());
