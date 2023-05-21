@@ -89,7 +89,7 @@
     
 
     <div #resize class="resize-div-wrap">
-        <div class="resize-div"></div>
+        <div class="resize-div" [ngStyle]="{'top': (thisEvent.end - thisEvent.start) > 1 ? '4px' : '6px'}"></div>
     </div>
 </div>
 
