@@ -19,7 +19,7 @@ export class AuthService {
     ) {}
 
     login(email: string, password: string, login: boolean){
-      this.http.post(`https://schedule-manager-drf.onrender.com/api/${login ? 'login': 'signup'}/`, { 
+      this.http.post(`https://drfscheduler.herokuapp.com/api/${login ? 'login': 'signup'}/`, { 
         email: email,
         password: password
       })
@@ -69,7 +69,7 @@ export class AuthService {
     }
 
     refreshToken(refresh: string, initial: boolean){
-      this.http.post('https://schedule-manager-drf.onrender.com/api/refresh/', {refresh: refresh})
+      this.http.post('https://drfscheduler.herokuapp.com/api/refresh/', {refresh: refresh})
       .subscribe((response: any) => {
         const loginObject = JSON.parse(localStorage.getItem('schedule_login'));
         if (loginObject) {
