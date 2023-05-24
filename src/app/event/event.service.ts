@@ -11,12 +11,12 @@ export class EventService{
 
     addEvent(myEvent: any) {
       let event = this.getTransofrmedEvent(myEvent.event)
-      return this.http.post('https://drfscheduler.herokuapp.com/api/event/', event)
+      return this.http.post('https://drfscheduler.up.railway.app/api/event/', event)
     }
     
     putEvent(myEvent: any){
       let event = this.getTransofrmedEvent(myEvent.event)
-      return this.http.put(`https://drfscheduler.herokuapp.com/api/event/${myEvent.event.serverId}/`, event)
+      return this.http.put(`https://drfscheduler.up.railway.app/api/event/${myEvent.event.serverId}/`, event)
     }
 
     getTransofrmedEvent(myEvent: any): EventBackend {
@@ -33,7 +33,7 @@ export class EventService{
     }
 
     deleteEvent(id: number){
-      return this.http.delete(`https://drfscheduler.herokuapp.com/api/event/${id}/`) 
+      return this.http.delete(`https://drfscheduler.up.railway.app/api/event/${id}/`) 
     }
 
     getEvents(data: any){
@@ -41,7 +41,7 @@ export class EventService{
       const day = new Date(date).getDate();
       const month = new Date(date).getMonth() + 1;
       const year = new Date(date).getFullYear();
-      return this.http.get(`https://drfscheduler.herokuapp.com/api/event/${day}/${month}/${year}/`)
+      return this.http.get(`https://drfscheduler.up.railway.app/api/event/${day}/${month}/${year}/`)
     }
 
 
