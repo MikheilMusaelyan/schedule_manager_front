@@ -1,5 +1,5 @@
 import { createReducer, on } from "@ngrx/store";
-import { EventFailure, addEvent, changeTree, CREATEvent, UPDATEvent, deleteEvent, REMOVEvent, setMessage, getEvents, eventsLoading } from "../event.actions";
+import { EventFailure, addEvent, changeTree, CREATEvent, UPDATEvent, deleteEvent, REMOVEvent, setMessage, getEvents, eventsLoading, setUpcoming } from "../event.actions";
 import { actuallySelectDate } from "src/app/calendar/calendar.actions";
 import { state } from "@angular/animations";
 import { logout } from "src/app/login/login.actions";
@@ -38,6 +38,12 @@ export const EventReducer = createReducer(
             ...state,
             changed: !state.changed
         };
+    }),
+    on(setUpcoming, (state, {upcoming}) => {
+        return {
+            ...state,
+            upcomingEvents: upcoming
+        }
     }),
     on(actuallySelectDate, (state, {date, data, upcoming}) => {
         if(data != null){

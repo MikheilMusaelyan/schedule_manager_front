@@ -53,3 +53,8 @@ export const eventsLoading = createAction(
     '[Singleday] Events Loading',
     props<{bool: boolean}>()
 );
+
+export const setUpcoming = createAction(
+    '[upcoming page] Set Upcoming Events',
+    props<{upcoming: any[]}>()
+);

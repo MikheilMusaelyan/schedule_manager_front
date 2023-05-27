@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { upcomingSelector } from '../event/event.selectors';
 import { Router } from '@angular/router';
 import { selectDate } from '../calendar/calendar.actions';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-upcomingevents',
@@ -16,12 +17,16 @@ export class UpcomingeventsComponent {
 
   constructor(
     private store: Store,
-    private router: Router
-  ){}
+    private router: Router,
+    private http: HttpClient
+  ){
+    
+  }
 
   getConverted(time: string | number, bool: boolean){
     return convertTime(time, bool)
   }
+
   getDate(date: string){
     const day = new Date(date).getDate()
     const newDate = new Date(date)
