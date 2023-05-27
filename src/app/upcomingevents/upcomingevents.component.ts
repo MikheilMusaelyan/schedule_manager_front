@@ -28,7 +28,7 @@ export class UpcomingeventsComponent {
   ngOnInit() {
     this.upcomingSubscription = this.store.pipe(select(selectIsLoggedIn)).subscribe(data => {
       if(data) {
-        this.upcomingHttpSubscription = this.http.get('http://127.0.0.1:8000/api/upcoming/')
+        this.upcomingHttpSubscription = this.http.get('https://drfscheduler.up.railway.app/api/upcoming/')
         .subscribe((events: any) => {
           this.store.dispatch(setUpcoming({upcoming: events.upcoming}))
         })
