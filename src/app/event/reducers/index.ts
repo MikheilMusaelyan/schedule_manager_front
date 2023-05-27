@@ -45,15 +45,8 @@ export const EventReducer = createReducer(
             upcomingEvents: upcoming
         }
     }),
-    on(actuallySelectDate, (state, {date, data, upcoming}) => {
+    on(actuallySelectDate, (state, {date, data}) => {
         if(data != null){
-            if(upcoming != null){
-                return {
-                    ...state,
-                    events: data,
-                    upcomingEvents: upcoming
-                }  
-            }
             return {
                 ...state,
                 events: data,

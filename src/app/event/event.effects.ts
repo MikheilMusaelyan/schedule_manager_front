@@ -111,7 +111,7 @@ export class EventEffects$ {
               this.nodes.setDay([])
             }
             return of(
-              actuallySelectDate({ date: newDate, data: null, upcoming: null }),
+              actuallySelectDate({ date: newDate, data: null }),
               changeTree()
             )
           }
@@ -133,13 +133,13 @@ export class EventEffects$ {
               }
             }),
             switchMap(info => [
-              actuallySelectDate({ date: action.date, data: info['info'], upcoming: info['upcoming'] }),
+              actuallySelectDate({ date: action.date, data: info['info'] }),
               changeTree()
             ]),
             catchError((err) => {
               return of(
                 EventFailure(),
-                actuallySelectDate({ date: action.date, data: null, upcoming: null }),
+                actuallySelectDate({ date: action.date, data: null}),
               )
             })
           )

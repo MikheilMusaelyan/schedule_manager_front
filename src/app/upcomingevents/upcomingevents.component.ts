@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 import { selectDate } from '../calendar/calendar.actions';
 import { HttpClient } from '@angular/common/http';
 import { setUpcoming } from '../event/event.actions';
+import { selectIsLoggedIn } from '../login/login.selectors';
 
 @Component({
   selector: 'app-upcomingevents',
@@ -16,6 +17,7 @@ import { setUpcoming } from '../event/event.actions';
 export class UpcomingeventsComponent {
   upcoming$: Observable<any[]> = this.store.pipe(select(upcomingSelector))
   upcomingSubscription: Subscription = new Subscription()
+  upcomingHttpSubscription: Subscription = new Subscription()
 
   constructor(
     private store: Store,
@@ -24,9 +26,13 @@ export class UpcomingeventsComponent {
   ){}
 
   ngOnInit() {
-    this.upcomingSubscription = this.http.get('http://127.0.0.1:8000/api/upcoming/')
-    .subscribe((events: any) => {
-      this.store.dispatch(setUpcoming({upcoming: events.upcoming}))
+    this.upcomingSubscription = this.store.pipe(select(selectIsLoggedIn)).subscribe(data => {
+      if(data) {
+        this.upcomingHttpSubscription = this.http.get('http://127.0.0.1:8000/api/upcoming/')
+        .subscribe((events: any) => {
+          this.store.dispatch(setUpcoming({upcoming: events.upcoming}))
+        })
+      }
     })
   }
 
@@ -35,22 +41,17 @@ export class UpcomingeventsComponent {
   }
 
   getDate(date: string){
-    const day = new Date(date).getDate()
-    const newDate = new Date(date)
-    newDate.setDate(day + 1)
-    const formattedDate = newDate.toLocaleDateString('en-GB', { year: 'numeric', month: 'long', day: 'numeric' });
+    const formattedDate = new Date(date).toLocaleDateString('en-GB', { year: 'numeric', month: 'long', day: 'numeric' });
     return formattedDate
   }
 
   goToSingleDay(date: string){
-    const day = new Date(date).getDate()
-    const newDate = new Date(date)
-    newDate.setDate(day + 1)
-    this.store.dispatch(selectDate({date: newDate}))
+    this.store.dispatch(selectDate({date: new Date(date)}))
     this.router.navigate(['singleday'])
   }
 
   ngOnDestroy() {
     this.upcomingSubscription.unsubscribe()
+    this.upcomingHttpSubscription.unsubscribe()
   }
 }
