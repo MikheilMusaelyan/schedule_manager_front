@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 import { convertTime } from '../shared/shared';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { upcomingSelector } from '../event/event.selectors';
 import { Router } from '@angular/router';
 import { selectDate } from '../calendar/calendar.actions';
 import { HttpClient } from '@angular/common/http';
+import { setUpcoming } from '../event/event.actions';
 
 @Component({
   selector: 'app-upcomingevents',
@@ -14,13 +15,19 @@ import { HttpClient } from '@angular/common/http';
 })
 export class UpcomingeventsComponent {
   upcoming$: Observable<any[]> = this.store.pipe(select(upcomingSelector))
+  upcomingSubscription: Subscription = new Subscription()
 
   constructor(
     private store: Store,
     private router: Router,
     private http: HttpClient
-  ){
-    
+  ){}
+
+  ngOnInit() {
+    this.upcomingSubscription = this.http.get('http://127.0.0.1:8000/api/upcoming/')
+    .subscribe((events: any) => {
+      this.store.dispatch(setUpcoming({upcoming: events.upcoming}))
+    })
   }
 
   getConverted(time: string | number, bool: boolean){
@@ -41,5 +48,9 @@ export class UpcomingeventsComponent {
     newDate.setDate(day + 1)
     this.store.dispatch(selectDate({date: newDate}))
     this.router.navigate(['singleday'])
+  }
+
+  ngOnDestroy() {
+    this.upcomingSubscription.unsubscribe()
   }
 }
