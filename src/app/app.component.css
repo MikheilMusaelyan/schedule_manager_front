@@ -10,6 +10,8 @@ section{
     max-width: calc(100% - 90px) !important;
 }
 .outlet{
+    min-height: 100svh;
+    background: var(--mainBackground);
     transition: transform 350ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 .shrinked{

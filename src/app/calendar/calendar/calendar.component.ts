@@ -22,7 +22,7 @@ export class CalendarComponent {
       if(data[`d${new Date().getDate()}`]){
         return data[`d${new Date().getDate()}`]['length']
       }
-      return  0
+      return 0
     })
   )
  
