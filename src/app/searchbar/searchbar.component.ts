@@ -102,7 +102,7 @@ export class SearchbarComponent {
     }
     this.loading = true
     // get
-    this.http.get(`https://drfscheduler.up.railway.app/api/search/` + (newObject?.date?.trim()) + '/' + (newObject?.start) + '/' + (newObject?.name?.trim()) + '/')
+    this.http.get(`https://drf.up.railway.app/api/search/` + (newObject?.date?.trim()) + '/' + (newObject?.start) + '/' + (newObject?.name?.trim()) + '/')
     .subscribe((results: any) => {
       this.loading = false;
       this.searchResults = results;

@@ -17,9 +17,10 @@ export class AuthService {
         private router: Router,
         private nodes: NodesService
     ) {}
-
+    
     login(email: string, password: string, login: boolean){
-      this.http.post(`https://drfscheduler.up.railway.app/api/${login ? 'login': 'signup'}/`, { 
+      console.log(email);
+      this.http.post(`https://drf.up.railway.app/api/${login ? 'login': 'signup'}/`, { 
         email: email,
         password: password
       })
@@ -70,7 +71,7 @@ export class AuthService {
     }
 
     refreshToken(refresh: string, initial: boolean){
-      this.http.post('https://drfscheduler.up.railway.app/api/refresh/', {refresh: refresh})
+      this.http.post('https://drf.up.railway.app/api/refresh/', {refresh: refresh})
       .subscribe((response: any) => {
         const loginObject = JSON.parse(localStorage.getItem('schedule_login'));
         if (loginObject) {
